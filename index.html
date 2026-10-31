@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BayFlow - 이베이 셀러 올인원 자동화 대시보드</title>
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BayFlow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Mobile app scroll & touch behavior */
+    body {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased pb-24 md:pb-6">
+
+  <!-- Top App Bar -->
+  <header class="sticky top-0 z-30 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-sky-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-indigo-500/20">
+        ⚡
+      </div>
+      <div>
+        <div class="flex items-center space-x-1.5">
+          <h1 class="font-bold text-base tracking-tight text-white">BayFlow</h1>
+          <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Live Sync</span>
+        </div>
+        <p class="text-[11px] text-slate-400">eBay: <span class="text-slate-300 font-medium">seodo_6</span></p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button onclick="refreshData()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition active:scale-95" title="동기화">
+        <svg id="sync-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+      </button>
+      <div class="text-right">
+        <div class="text-[10px] text-slate-400">정산 예정</div>
+        <div class="text-xs font-bold text-sky-400">$547.00</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PWA Install Banner (Shown on mobile if applicable) -->
+  <div id="pwa-install-banner" class="hidden bg-gradient-to-r from-indigo-900/60 to-purple-900/60 border-b border-indigo-500/30 px-4 py-2.5 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <span class="text-base">📲</span>
+      <span class="text-xs text-indigo-200">폰 홈 화면에 추가하면 <strong>진짜 앱</strong>으로 사용 가능!</span>
+    </div>
+    <button onclick="installPwa()" class="text-xs bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-2.5 py-1 rounded-lg shadow transition">
+      앱 설치
+    </button>
+  </div>
+
+  <!-- Main Content Tabs -->
+  <main class="flex-1 max-w-4xl w-full mx-auto p-4 space-y-4">
+
+    <!-- TAB 1: 주문 & 우체국 송장 자동화 -->
+    <section id="tab-orders" class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>📦</span>
+          <span>주문 관리 & K-Packet 송장 자동화</span>
+        </h2>
+        <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">발송 대기 <b class="text-indigo-400 font-bold" id="pending-count">1</b>건</span>
+      </div>
+
+      <!-- Action Card: 원클릭 우체국 송장 생성 -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 shadow-xl space-y-3">
+        <div class="flex items-start justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">결제완료 · 배송대기</span>
+              <span class="text-xs text-slate-400">주문 #26-1028-4401</span>
+            </div>
+            <h3 class="font-bold text-slate-100 text-sm">Pokemon TCG Ditto 173/SV-P Metamong Project Korean Promo</h3>
+            <p class="text-xs text-slate-400">구매자: <span class="text-slate-300">and_550413 (미국 캘리포니아)</span> · 결제금액: <strong class="text-emerald-400">$125.00</strong></p>
+          </div>
+        </div>
+
+        <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800/80 space-y-2 text-xs">
+          <div class="flex justify-between text-slate-400">
+            <span>배송 방식</span>
+            <span class="text-slate-200 font-medium">우체국 K-Packet (추적 가능)</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>송장 상태</span>
+            <span id="order-1-status" class="text-amber-400 font-medium">미발급 (접수 대기)</span>
+          </div>
+          <div id="order-1-tracking" class="hidden flex justify-between text-slate-400 bg-indigo-950/30 p-2 rounded border border-indigo-900/50">
+            <span>K-Packet 송장번호</span>
+            <span class="font-mono text-indigo-400 font-bold tracking-wide">LP192837465KR</span>
+          </div>
+        </div>
+
+        <div class="pt-1 flex space-x-2">
+          <button id="btn-create-label" onclick="autoProcessShipment(1)" class="flex-1 bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg shadow-indigo-500/25 transition flex items-center justify-center space-x-1.5 active:scale-98">
+            <span>⚡ 우체국 API 송장 자동 발급 & eBay 전송</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 최근 배송 완료 히스토리 -->
+      <div class="bg-slate-900/60 rounded-2xl border border-slate-800/60 p-4 space-y-2">
+        <h3 class="text-xs font-semibold text-slate-400">최근 배송 진행 건 (2)</h3>
+        <div class="space-y-2 text-xs">
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/40 border border-slate-800/50">
+            <div>
+              <div class="font-medium text-slate-200">스타벅스 x 스누피 호박 토트백</div>
+              <div class="text-[11px] text-slate-500 font-mono">LP982341203KR · 미국 통관 진행 중</div>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">배송 중</span>
+          </div>
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/40 border border-slate-800/50">
+            <div>
+              <div class="font-medium text-slate-200">메가 페스타 잉어킹 프로모 040/M-P</div>
+              <div class="text-[11px] text-slate-500 font-mono">LP881023941KR · 이탈리아 배달 완료</div>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">배송 완료</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 오퍼 & 메시지 관리 -->
+    <section id="tab-offers" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>🏷️</span>
+          <span>오퍼 & 구매자 CS 현황</span>
+        </h2>
+      </div>
+
+      <!-- 보낸 오퍼 진행 상황 -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">진행 중인 오퍼</span>
+          <span class="text-[11px] text-slate-400">만료까지 3일 23시간</span>
+        </div>
+        <div class="space-y-1">
+          <h3 class="font-bold text-slate-100 text-sm">Mega Charizard X ex SAR 110/080 M2 Inferno X</h3>
+          <p class="text-xs text-slate-400">정가 $210.00 ➔ <strong class="text-indigo-400 text-sm">$195.00</strong> (7.14% 할인 제안)</p>
+          <p class="text-[11px] text-slate-500">수신 대상: 관심 고객 2명 (c***3, a***d) 전송 완료</p>
+        </div>
+        <div class="p-2.5 bg-slate-950 rounded-xl text-xs text-slate-400 border border-slate-800 italic">
+          "Special offer for you! Ships safely in sleeve & toploader with tracking from South Korea."
+        </div>
+      </div>
+
+      <!-- 바이어 메시지 AI 응대 -->
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-300 flex items-center space-x-1">
+            <span>💬</span>
+            <span>최근 바이어 대화 (브루나이 jafarph0)</span>
+          </span>
+          <span class="text-[11px] text-emerald-400">답변 완료</span>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs space-y-1.5">
+          <div class="text-slate-400"><b class="text-slate-300">Buyer:</b> "scalping is quite heavy on 30th celebration..."</div>
+          <div class="text-indigo-300 bg-indigo-950/30 p-2 rounded border border-indigo-900/50">
+            <span class="text-[10px] text-indigo-400 block font-bold">내 최신 답변:</span>
+            한국 매장 실물 카드 사진 첨부 및 30주년 카드 추가 확보 가능 안내 완료
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: 실전 마진 계산기 -->
+    <section id="tab-calculator" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>🧮</span>
+          <span>이베이 카드 실전 마진 계산기</span>
+        </h2>
+        <span class="text-[11px] text-slate-400">공식 수수료·세금 연동 반영</span>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-4">
+        <!-- Input Grid -->
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div class="space-y-1">
+            <label class="text-slate-400 font-medium">이베이 판매가 (USD $)</label>
+            <div class="relative">
+              <span class="absolute left-3 top-2.5 text-slate-500 font-bold">$</span>
+              <input type="number" id="calc-price" value="195" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-7 pr-3 text-white font-bold focus:outline-none focus:border-indigo-500 text-sm">
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-slate-400 font-medium">카드 매입 원가 (KRW 원)</label>
+            <div class="relative">
+              <input type="number" id="calc-cost" value="140000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-white font-bold focus:outline-none focus:border-indigo-500 text-sm">
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-slate-400 font-medium">예상 환율 (KRW/USD)</label>
+            <input type="number" id="calc-fx" value="1334" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-slate-300 focus:outline-none focus:border-indigo-500 text-sm">
+          </div>
+          <div class="space-y-1">
+            <label class="text-slate-400 font-medium">국제 배송비 (원)</label>
+            <input type="number" id="calc-ship" value="10000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-slate-300 focus:outline-none focus:border-indigo-500 text-sm">
+          </div>
+        </div>
+
+        <!-- Breakdown Details -->
+        <div class="bg-slate-950 rounded-xl p-3 border border-slate-800 space-y-2 text-xs">
+          <div class="flex justify-between text-slate-400">
+            <span>총 판매 금액 환산</span>
+            <span id="res-gross" class="text-slate-200 font-bold">260,130원</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>이베이 수수료 (기본 13.25% + 해외 1.45% + $0.40)</span>
+            <span id="res-ebay-fee" class="text-red-400 font-medium">- 38,810원</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>바이어 판매세(Sales Tax 8%) 연동 수수료</span>
+            <span id="res-tax-fee" class="text-red-400 font-medium">- 3,100원</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>페이오니아 인출/환전 수수료 (2%)</span>
+            <span id="res-payo-fee" class="text-red-400 font-medium">- 4,360원</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>배송비 & 매입 원가</span>
+            <span id="res-cost-total" class="text-slate-300">- 150,000원</span>
+          </div>
+          <div class="border-t border-slate-800 pt-2 flex justify-between items-center">
+            <span class="font-bold text-slate-200">실질 수수료율</span>
+            <span id="res-fee-rate" class="font-mono text-amber-400 font-bold">약 17.8%</span>
+          </div>
+        </div>
+
+        <!-- Profit Result Card -->
+        <div class="bg-gradient-to-r from-emerald-950/60 to-teal-950/60 border border-emerald-500/30 rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div class="text-[11px] text-emerald-400 font-semibold uppercase">통장 입금 순마진 (Net Profit)</div>
+            <div id="res-net-profit" class="text-2xl font-black text-emerald-300 tracking-tight">약 63,860원</div>
+          </div>
+          <div class="text-right">
+            <div class="text-[11px] text-slate-400">원금 대비 수익률 (ROI)</div>
+            <div id="res-roi" class="text-lg font-bold text-sky-400">+45.6%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 자동 소싱 레이더 (Arbitrage Radar) -->
+    <section id="tab-sourcing" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>🎯</span>
+          <span>시세차익 자동 소싱 레이더</span>
+        </h2>
+        <button onclick="simulateScan()" class="text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-2.5 py-1 rounded-lg font-semibold flex items-center space-x-1">
+          <span id="scan-spinner" class="hidden animate-spin">🌀</span>
+          <span>신규 매물 스캔</span>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Item 1 -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 45%</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">포켓몬 메가 리자몽 X ex SAR 110/080</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold text-emerald-400">+63,800원</div>
+              <div class="text-[10px] text-slate-400">예상 순마진</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-slate-500 block text-[10px]">국내 번개장터 시세</span>
+              <span class="font-semibold text-slate-300">140,000 ~ 150,000원</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">이베이 최근 거래가 (Sold)</span>
+              <span class="font-semibold text-sky-400">$195.00 ~ $220.00</span>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition">
+              번개장터 매물 보기
+            </button>
+            <button class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition">
+              이베이 1초 리스팅 초안
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 52%</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">메타몽 프로젝트 디토 173/SV-P 밀봉</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold text-emerald-400">+48,500원</div>
+              <div class="text-[10px] text-slate-400">예상 순마진</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-slate-500 block text-[10px]">국내 중고나라 시세</span>
+              <span class="font-semibold text-slate-300">70,000 ~ 75,000원</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">이베이 최근 거래가 (Sold)</span>
+              <span class="font-semibold text-sky-400">$125.00 (실제 판매 완료)</span>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition">
+              국내 매물 알림 켜기
+            </button>
+            <button class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition">
+              추가 리스팅
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Tab Navigation -->
+  <nav class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 z-40 px-3 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-4 gap-1">
+      <button onclick="switchTab('orders')" id="tab-btn-orders" class="flex flex-col items-center py-1 text-indigo-400 font-bold transition">
+        <span class="text-lg">📦</span>
+        <span class="text-[10px] mt-0.5">주문/송장</span>
+      </button>
+      <button onclick="switchTab('offers')" id="tab-btn-offers" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
+        <span class="text-lg">🏷️</span>
+        <span class="text-[10px] mt-0.5">오퍼/CS</span>
+      </button>
+      <button onclick="switchTab('calculator')" id="tab-btn-calculator" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
+        <span class="text-lg">🧮</span>
+        <span class="text-[10px] mt-0.5">마진계산</span>
+      </button>
+      <button onclick="switchTab('sourcing')" id="tab-btn-sourcing" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
+        <span class="text-lg">🎯</span>
+        <span class="text-[10px] mt-0.5">소싱레이더</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-16 inset-x-4 max-w-sm mx-auto bg-slate-800/95 border border-indigo-500/40 text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 transition transform -translate-y-12 opacity-0 pointer-events-none z-50">
+    <span class="text-base" id="toast-icon">⚡</span>
+    <span id="toast-msg">작업이 완료되었습니다.</span>
+  </div>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      ['orders', 'offers', 'calculator', 'sourcing'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${t}`);
+        btn.classList.remove('text-indigo-400', 'font-bold');
+        btn.classList.add('text-slate-400', 'font-medium');
+      });
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      activeBtn.classList.remove('text-slate-400', 'font-medium');
+      activeBtn.classList.add('text-indigo-400', 'font-bold');
+    }
+
+    // Toast Helper
+    function showToast(msg, icon = '⚡') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      document.getElementById('toast-icon').innerText = icon;
+      toast.classList.remove('-translate-y-12', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.add('-translate-y-12', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    // 우체국 API 송장 자동 처리 시뮬레이션
+    function autoProcessShipment(orderId) {
+      const btn = document.getElementById('btn-create-label');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳ 우체국 API 통신 중...</span>';
+
+      setTimeout(() => {
+        document.getElementById('order-1-status').innerText = '발급 완료 (LP192837465KR)';
+        document.getElementById('order-1-status').className = 'text-emerald-400 font-bold';
+        document.getElementById('order-1-tracking').classList.remove('hidden');
+        document.getElementById('pending-count').innerText = '0';
+
+        btn.innerHTML = '<span>✅ 송장 발급 및 eBay 자동 입력 완료</span>';
+        btn.className = 'flex-1 bg-slate-800 text-emerald-400 font-bold text-xs py-2.5 rounded-xl border border-emerald-500/40 cursor-default';
+
+        showToast('우체국 송장 채번 완료! eBay에 트래킹 번호가 전송되었습니다.', '📦');
+      }, 1200);
+    }
+
+    // Refresh Data
+    function refreshData() {
+      const icon = document.getElementById('sync-icon');
+      icon.classList.add('animate-spin');
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        showToast('최신 eBay 주문 및 정산 데이터 동기화 완료!');
+      }, 800);
+    }
+
+    // Scan Simulation
+    function simulateScan() {
+      const spinner = document.getElementById('scan-spinner');
+      spinner.classList.remove('hidden');
+      setTimeout(() => {
+        spinner.classList.add('hidden');
+        showToast('국내 마켓 4개사 시세 스캔 완료: 2건의 마진 매물 발견!', '🎯');
+      }, 1500);
+    }
+
+    // Accurate Margin Calculator Logic
+    function calculateMargin() {
+      const priceUSD = parseFloat(document.getElementById('calc-price').value) || 0;
+      const costKRW = parseFloat(document.getElementById('calc-cost').value) || 0;
+      const fxRate = parseFloat(document.getElementById('calc-fx').value) || 1334;
+      const shipKRW = parseFloat(document.getElementById('calc-ship').value) || 10000;
+
+      const grossKRW = priceUSD * fxRate;
+      
+      // 공식 규정 계산
+      // 1. eBay 기본 13.25% + 건당 $0.40
+      const ebayCategoryFeeUSD = (priceUSD * 0.1325) + 0.40;
+      // 2. 한국 셀러 국제 판매 수수료 1.45%
+      const ebayIntlFeeUSD = priceUSD * 0.0145;
+      const totalEbayFeeKRW = (ebayCategoryFeeUSD + ebayIntlFeeUSD) * fxRate;
+
+      // 3. 바이어 세금 (Sales tax ~8%) 연동 수수료: (price * 8%) * 14.7%
+      const buyerTaxFeeKRW = (priceUSD * 0.08 * 0.147) * fxRate;
+
+      // 4. 페이오니아 원화 인출 환전 수수료 (2%)
+      const payoFeeKRW = (grossKRW - totalEbayFeeKRW) * 0.02;
+
+      // 총 수수료
+      const allFeesKRW = totalEbayFeeKRW + buyerTaxFeeKRW + payoFeeKRW;
+      const totalExpensesKRW = allFeesKRW + shipKRW + costKRW;
+      const netProfitKRW = grossKRW - totalExpensesKRW;
+      const effectiveFeeRate = (allFeesKRW / grossKRW) * 100;
+      const roi = costKRW > 0 ? (netProfitKRW / costKRW) * 100 : 0;
+
+      // Render
+      document.getElementById('res-gross').innerText = Math.round(grossKRW).toLocaleString() + '원';
+      document.getElementById('res-ebay-fee').innerText = '- ' + Math.round(totalEbayFeeKRW).toLocaleString() + '원';
+      document.getElementById('res-tax-fee').innerText = '- ' + Math.round(buyerTaxFeeKRW).toLocaleString() + '원';
+      document.getElementById('res-payo-fee').innerText = '- ' + Math.round(payoFeeKRW).toLocaleString() + '원';
+      document.getElementById('res-cost-total').innerText = '- ' + Math.round(costKRW + shipKRW).toLocaleString() + '원';
+      document.getElementById('res-fee-rate').innerText = '약 ' + effectiveFeeRate.toFixed(1) + '%';
+      
+      const profitEl = document.getElementById('res-net-profit');
+      profitEl.innerText = (netProfitKRW >= 0 ? '약 ' : '- ') + Math.abs(Math.round(netProfitKRW)).toLocaleString() + '원';
+      profitEl.className = netProfitKRW >= 0 ? 'text-2xl font-black text-emerald-300 tracking-tight' : 'text-2xl font-black text-rose-400 tracking-tight';
+
+      document.getElementById('res-roi').innerText = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
+    }
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed', err));
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwa-install-banner').classList.remove('hidden');
+    });
+
+    function installPwa() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => {
+          document.getElementById('pwa-install-banner').classList.add('hidden');
+          deferredPrompt = null;
+        });
+      } else {
+        alert('브라우저 메뉴에서 [홈 화면에 추가] 또는 [앱 설치]를 눌러주시면 바로 설치됩니다!');
+      }
+    }
+
+    // Initial calculation on load
+    calculateMargin();
+  </script>
+</body>
+</html>
