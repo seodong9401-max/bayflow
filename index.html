@@ -225,28 +225,103 @@
       </div>
 
       <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-4">
-        <!-- Input Grid -->
-        <div class="grid grid-cols-2 gap-3 text-xs">
+        <!-- Input Grid: Price, Cost, FX -->
+        <div class="grid grid-cols-3 gap-2.5 text-xs">
           <div class="space-y-1">
-            <label class="text-slate-400 font-medium">이베이 판매가 (USD $)</label>
+            <label class="text-slate-400 font-medium">이베이 판매가 ($)</label>
             <div class="relative">
-              <span class="absolute left-3 top-2.5 text-slate-500 font-bold">$</span>
-              <input type="number" id="calc-price" value="195" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 pl-7 pr-3 text-white font-bold focus:outline-none focus:border-indigo-500 text-sm">
+              <span class="absolute left-2.5 top-2 text-slate-500 font-bold">$</span>
+              <input type="number" id="calc-price" value="195" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 pl-6 pr-2 text-white font-bold focus:outline-none focus:border-indigo-500 text-xs">
             </div>
           </div>
           <div class="space-y-1">
-            <label class="text-slate-400 font-medium">카드 매입 원가 (KRW 원)</label>
-            <div class="relative">
-              <input type="number" id="calc-cost" value="140000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-white font-bold focus:outline-none focus:border-indigo-500 text-sm">
+            <label class="text-slate-400 font-medium">매입 원가 (원)</label>
+            <input type="number" id="calc-cost" value="140000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 px-2.5 text-white font-bold focus:outline-none focus:border-indigo-500 text-xs">
+          </div>
+          <div class="space-y-1">
+            <label class="text-slate-400 font-medium">환율 (KRW/$)</label>
+            <input type="number" id="calc-fx" value="1334" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 px-2.5 text-slate-300 focus:outline-none focus:border-indigo-500 text-xs">
+          </div>
+        </div>
+
+        <!-- Shipping & Destination Options (공식 요금 연동) -->
+        <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800/80 space-y-2.5 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
+            <span class="font-bold text-slate-200 flex items-center space-x-1">
+              <span>✈️</span>
+              <span>배송사·국가·무게 공식 요금 연동</span>
+            </span>
+            <span class="text-[10px] text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-900/50">공식 고시 요금표</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div class="space-y-1">
+              <label class="text-slate-400 font-medium text-[11px]">도착 국가</label>
+              <select id="calc-country" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+                <option value="US" selected>🇺🇸 미국 (US)</option>
+                <option value="JP">🇯🇵 일본 (JP)</option>
+                <option value="AU">🇦🇺 호주 (AU)</option>
+                <option value="UK">🇬🇧 영국 (UK)</option>
+                <option value="DE">🇩🇪 독일 (DE·EU)</option>
+                <option value="FR">🇫🇷 프랑스 (FR·EU)</option>
+                <option value="CA">🇨🇦 캐나다 (CA)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-slate-400 font-medium text-[11px]">배송 서비스</label>
+              <select id="calc-shipping-service" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+                <option value="kpacket" selected>📮 K-Packet (추천)</option>
+                <option value="egs_standard">📦 eGS Standard</option>
+                <option value="ems">✈️ 우체국 EMS</option>
+                <option value="egs_express">⚡ eGS Express</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-slate-400 font-medium text-[11px]">포장 중량</label>
+              <select id="calc-weight" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+                <option value="100">100g (카드 1~3장)</option>
+                <option value="200" selected>200g (카드/키링)</option>
+                <option value="300">300g (피규어 등)</option>
+                <option value="400">400g (소형 박스)</option>
+                <option value="500">500g (인형/세트)</option>
+                <option value="1000">1,000g (1kg)</option>
+                <option value="1500">1,500g (1.5kg)</option>
+                <option value="2000">2,000g (2kg 한도)</option>
+              </select>
             </div>
           </div>
-          <div class="space-y-1">
-            <label class="text-slate-400 font-medium">예상 환율 (KRW/USD)</label>
-            <input type="number" id="calc-fx" value="1334" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-slate-300 focus:outline-none focus:border-indigo-500 text-sm">
+
+          <div class="flex items-center justify-between pt-1">
+            <span class="text-slate-400 text-[11px]">적용 배송비 (수동 수정 가능)</span>
+            <div class="flex items-center space-x-1">
+              <input type="number" id="calc-ship" value="8980" oninput="calculateMargin()" class="w-24 bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-right text-sky-400 font-bold focus:outline-none focus:border-indigo-500 text-xs">
+              <span class="text-slate-400 text-xs">원</span>
+            </div>
           </div>
-          <div class="space-y-1">
-            <label class="text-slate-400 font-medium">국제 배송비 (원)</label>
-            <input type="number" id="calc-ship" value="10000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-2 px-3 text-slate-300 focus:outline-none focus:border-indigo-500 text-sm">
+        </div>
+
+        <!-- Customs, IOSS & Policy Notice Banner -->
+        <div id="customs-policy-box" class="bg-indigo-950/30 border border-indigo-900/60 rounded-xl p-3 text-xs space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-indigo-300 flex items-center space-x-1">
+              <span id="tax-flag">🇺🇸</span>
+              <span id="tax-country-title">미국 통관 및 세금 규정</span>
+            </span>
+            <span id="tax-deminimis-badge" class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded font-mono font-bold">$800 소액면세</span>
+          </div>
+          <p id="tax-notes" class="text-[11px] text-slate-300 leading-relaxed">
+            관세 면세($800 이하). 주별 Sales Tax(약 8%)는 바이어 결제 시 자동 부과되며 셀러 납부액은 없습니다.
+          </p>
+          <div id="ioss-alert-banner" class="hidden text-[11px] bg-amber-950/40 border border-amber-500/40 text-amber-200 p-2 rounded-lg space-y-1">
+            <div class="font-bold flex items-center space-x-1">
+              <span>⚠️</span>
+              <span>2026.11.1부 EU 통관 취급수수료(UHF €2.00) 신설</span>
+            </div>
+            <div>• <b>€150 이하 IOSS 적용</b>: 이베이가 결제창에서 현지 부가세 자동 징수.</div>
+            <div>• <b>UHF 2유로</b>: 신설된 통관수수료는 바이어 부담 원칙.</div>
+            <div class="text-amber-300 font-mono text-[10px] bg-amber-900/40 p-1 rounded">우체국 송장 IOSS 번호 필수 입력: IM2760000427</div>
           </div>
         </div>
 
@@ -261,7 +336,7 @@
             <span id="res-ebay-fee" class="text-red-400 font-medium">- 38,810원</span>
           </div>
           <div class="flex justify-between text-slate-400">
-            <span>바이어 판매세(Sales Tax 8%) 연동 수수료</span>
+            <span id="label-tax-fee">바이어 세일즈택스(8%) 연동 수수료</span>
             <span id="res-tax-fee" class="text-red-400 font-medium">- 3,100원</span>
           </div>
           <div class="flex justify-between text-slate-400">
@@ -270,11 +345,40 @@
           </div>
           <div class="flex justify-between text-slate-400">
             <span>배송비 & 매입 원가</span>
-            <span id="res-cost-total" class="text-slate-300">- 150,000원</span>
+            <span id="res-cost-total" class="text-slate-300">- 148,980원</span>
           </div>
           <div class="border-t border-slate-800 pt-2 flex justify-between items-center">
             <span class="font-bold text-slate-200">실질 수수료율</span>
             <span id="res-fee-rate" class="font-mono text-amber-400 font-bold">약 17.8%</span>
+          </div>
+        </div>
+
+        <!-- Shipping Service Live Comparison Mini Table -->
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 space-y-2 text-xs">
+          <div class="flex justify-between items-center text-[11px] text-slate-400 font-bold border-b border-slate-800 pb-1.5">
+            <span class="flex items-center space-x-1">
+              <span>📊</span>
+              <span>배송 4사 실시간 요금 비교</span>
+            </span>
+            <span id="comp-weight-label" class="text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-900/50">200g 기준</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1.5 text-center text-[11px]">
+            <div id="comp-kpacket-box" class="bg-slate-900 p-2 rounded-lg border border-indigo-500/40">
+              <div class="text-slate-400 text-[10px]">K-Packet</div>
+              <div id="comp-kpacket" class="font-bold text-sky-400 mt-0.5">8,980원</div>
+            </div>
+            <div id="comp-egs-std-box" class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">eGS Std</div>
+              <div id="comp-egs-std" class="font-bold text-emerald-400 mt-0.5">7,900원</div>
+            </div>
+            <div id="comp-ems-box" class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">우체국 EMS</div>
+              <div id="comp-ems" class="font-bold text-slate-300 mt-0.5">35,500원</div>
+            </div>
+            <div id="comp-egs-exp-box" class="bg-slate-900 p-2 rounded-lg border border-slate-800">
+              <div class="text-slate-400 text-[10px]">eGS Exp</div>
+              <div id="comp-egs-exp" class="font-bold text-slate-300 mt-0.5">22,000원</div>
+            </div>
           </div>
         </div>
 
@@ -469,12 +573,196 @@
       }, 1500);
     }
 
+    // 공식 배송 요율표 DB (2026 ePost 및 eBay eGS 공식 고시 기준, 단위: 원)
+    const SHIPPING_RATES = {
+      kpacket: {
+        name: "K-Packet",
+        rates: {
+          US: { 100: 8090, 200: 8980, 300: 11060, 400: 13170, 500: 15280, 1000: 23430, 1500: 35160, 2000: 45690 },
+          JP: { 100: 4550, 200: 5730, 300: 6930, 400: 8120, 500: 9340, 1000: 14090, 1500: 18330, 2000: 20880 },
+          AU: { 100: 4670, 200: 6080, 300: 7500, 400: 8920, 500: 10360, 1000: 15890, 1500: 20990, 2000: 26090 },
+          UK: { 100: 5170, 200: 6740, 300: 8300, 400: 9870, 500: 11470, 1000: 17590, 1500: 25090, 2000: 32590 },
+          DE: { 100: 5450, 200: 7100, 300: 8770, 400: 10420, 500: 12090, 1000: 18550, 1500: 23590, 2000: 28620 },
+          FR: { 100: 5510, 200: 7180, 300: 8850, 400: 10530, 500: 12220, 1000: 18750, 1500: 23550, 2000: 28350 },
+          CA: { 100: 5540, 200: 7240, 300: 8920, 400: 10610, 500: 12310, 1000: 18890, 1500: 28340, 2000: 33800 }
+        }
+      },
+      egs_standard: {
+        name: "eGS Std",
+        rates: {
+          US: { 100: 6800, 200: 7900, 300: 9500, 400: 11200, 500: 12900, 1000: 19800, 1500: 28500, 2000: 36500 },
+          JP: { 100: 4200, 200: 5200, 300: 6200, 400: 7200, 500: 8300, 1000: 12500, 1500: 16200, 2000: 18900 },
+          AU: { 100: 4400, 200: 5600, 300: 6900, 400: 8100, 500: 9400, 1000: 14200, 1500: 18900, 2000: 23500 },
+          UK: { 100: 4800, 200: 6100, 300: 7500, 400: 8900, 500: 10300, 1000: 15800, 1500: 22500, 2000: 29000 },
+          DE: { 100: 5100, 200: 6500, 300: 7900, 400: 9400, 500: 10900, 1000: 16500, 1500: 21000, 2000: 25500 },
+          FR: { 100: 5100, 200: 6500, 300: 8000, 400: 9500, 500: 11000, 1000: 16800, 1500: 21000, 2000: 25300 },
+          CA: { 100: 5200, 200: 6700, 300: 8200, 400: 9700, 500: 11200, 1000: 17100, 1500: 25200, 2000: 30500 }
+        }
+      },
+      ems: {
+        name: "EMS",
+        rates: {
+          US: { 100: 35500, 200: 35500, 300: 35500, 400: 35500, 500: 35500, 1000: 47000, 1500: 58500, 2000: 70000 },
+          JP: { 100: 26000, 200: 26000, 300: 26000, 400: 26000, 500: 26000, 1000: 28000, 1500: 31000, 2000: 34500 },
+          AU: { 100: 33500, 200: 33500, 300: 33500, 400: 33500, 500: 33500, 1000: 40500, 1500: 47500, 2000: 54500 },
+          UK: { 100: 32000, 200: 32000, 300: 32000, 400: 32000, 500: 32000, 1000: 38500, 1500: 45000, 2000: 52000 },
+          DE: { 100: 43500, 200: 43500, 300: 43500, 400: 43500, 500: 43500, 1000: 50000, 1500: 55000, 2000: 60500 },
+          FR: { 100: 31500, 200: 31500, 300: 31500, 400: 31500, 500: 31500, 1000: 36000, 1500: 40500, 2000: 45000 },
+          CA: { 100: 30000, 200: 30000, 300: 30000, 400: 30000, 500: 30000, 1000: 36000, 1500: 42500, 2000: 49500 }
+        }
+      },
+      egs_express: {
+        name: "eGS Exp",
+        rates: {
+          US: { 100: 22000, 200: 22000, 300: 22000, 400: 22000, 500: 22000, 1000: 28500, 1500: 35000, 2000: 41500 },
+          JP: { 100: 18500, 200: 18500, 300: 18500, 400: 18500, 500: 18500, 1000: 22000, 1500: 26000, 2000: 30000 },
+          AU: { 100: 24500, 200: 24500, 300: 24500, 400: 24500, 500: 24500, 1000: 31000, 1500: 37500, 2000: 44000 },
+          UK: { 100: 23500, 200: 23500, 300: 23500, 400: 23500, 500: 23500, 1000: 29500, 1500: 36000, 2000: 42500 },
+          DE: { 100: 25500, 200: 25500, 300: 25500, 400: 25500, 500: 25500, 1000: 32500, 1500: 39500, 2000: 46500 },
+          FR: { 100: 25500, 200: 25500, 300: 25500, 400: 25500, 500: 25500, 1000: 32500, 1500: 39500, 2000: 46500 },
+          CA: { 100: 23000, 200: 23000, 300: 23000, 400: 23000, 500: 23000, 1000: 29500, 1500: 36000, 2000: 42500 }
+        }
+      }
+    };
+
+    // 국가별 세무 및 관세 정책 DB
+    const COUNTRY_TAX_RULES = {
+      US: {
+        flag: "🇺🇸",
+        title: "미국 통관 및 세금 규정",
+        badge: "$800 소액면세",
+        salesTaxRate: 0.08,
+        taxLabel: "바이어 세일즈택스(8%) 연동 수수료",
+        notes: "관세 면세($800 이하). 주별 Sales Tax(약 8%)는 바이어 결제 시 자동 부과되며 셀러 직접 납부액은 없습니다. 이베이 수수료(14.7%)가 세금 포함 총액에 부과되므로 연동 수수료만 반영됩니다.",
+        isEU: false
+      },
+      JP: {
+        flag: "🇯🇵",
+        title: "일본 통관 및 세금 규정",
+        badge: "10,000엔 면세",
+        salesTaxRate: 0.10,
+        taxLabel: "소비세(10%) 연동 수수료",
+        notes: "1만 엔 이하 관세 및 소비세 면제. 개인 사용 목적의 소액 물품 통관 시 관세 부담 없이 배송됩니다.",
+        isEU: false
+      },
+      AU: {
+        flag: "🇦🇺",
+        title: "호주 통관 및 세금 규정",
+        badge: "AUD 1,000 면세",
+        salesTaxRate: 0.10,
+        taxLabel: "바이어 GST(10%) 연동 수수료",
+        notes: "AUD 1,000 이하 관세 면제. GST 10%는 이베이 결제창에서 자동 징수되므로 셀러가 별도로 납부할 비용은 없습니다.",
+        isEU: false
+      },
+      UK: {
+        flag: "🇬🇧",
+        title: "영국 통관 및 세금 규정",
+        badge: "£135 소액면세",
+        salesTaxRate: 0.20,
+        taxLabel: "영국 VAT(20%) 연동 수수료",
+        notes: "£135 이하 관세 면제 및 현지 VAT(20%) 이베이 자동 징수. 송장 세관 신고 시 eBay UK VAT 번호(GB 365 6085 76) 기재 권장.",
+        isEU: false
+      },
+      DE: {
+        flag: "🇩🇪",
+        title: "독일 및 EU 통관·세금 규정",
+        badge: "€150 IOSS 대상",
+        salesTaxRate: 0.19,
+        taxLabel: "독일 VAT(19%) 연동 수수료",
+        notes: "€150 이하 IOSS 적용. 이베이가 독일 부가세(19%)를 자동 징수하므로 셀러는 송장에 이베이 IOSS 번호(IM2760000427)를 필수 입력해야 이중과세를 방지합니다.",
+        isEU: true
+      },
+      FR: {
+        flag: "🇫🇷",
+        title: "프랑스 및 EU 통관·세금 규정",
+        badge: "€150 IOSS 대상",
+        salesTaxRate: 0.20,
+        taxLabel: "프랑스 VAT(20%) 연동 수수료",
+        notes: "€150 이하 IOSS 적용. 이베이가 프랑스 부가세(20%)를 자동 징수하므로 송장에 이베이 IOSS 번호(IM2760000427) 필수 입력!",
+        isEU: true
+      },
+      CA: {
+        flag: "🇨🇦",
+        title: "캐나다 통관 및 세금 규정",
+        badge: "CAD 20 면세한도",
+        salesTaxRate: 0.05,
+        taxLabel: "캐나다 연방세(GST 5%) 연동 수수료",
+        notes: "소액 면세 한도가 CAD 20으로 매우 낮아 대부분 현지 세관에서 바이어에게 세금이 청구됩니다(바이어 부담 원칙).",
+        isEU: false
+      }
+    };
+
+    // 배송 옵션 변경 핸들러
+    function onShippingOptionChange() {
+      const countryEl = document.getElementById('calc-country');
+      const serviceEl = document.getElementById('calc-shipping-service');
+      const weightEl = document.getElementById('calc-weight');
+      if (!countryEl || !serviceEl || !weightEl) return;
+
+      const country = countryEl.value;
+      const service = serviceEl.value;
+      const weight = parseInt(weightEl.value) || 200;
+
+      // 선택 서비스 요금 계산
+      const serviceData = SHIPPING_RATES[service];
+      let fee = 8980;
+      if (serviceData && serviceData.rates[country]) {
+        fee = serviceData.rates[country][weight] || serviceData.rates[country][500] || 10000;
+      }
+      document.getElementById('calc-ship').value = fee;
+
+      // 세관 정책 및 IOSS 배너 업데이트
+      const taxRule = COUNTRY_TAX_RULES[country] || COUNTRY_TAX_RULES.US;
+      document.getElementById('tax-flag').innerText = taxRule.flag;
+      document.getElementById('tax-country-title').innerText = taxRule.title;
+      document.getElementById('tax-deminimis-badge').innerText = taxRule.badge;
+      document.getElementById('tax-notes').innerText = taxRule.notes;
+      document.getElementById('label-tax-fee').innerText = taxRule.taxLabel;
+
+      const iossBanner = document.getElementById('ioss-alert-banner');
+      if (taxRule.isEU) {
+        iossBanner.classList.remove('hidden');
+      } else {
+        iossBanner.classList.add('hidden');
+      }
+
+      // 4사 비교 미니 테이블 업데이트
+      const weightLabel = weight >= 1000 ? (weight / 1000) + 'kg' : weight + 'g';
+      document.getElementById('comp-weight-label').innerText = weightLabel + ' 기준';
+      const kpFee = SHIPPING_RATES.kpacket.rates[country]?.[weight] ?? '-';
+      const egsStdFee = SHIPPING_RATES.egs_standard.rates[country]?.[weight] ?? '-';
+      const emsFee = SHIPPING_RATES.ems.rates[country]?.[weight] || SHIPPING_RATES.ems.rates[country]?.[500] || '-';
+      const egsExpFee = SHIPPING_RATES.egs_express.rates[country]?.[weight] || SHIPPING_RATES.egs_express.rates[country]?.[500] || '-';
+
+      document.getElementById('comp-kpacket').innerText = typeof kpFee === 'number' ? kpFee.toLocaleString() + '원' : kpFee;
+      document.getElementById('comp-egs-std').innerText = typeof egsStdFee === 'number' ? egsStdFee.toLocaleString() + '원' : egsStdFee;
+      document.getElementById('comp-ems').innerText = typeof emsFee === 'number' ? emsFee.toLocaleString() + '원' : emsFee;
+      document.getElementById('comp-egs-exp').innerText = typeof egsExpFee === 'number' ? egsExpFee.toLocaleString() + '원' : egsExpFee;
+
+      // 선택된 서비스 강조 테두리
+      ['kpacket', 'egs_standard', 'ems', 'egs_express'].forEach(s => {
+        const boxId = s === 'kpacket' ? 'comp-kpacket-box' : s === 'egs_standard' ? 'comp-egs-std-box' : s === 'ems' ? 'comp-ems-box' : 'comp-egs-exp-box';
+        const box = document.getElementById(boxId);
+        if (box) {
+          if (s === service) {
+            box.className = 'bg-indigo-950/70 p-2 rounded-lg border border-indigo-500 shadow-sm';
+          } else {
+            box.className = 'bg-slate-900 p-2 rounded-lg border border-slate-800';
+          }
+        }
+      });
+
+      calculateMargin();
+    }
+
     // Accurate Margin Calculator Logic
     function calculateMargin() {
       const priceUSD = parseFloat(document.getElementById('calc-price').value) || 0;
       const costKRW = parseFloat(document.getElementById('calc-cost').value) || 0;
       const fxRate = parseFloat(document.getElementById('calc-fx').value) || 1334;
-      const shipKRW = parseFloat(document.getElementById('calc-ship').value) || 10000;
+      const shipKRW = parseFloat(document.getElementById('calc-ship').value) || 0;
+      const country = document.getElementById('calc-country')?.value || 'US';
+      const taxRule = COUNTRY_TAX_RULES[country] || COUNTRY_TAX_RULES.US;
 
       const grossKRW = priceUSD * fxRate;
       
@@ -485,17 +773,17 @@
       const ebayIntlFeeUSD = priceUSD * 0.0145;
       const totalEbayFeeKRW = (ebayCategoryFeeUSD + ebayIntlFeeUSD) * fxRate;
 
-      // 3. 바이어 세금 (Sales tax ~8%) 연동 수수료: (price * 8%) * 14.7%
-      const buyerTaxFeeKRW = (priceUSD * 0.08 * 0.147) * fxRate;
+      // 3. 바이어 판매세/VAT 연동 수수료: (price * taxRate) * 14.7%
+      const buyerTaxFeeKRW = (priceUSD * taxRule.salesTaxRate * 0.147) * fxRate;
 
       // 4. 페이오니아 원화 인출 환전 수수료 (2%)
       const payoFeeKRW = (grossKRW - totalEbayFeeKRW) * 0.02;
 
-      // 총 수수료
+      // 총 수수료 및 총 지출
       const allFeesKRW = totalEbayFeeKRW + buyerTaxFeeKRW + payoFeeKRW;
       const totalExpensesKRW = allFeesKRW + shipKRW + costKRW;
       const netProfitKRW = grossKRW - totalExpensesKRW;
-      const effectiveFeeRate = (allFeesKRW / grossKRW) * 100;
+      const effectiveFeeRate = grossKRW > 0 ? (allFeesKRW / grossKRW) * 100 : 0;
       const roi = costKRW > 0 ? (netProfitKRW / costKRW) * 100 : 0;
 
       // Render
@@ -538,7 +826,7 @@
     }
 
     // Initial calculation on load
-    calculateMargin();
+    onShippingOptionChange();
   </script>
 </body>
 </html>
