@@ -29,6 +29,103 @@
         }
       }
     }
+
+    // K-Packet 100x150 라벨 인쇄 모달 제어 (SL43 감열 회전 출력)
+    function openKpacketPrintModal(tracking, title, buyer, addr, weight, val) {
+      document.getElementById('modal-print-tracking').innerText = tracking;
+      document.getElementById('modal-print-buyer').innerText = `${buyer} (USA)`;
+      document.getElementById('preview-mini-tracking').innerText = tracking;
+      document.getElementById('preview-mini-buyer').innerText = buyer;
+      document.getElementById('modal-kpacket-print').classList.remove('hidden');
+    }
+
+    function closeKpacketPrintModal() {
+      document.getElementById('modal-kpacket-print').classList.add('hidden');
+    }
+
+    function triggerPrintKpacket() {
+      const tracking = document.getElementById('modal-print-tracking').innerText;
+      showToast(`${tracking} 송장 인쇄창을 엽니다. (100×150mm 여백 0 설정)`, '🖨️');
+      
+      const printWin = window.open('', '_blank', 'width=450,height=650');
+      if (printWin) {
+        printWin.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>K-Packet 송장 인쇄 - ${tracking}</title>
+            <style>
+              @page { size: 100mm 150mm portrait; margin: 0; }
+              body { margin: 0; padding: 4mm; font-family: -apple-system, sans-serif; background: #fff; color: #000; box-sizing: border-box; }
+              .label-box { width: 92mm; height: 142mm; border: 2px solid #000; padding: 3mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
+              .header { border-bottom: 2px solid #000; padding-bottom: 2mm; display: flex; justify-content: space-between; align-items: center; }
+              .tracking { font-family: monospace; font-size: 16px; font-weight: bold; }
+              .address-sec { padding: 3mm 0; border-bottom: 1px solid #000; font-size: 11px; line-height: 1.4; }
+              .customs-sec { padding: 2mm 0; font-size: 10px; border-bottom: 1px solid #000; }
+              .barcode-box { text-align: center; padding-top: 3mm; }
+              .barcode-lines { font-family: monospace; font-size: 26px; letter-spacing: 2px; font-weight: bold; }
+            </style>
+          </head>
+          <body>
+            <div class="label-box">
+              <div class="header">
+                <b>KOREA POST K-Packet</b>
+                <span class="tracking">${tracking}</span>
+              </div>
+              <div class="address-sec">
+                <b>FROM:</b> (YUL)컴퍼니 / 서광주우체국 (TEL: 010-5686-1424)<br>
+                Gwangju, Republic of Korea
+              </div>
+              <div class="address-sec">
+                <b>TO:</b> and_550413 (USA)<br>
+                123 Market St, Apt 4B<br>
+                San Francisco, CA 94105, United States
+              </div>
+              <div class="customs-sec">
+                <b>CUSTOMS DECLARATION (CN22)</b><br>
+                1. Item: Trading Card Game / Collectibles<br>
+                2. Weight: 80g | Value: $125.00 USD | Origin: KR<br>
+                3. HS Code: 9504.40.0000 (IOSS: IM2760000427)
+              </div>
+              <div class="barcode-box">
+                <div class="barcode-lines">||| | ||||| |||| | |||||||| |||</div>
+                <div class="tracking">${tracking}</div>
+              </div>
+            </div>
+            <script>
+              window.onload = function() { window.print(); };
+            <\/script>
+          </body>
+          </html>
+        `);
+        printWin.document.close();
+      } else {
+        window.print();
+      }
+    }
+
+    // 국세청 부가세 영세율 신고용 수출실적명세서 CSV 다운로드
+    function downloadTaxExportCsv() {
+      const rows = [
+        ['주문번호', '주문일시', '바이어', '수출국가', '품목명', 'K-Packet등기번호', '통화', '결제금액(USD)', '적용환율', '원화환산액(KRW)', 'HS코드', '영세율구분'],
+        ['26-1028-4401', '2026-11-01 14:22', 'and_550413', 'US', 'Pokemon TCG Ditto 173/SV-P Promo', 'LP192837465KR', 'USD', '125.00', '1380', '172500', '9504.40.0000', '수출실적명세서(영세율)'],
+        ['26-1025-1102', '2026-10-25 18:05', 'darkrain65', 'AU', 'Mega Charizard X ex SAR 110/080', 'LP881023941KR', 'USD', '185.00', '1380', '255300', '9504.40.0000', '수출실적명세서(영세율)'],
+        ['26-1022-9012', '2026-10-22 09:30', 'jafarph0', 'BN', 'Mega Festa Magikarp Promo 040/M-P', 'LP982341203KR', 'USD', '48.00', '1380', '66240', '9504.40.0000', '수출실적명세서(영세율)']
+      ];
+
+      const csvContent = '\uFEFF' + rows.map(e => e.join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `eBay_수출실적명세서_영세율_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('국세청 영세율 신고용 수출실적 엑셀(CSV) 다운로드 완료!', '📑');
+    }
+
   </script>
   <style>
     /* Mobile app scroll & touch behavior */
@@ -144,6 +241,14 @@
         <div class="pt-1 flex space-x-2">
           <button id="btn-create-label" onclick="autoProcessShipment(1)" class="flex-1 bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg shadow-indigo-500/25 transition flex items-center justify-center space-x-1.5 active:scale-98">
             <span>⚡ 우체국 API 송장 자동 발급 & eBay 전송</span>
+          </button>
+        </div>
+        <div id="order-1-tools" class="flex space-x-2 pt-1">
+          <button onclick="openKpacketPrintModal('LP192837465KR', 'Pokemon TCG Ditto 173/SV-P Promo', 'and_550413', '123 Market St, San Francisco, CA 94105, USA', 80, 125.0)" class="flex-1 bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center space-x-1.5 active:scale-95 border border-indigo-500/30 shadow">
+            <span>🖨️ 100×150 송장 인쇄 (SL43 회전)</span>
+          </button>
+          <button onclick="downloadTaxExportCsv()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl border border-slate-700 transition flex items-center justify-center space-x-1 active:scale-95">
+            <span>📑 영세율 엑셀</span>
           </button>
         </div>
       </div>
@@ -692,13 +797,21 @@
           </button>
         </div>
 
-        <!-- 인기 추천 소싱 키워드 칩 -->
-        <div class="flex flex-wrap items-center gap-1.5 text-[11px] pt-1">
-          <span class="text-slate-400 py-0.5">빠른 분석:</span>
-          <button onclick="setSourcingKeyword('고풍 피카츄')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#고풍 피카츄</button>
-          <button onclick="setSourcingKeyword('메가 리자몽 X ex SAR')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#리자몽 X SAR</button>
-          <button onclick="setSourcingKeyword('메타몽 프로젝트 디토')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#메타몽 프로모</button>
-          <button onclick="setSourcingKeyword('산타크루즈 포켓몬 스케이트보드')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#산타크루즈 데크</button>
+        <!-- 인기 추천 소싱 키워드 칩 (돈 되는 전 종목) -->
+        <div class="space-y-1.5 pt-1">
+          <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold">
+            <span>🔥 돈 되는 실전 카테고리별 빠른 분석:</span>
+            <span class="text-[9px] text-indigo-400">원터치 분석</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+            <button onclick="setSourcingKeyword('메가 리자몽 X ex SAR')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">🃏 #리자몽 SAR</button>
+            <button onclick="setSourcingKeyword('고풍 피카츄')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">⚡ #고풍 피카츄</button>
+            <button onclick="setSourcingKeyword('나이키 조던 1 로우 골프')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-700/60 transition">👟 #조던1 로우</button>
+            <button onclick="setSourcingKeyword('아디다스 삼바 OG')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-700/60 transition">👟 #아디다스 삼바</button>
+            <button onclick="setSourcingKeyword('스탠리 텀블러 591')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-700/60 transition">☕ #스탠리 텀블러</button>
+            <button onclick="setSourcingKeyword('마뗑킴 아코디언 지갑')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-700/60 transition">👛 #마뗑킴 지갑</button>
+            <button onclick="setSourcingKeyword('산타크루즈 포켓몬 스케이트보드')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-700/60 transition">🛹 #산타크루즈</button>
+          </div>
         </div>
 
         <!-- 📊 [NEW] 실시간 소싱 분석 결과 대시보드 카드 -->
@@ -748,7 +861,32 @@
             <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
               <span class="text-[10px] text-slate-400 block">수수료+배송비</span>
               <div id="analysis-fees-total" class="font-bold text-rose-400 text-xs mt-1.5">-65,240원</div>
-              <span class="text-[9px] text-slate-400 block mt-1">이베이+K-Packet</span>
+              <span class="text-[9px] text-slate-400 block mt-1">이베이+배송비</span>
+            </div>
+          </div>
+
+          <!-- 상품 규격 / 배송비 원터치 선택기 (카드/의류/신발/대형) -->
+          <div class="bg-slate-900/90 p-2.5 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-bold text-slate-300 flex items-center space-x-1">
+                <span>📦</span>
+                <span>상품 배송 규격 (선택 시 배송비·마진 자동 변경):</span>
+              </span>
+              <span id="label-selected-shipping" class="font-mono text-sky-400 font-bold">K-Packet (8,980원)</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1 text-[10px] font-bold">
+              <button type="button" onclick="setShippingPreset('card')" id="ship-btn-card" class="py-1.5 px-1 rounded-lg bg-indigo-600 text-white border border-indigo-400 transition text-center active:scale-95">
+                🃏 소형·카드<br><span class="text-[9px] font-normal opacity-80">100g 8,980원</span>
+              </button>
+              <button type="button" onclick="setShippingPreset('clothes')" id="ship-btn-clothes" class="py-1.5 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
+                👕 의류·잡화<br><span class="text-[9px] font-normal opacity-80">500g 12,500원</span>
+              </button>
+              <button type="button" onclick="setShippingPreset('shoes')" id="ship-btn-shoes" class="py-1.5 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
+                👟 신발·텀블러<br><span class="text-[9px] font-normal opacity-80">1.5kg 24,000원</span>
+              </button>
+              <button type="button" onclick="setShippingPreset('heavy')" id="ship-btn-heavy" class="py-1.5 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
+                🛹 대형·보드<br><span class="text-[9px] font-normal opacity-80">5kg 75,000원</span>
+              </button>
             </div>
           </div>
 
@@ -826,6 +964,41 @@
               번개장터 매물 보기
             </a>
             <a href="https://www.ebay.com/sch/i.html?_nkw=Mega+Charizard+X+ex+SAR+110%2F080&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
+              eBay 체결가 확인
+            </a>
+          </div>
+        </div>
+
+        <!-- 매물: 나이키 에어 조던 1 로우 골프 (스니커즈 실전 소싱) -->
+        <div class="bg-slate-900 rounded-2xl border border-indigo-500/30 p-4 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">마진율 31.0% (스니커즈)</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">나이키 에어 조던 1 로우 골프 울프 그레이</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold text-emerald-400">+51,200원</div>
+              <div class="text-[10px] text-slate-400">eGS 1.2kg 차감 순마진</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-slate-500 block text-[10px]">국내 KREAM / 공홈 시세</span>
+              <span class="font-semibold text-slate-300">165,000 ~ 170,000원</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">이베이 최근 체결가 (Sold)</span>
+              <span class="font-semibold text-sky-400">$220.00 ~ $240.00</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-400 leading-tight">
+            👟 무게 1.2kg 기준 eGS 배송비(24,000원)와 이베이 수수료를 차감한 실전 순이익입니다.
+          </p>
+          <div class="flex space-x-2">
+            <a href="https://kream.co.kr/search?keyword=DD9315-002" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
+              KREAM 시세 보기
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Nike+Air+Jordan+1+Low+Golf+Wolf+Grey&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
               eBay 체결가 확인
             </a>
           </div>
@@ -932,6 +1105,61 @@
       </div>
     </section>
 
+  <!-- K-Packet 100x150 라벨 인쇄 모달 (SL43 감열 회전 출력) -->
+  <div id="modal-kpacket-print" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-4 space-y-3 shadow-2xl">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+        <div class="flex items-center space-x-2">
+          <span class="text-lg">🖨️</span>
+          <h3 class="font-bold text-white text-sm">K-Packet 100×150 라벨 인쇄</h3>
+        </div>
+        <button onclick="closeKpacketPrintModal()" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
+        <div class="flex justify-between">
+          <span class="text-slate-400">송장번호:</span>
+          <span id="modal-print-tracking" class="font-mono font-bold text-sky-400">LP192837465KR</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">수취인:</span>
+          <span id="modal-print-buyer" class="text-slate-200">and_550413 (USA)</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">출력 규격:</span>
+          <span class="text-emerald-400 font-bold">100×150mm (SL43 90도 회전)</span>
+        </div>
+      </div>
+      <!-- 100x150 미니어처 라벨 프리뷰 -->
+      <div class="bg-white text-black p-3 rounded-lg border-2 border-dashed border-slate-300 font-mono text-[10px] space-y-1 shadow-inner select-none">
+        <div class="flex justify-between border-b border-black pb-1">
+          <b>KOREA POST K-Packet</b>
+          <span id="preview-mini-tracking" class="font-bold">LP192837465KR</span>
+        </div>
+        <div class="py-1">
+          <div class="text-[9px] text-gray-700">From: (YUL)컴퍼니 (서광주우체국)</div>
+          <div class="text-[9px] text-gray-700">To: <span id="preview-mini-buyer" class="font-bold">and_550413</span></div>
+          <div class="text-[9px] text-gray-800 truncate">123 Market St, San Francisco, CA 94105, USA</div>
+        </div>
+        <div class="border-t border-black pt-1 flex justify-between text-[9px]">
+          <span>Contents: Trading Card Game</span>
+          <span>Origin: KR</span>
+        </div>
+        <div class="text-center pt-1 font-bold text-xs tracking-widest border-t border-black">
+          ||||| ||||||| |||||| |||||||||||
+        </div>
+      </div>
+      <div class="flex space-x-2 pt-1">
+        <button onclick="triggerPrintKpacket()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-500/20 transition active:scale-95 flex items-center justify-center space-x-1.5">
+          <span>🖨️</span>
+          <span>SL43 감열 프린터로 인쇄</span>
+        </button>
+        <button onclick="closeKpacketPrintModal()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs rounded-xl transition">
+          닫기
+        </button>
+      </div>
+      <p class="text-[10px] text-slate-400 text-center">PC에서 누르면 SL43 프린터로 100×150mm 여백 0에 딱 맞게 출력됩니다.</p>
+    </div>
+  </div>
   </main>
 
   <!-- Mobile Bottom Tab Navigation -->
@@ -1606,7 +1834,35 @@
       runSmartSourcingAnalysis(kw);
     }
 
-    // 소싱 상품별 실전 데이터베이스 (시세 및 공식 거래량 매칭)
+    // 배송 규격 프리셋 및 요금 테이블
+    let currentShippingCost = 8980;
+    let currentShippingType = 'card';
+
+    const SHIPPING_PRESETS = {
+      card: { name: 'K-Packet (8,980원)', cost: 8980 },
+      clothes: { name: 'eGS Standard (12,500원)', cost: 12500 },
+      shoes: { name: 'eGS / EMS (24,000원)', cost: 24000 },
+      heavy: { name: '우체국 EMS (75,000원)', cost: 75000 }
+    };
+
+    function setShippingPreset(type) {
+      currentShippingType = type;
+      currentShippingCost = SHIPPING_PRESETS[type].cost;
+      document.getElementById('label-selected-shipping').innerText = SHIPPING_PRESETS[type].name;
+
+      ['card', 'clothes', 'shoes', 'heavy'].forEach(t => {
+        const btn = document.getElementById(`ship-btn-${t}`);
+        if (!btn) return;
+        if (t === type) {
+          btn.className = 'py-1.5 px-1 rounded-lg bg-indigo-600 text-white border border-indigo-400 transition text-center active:scale-95';
+        } else {
+          btn.className = 'py-1.5 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95';
+        }
+      });
+      recalcSourcingBoard();
+    }
+
+    // 소싱 상품별 실전 데이터베이스 (시세 및 공식 거래량 매칭 - 돈 되는 전 카테고리)
     const SOURCING_DATABASE = {
       '리자몽': {
         title: '포켓몬 메가 리자몽 X ex SAR 110/080 M2',
@@ -1616,7 +1872,8 @@
         volume30d: '🔥 최근 30일 18건 판매',
         sellThrough: 88,
         dailySales: '0.6건/일',
-        ebayQuery: 'Mega+Charizard+X+ex+SAR+110%2F080'
+        ebayQuery: 'Mega+Charizard+X+ex+SAR+110%2F080',
+        shippingType: 'card'
       },
       '피카츄': {
         title: '고풍에디션 전통 한복 피카츄 LED 키링 2종 세트',
@@ -1626,7 +1883,63 @@
         volume30d: '🔥 최근 30일 8건 판매',
         sellThrough: 75,
         dailySales: '0.3건/일',
-        ebayQuery: 'Pokemon+Hanbok+Pikachu+Keychain+Set'
+        ebayQuery: 'Pokemon+Hanbok+Pikachu+Keychain+Set',
+        shippingType: 'card'
+      },
+      '조던': {
+        title: '나이키 에어 조던 1 로우 골프 울프 그레이 (DD9315-002)',
+        buyKrw: 165000,
+        buySource: 'KREAM / 공홈 시세',
+        soldUsd: 220.0,
+        volume30d: '🔥 최근 30일 26건 판매',
+        sellThrough: 84,
+        dailySales: '0.9건/일',
+        ebayQuery: 'Nike+Air+Jordan+1+Low+Golf+Wolf+Grey',
+        shippingType: 'shoes'
+      },
+      '삼바': {
+        title: '아디다스 삼바 OG 화이트 블랙 (B75806)',
+        buyKrw: 115000,
+        buySource: 'ABC마트 / 무신사',
+        soldUsd: 155.0,
+        volume30d: '🔥 최근 30일 35건 판매',
+        sellThrough: 90,
+        dailySales: '1.2건/일',
+        ebayQuery: 'Adidas+Samba+OG+White+Black+B75806',
+        shippingType: 'shoes'
+      },
+      '스탠리': {
+        title: '스타벅스 코리아 x 스탠리 클래식 텀블러 591ml',
+        buyKrw: 39000,
+        buySource: '스타벅스 매장 / SSG',
+        soldUsd: 78.0,
+        volume30d: '🔥 최근 30일 19건 판매',
+        sellThrough: 78,
+        dailySales: '0.6건/일',
+        ebayQuery: 'Starbucks+Korea+Stanley+Tumbler',
+        shippingType: 'shoes'
+      },
+      '스타벅스': {
+        title: '스타벅스 코리아 썸머 한정 텀블러 & 콜드컵',
+        buyKrw: 35000,
+        buySource: '스타벅스 공식 / 번개장터',
+        soldUsd: 75.0,
+        volume30d: '🔥 최근 30일 24건 판매',
+        sellThrough: 80,
+        dailySales: '0.8건/일',
+        ebayQuery: 'Starbucks+Korea+Tumbler+Limited',
+        shippingType: 'shoes'
+      },
+      '마뗑킴': {
+        title: '마뗑킴 아코디언 지갑 블랙 (Matin Kim Wallet)',
+        buyKrw: 48000,
+        buySource: '무신사 / 공식스토어',
+        soldUsd: 89.0,
+        volume30d: '🔥 최근 30일 15건 판매',
+        sellThrough: 80,
+        dailySales: '0.5건/일',
+        ebayQuery: 'Matin+Kim+Accordion+Wallet+Black',
+        shippingType: 'clothes'
       },
       '메타몽': {
         title: '메타몽 프로젝트 디토 173/SV-P 밀봉 프로모',
@@ -1636,7 +1949,8 @@
         volume30d: '🔥 최근 30일 22건 판매',
         sellThrough: 92,
         dailySales: '0.7건/일',
-        ebayQuery: 'Pokemon+Ditto+173%2FSV-P+Korean'
+        ebayQuery: 'Pokemon+Ditto+173%2FSV-P+Korean',
+        shippingType: 'card'
       },
       '산타크루즈': {
         title: '포켓몬 x 산타크루즈 스케이트보드 3종 세트',
@@ -1646,7 +1960,8 @@
         volume30d: '📦 최근 30일 5건 판매',
         sellThrough: 60,
         dailySales: '0.2건/일',
-        ebayQuery: 'Santa+Cruz+Pokemon+Skateboard+deck'
+        ebayQuery: 'Santa+Cruz+Pokemon+Skateboard+deck',
+        shippingType: 'heavy'
       },
       '뮤': {
         title: '30주년 한글판 뮤 ex SAR 205/165',
@@ -1656,7 +1971,8 @@
         volume30d: '🔥 최근 30일 14건 판매',
         sellThrough: 82,
         dailySales: '0.5건/일',
-        ebayQuery: 'Pokemon+Mew+ex+SAR+Korean+205%2F165'
+        ebayQuery: 'Pokemon+Mew+ex+SAR+Korean+205%2F165',
+        shippingType: 'card'
       }
     };
 
@@ -1669,7 +1985,7 @@
       const grossKrw = soldUsd * rate;
       const ebayFeeKrw = grossKrw * (0.1325 + 0.0145) + (0.40 * rate); // 이베이 13.25% + 한국셀러 1.45% + $0.40
       const payoFeeKrw = grossKrw * 0.02; // 페이오니아 2%
-      const shipKrw = title.includes('산타크루즈') ? 75000 : 8980; // 스케이트보드는 EMS 7.5만 원, 카드는 K-Packet 8,980원
+      const shipKrw = currentShippingCost;
       const totalFeesKrw = Math.round(ebayFeeKrw + payoFeeKrw + shipKrw);
       const netProfitKrw = Math.round(grossKrw - buyPrice - totalFeesKrw);
       const roi = buyPrice > 0 ? ((netProfitKrw / buyPrice) * 100).toFixed(1) : 0;
@@ -1721,6 +2037,9 @@
         volume30d = match.volume30d;
         speedText = `일평균 ${match.dailySales} 체결 · 판매성공률 ${match.sellThrough}%`;
         ebayQuery = match.ebayQuery;
+        if (match.shippingType) {
+          setShippingPreset(match.shippingType);
+        }
       }
 
       // 2. UI 기본값 주입 및 실시간 계산

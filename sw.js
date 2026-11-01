@@ -1,5 +1,5 @@
-// BayFlow Service Worker v7 (Terapeak & 130point Pro Sourcing Engine)
-const CACHE_NAME = 'bayflow-v7';
+// BayFlow Service Worker v8 (All-Category Multi-Sourcing & K-Packet Label Print)
+const CACHE_NAME = 'bayflow-v8';
 const ASSETS = [
   './',
   './index.html',
