@@ -1,5 +1,5 @@
-// BayFlow Service Worker v9 (Top-Seller 8 Sourcing Platforms)
-const CACHE_NAME = 'bayflow-v9';
+// BayFlow Service Worker v10 (12 Research Categories & Draw Radar)
+const CACHE_NAME = 'bayflow-v10';
 const ASSETS = [
   './',
   './index.html',
