@@ -1,5 +1,5 @@
-// BayFlow Service Worker v5 (Pickle AI Sourcing Radar Engine)
-const CACHE_NAME = 'bayflow-v5';
+// BayFlow Service Worker v6 (Smart Sourcing Analyzer Engine)
+const CACHE_NAME = 'bayflow-v6';
 const ASSETS = [
   './',
   './index.html',
