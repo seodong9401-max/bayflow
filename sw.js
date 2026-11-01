@@ -1,5 +1,5 @@
-// BayFlow Service Worker v2
-const CACHE_NAME = 'bayflow-v2';
+// BayFlow Service Worker v3 (Network-First with Instant Update)
+const CACHE_NAME = 'bayflow-v3';
 const ASSETS = [
   './',
   './index.html',
