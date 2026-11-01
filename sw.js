@@ -1,5 +1,5 @@
-// BayFlow Service Worker v6 (Smart Sourcing Analyzer Engine)
-const CACHE_NAME = 'bayflow-v6';
+// BayFlow Service Worker v7 (Terapeak & 130point Pro Sourcing Engine)
+const CACHE_NAME = 'bayflow-v7';
 const ASSETS = [
   './',
   './index.html',
