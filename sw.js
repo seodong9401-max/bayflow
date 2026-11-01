@@ -1,5 +1,5 @@
-// BayFlow Service Worker v8 (All-Category Multi-Sourcing & K-Packet Label Print)
-const CACHE_NAME = 'bayflow-v8';
+// BayFlow Service Worker v9 (Top-Seller 8 Sourcing Platforms)
+const CACHE_NAME = 'bayflow-v9';
 const ASSETS = [
   './',
   './index.html',

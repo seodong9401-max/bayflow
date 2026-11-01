@@ -243,14 +243,7 @@
             <span>⚡ 우체국 API 송장 자동 발급 & eBay 전송</span>
           </button>
         </div>
-        <div id="order-1-tools" class="flex space-x-2 pt-1">
-          <button onclick="openKpacketPrintModal('LP192837465KR', 'Pokemon TCG Ditto 173/SV-P Promo', 'and_550413', '123 Market St, San Francisco, CA 94105, USA', 80, 125.0)" class="flex-1 bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center space-x-1.5 active:scale-95 border border-indigo-500/30 shadow">
-            <span>🖨️ 100×150 송장 인쇄 (SL43 회전)</span>
-          </button>
-          <button onclick="downloadTaxExportCsv()" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl border border-slate-700 transition flex items-center justify-center space-x-1 active:scale-95">
-            <span>📑 영세율 엑셀</span>
-          </button>
-        </div>
+
       </div>
 
       <!-- 최근 배송 완료 히스토리 -->
@@ -916,20 +909,50 @@
             </a>
           </div>
 
-          <!-- 실시간 4대 마켓 소싱 바로가기 -->
-          <div class="grid grid-cols-4 gap-1.5 pt-1 border-t border-slate-800/80">
-            <a id="btn-link-bunjang" href="https://m.bunjang.co.kr/search/products?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-1.5 px-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-rose-500/30 text-center transition block active:scale-95">
-              <div class="text-[10px] font-bold text-rose-400">⚡ 번개장터</div>
-            </a>
-            <a id="btn-link-daangn" href="https://www.daangn.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-1.5 px-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-orange-500/30 text-center transition block active:scale-95">
-              <div class="text-[10px] font-bold text-orange-400">🥕 당근마켓</div>
-            </a>
-            <a id="btn-link-joongna" href="https://web.joongna.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-1.5 px-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-emerald-500/30 text-center transition block active:scale-95">
-              <div class="text-[10px] font-bold text-emerald-400">📦 중고나라</div>
-            </a>
-            <a id="btn-link-google" href="https://www.google.com/search?tbm=shop&q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-1.5 px-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-sky-500/30 text-center transition block active:scale-95">
-              <div class="text-[10px] font-bold text-sky-400">🔍 구글쇼핑</div>
-            </a>
+          <!-- 🏆 탑셀러 8대 실전 소싱처 직통 링크 그리드 -->
+          <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold">
+              <span>🏆 탑셀러 8대 핵심 소싱처 (원클릭 최저가 매물 조회):</span>
+              <span class="text-[9px] text-indigo-400 font-mono">Top Sourcing Hub</span>
+            </div>
+            <!-- 1열: 국내 리셀 & C2C 최저가 -->
+            <div class="grid grid-cols-4 gap-1.5">
+              <a id="btn-link-bunjang" href="https://m.bunjang.co.kr/search/products?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-rose-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-rose-400">⚡ 번개장터</div>
+                <div class="text-[9px] text-slate-500">C2C 최저가</div>
+              </a>
+              <a id="btn-link-daangn" href="https://www.daangn.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-orange-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-orange-400">🥕 당근마켓</div>
+                <div class="text-[9px] text-slate-500">직거래·네고</div>
+              </a>
+              <a id="btn-link-joongna" href="https://web.joongna.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-emerald-400">📦 중고나라</div>
+                <div class="text-[9px] text-slate-500">전국 택배</div>
+              </a>
+              <a id="btn-link-kream" href="https://kream.co.kr/search?keyword=%EB%A6%AC%EC%9E%90%EB%AA%BD" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-indigo-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-indigo-400">👟 KREAM</div>
+                <div class="text-[9px] text-slate-500">한정판 리셀</div>
+              </a>
+            </div>
+            <!-- 2열: K-브랜드 & 뷰티/패션 & 일본 역소싱 -->
+            <div class="grid grid-cols-4 gap-1.5">
+              <a id="btn-link-oliveyoung" href="https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-lime-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-lime-400">💄 올리브영</div>
+                <div class="text-[9px] text-slate-500">K-뷰티 정품</div>
+              </a>
+              <a id="btn-link-musinsa" href="https://www.musinsa.com/search/goods?keyword=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-sky-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-sky-400">👕 무신사</div>
+                <div class="text-[9px] text-slate-500">K-패션/도메스틱</div>
+              </a>
+              <a id="btn-link-buyee" href="https://buyee.jp/mercari/search?keyword=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-red-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-red-400">🇯🇵 메르카리</div>
+                <div class="text-[9px] text-slate-500">일본 Buyee 직구</div>
+              </a>
+              <a id="btn-link-google" href="https://www.google.com/search?tbm=shop&q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/30 text-center transition block active:scale-95 shadow">
+                <div class="text-[11px] font-bold text-cyan-400">🔍 구글쇼핑</div>
+                <div class="text-[9px] text-slate-500">국내 전몰 비교</div>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1105,61 +1128,6 @@
       </div>
     </section>
 
-  <!-- K-Packet 100x150 라벨 인쇄 모달 (SL43 감열 회전 출력) -->
-  <div id="modal-kpacket-print" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-4 space-y-3 shadow-2xl">
-      <div class="flex items-center justify-between pb-2 border-b border-slate-800">
-        <div class="flex items-center space-x-2">
-          <span class="text-lg">🖨️</span>
-          <h3 class="font-bold text-white text-sm">K-Packet 100×150 라벨 인쇄</h3>
-        </div>
-        <button onclick="closeKpacketPrintModal()" class="text-slate-400 hover:text-white p-1">✕</button>
-      </div>
-      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
-        <div class="flex justify-between">
-          <span class="text-slate-400">송장번호:</span>
-          <span id="modal-print-tracking" class="font-mono font-bold text-sky-400">LP192837465KR</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400">수취인:</span>
-          <span id="modal-print-buyer" class="text-slate-200">and_550413 (USA)</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400">출력 규격:</span>
-          <span class="text-emerald-400 font-bold">100×150mm (SL43 90도 회전)</span>
-        </div>
-      </div>
-      <!-- 100x150 미니어처 라벨 프리뷰 -->
-      <div class="bg-white text-black p-3 rounded-lg border-2 border-dashed border-slate-300 font-mono text-[10px] space-y-1 shadow-inner select-none">
-        <div class="flex justify-between border-b border-black pb-1">
-          <b>KOREA POST K-Packet</b>
-          <span id="preview-mini-tracking" class="font-bold">LP192837465KR</span>
-        </div>
-        <div class="py-1">
-          <div class="text-[9px] text-gray-700">From: (YUL)컴퍼니 (서광주우체국)</div>
-          <div class="text-[9px] text-gray-700">To: <span id="preview-mini-buyer" class="font-bold">and_550413</span></div>
-          <div class="text-[9px] text-gray-800 truncate">123 Market St, San Francisco, CA 94105, USA</div>
-        </div>
-        <div class="border-t border-black pt-1 flex justify-between text-[9px]">
-          <span>Contents: Trading Card Game</span>
-          <span>Origin: KR</span>
-        </div>
-        <div class="text-center pt-1 font-bold text-xs tracking-widest border-t border-black">
-          ||||| ||||||| |||||| |||||||||||
-        </div>
-      </div>
-      <div class="flex space-x-2 pt-1">
-        <button onclick="triggerPrintKpacket()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-500/20 transition active:scale-95 flex items-center justify-center space-x-1.5">
-          <span>🖨️</span>
-          <span>SL43 감열 프린터로 인쇄</span>
-        </button>
-        <button onclick="closeKpacketPrintModal()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs rounded-xl transition">
-          닫기
-        </button>
-      </div>
-      <p class="text-[10px] text-slate-400 text-center">PC에서 누르면 SL43 프린터로 100×150mm 여백 0에 딱 맞게 출력됩니다.</p>
-    </div>
-  </div>
   </main>
 
   <!-- Mobile Bottom Tab Navigation -->
@@ -2062,10 +2030,14 @@
       document.getElementById('btn-link-pricecharting').href = `https://www.pricecharting.com/search-products?q=${enc}&type=pokemon`;
       document.getElementById('btn-link-ebay').href = `https://www.ebay.com/sch/i.html?_nkw=${queryForEbay}&LH_Sold=1&LH_Complete=1&_sop=13`;
 
-      // 국내 4대 마켓 소싱 링크
+      // 탑셀러 8대 핵심 소싱처 직통 링크 동적 갱신
       document.getElementById('btn-link-bunjang').href = `https://m.bunjang.co.kr/search/products?q=${enc}`;
       document.getElementById('btn-link-daangn').href = `https://www.daangn.com/search/${enc}`;
       document.getElementById('btn-link-joongna').href = `https://web.joongna.com/search/${enc}`;
+      document.getElementById('btn-link-kream').href = `https://kream.co.kr/search?keyword=${enc}`;
+      document.getElementById('btn-link-oliveyoung').href = `https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=${enc}`;
+      document.getElementById('btn-link-musinsa').href = `https://www.musinsa.com/search/goods?keyword=${enc}`;
+      document.getElementById('btn-link-buyee').href = `https://buyee.jp/mercari/search?keyword=${enc}`;
       document.getElementById('btn-link-google').href = `https://www.google.com/search?tbm=shop&q=${enc}`;
 
       showToast(`'${title}' 전문 분석 준비 완료! (테라피크/130point 연동)`, '🎯');
