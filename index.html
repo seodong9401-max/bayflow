@@ -127,117 +127,177 @@
     }
 
 
-    // 📈 12대 테마 글로벌 리서치 데이터베이스
+    // 📈 12대 테마 글로벌 리서치 데이터베이스 (카테고리별 베스트셀러 & 팩트 지표)
     const RESEARCH_CATEGORIES = {
       pokemon: {
         title: '🃏 포켓몬 / 트레이딩카드 베스트셀러',
+        desc: '해외 포덕 & 수집가들의 절대적인 한정판·SAR·밀봉 프로모 수요',
         keywords: [
           { label: '메가 리자몽 X ex SAR', q: '메가 리자몽 X ex SAR' },
           { label: '한복 피카츄 키링', q: '고풍 피카츄' },
           { label: '메타몽 173/SV-P', q: '메타몽 프로젝트 디토' },
-          { label: '포켓몬 151 한국판', q: '포켓몬 151 박스' },
-          { label: '테라스탈 데뷔 한글판', q: '테라스탈 데뷔' },
-          { label: '샤이니트레저 ex', q: '샤이니트레저 ex' }
+          { label: '한글판 뮤 ex SAR', q: '뮤 ex SAR' },
+          { label: '포켓몬 151 한국판 박스', q: '포켓몬 151 박스' },
+          { label: '테라스탈 데뷔 한글판', q: '테라스탈 데뷔' }
+        ],
+        items: [
+          { name: '포켓몬 메가 리자몽 X ex SAR 110/080 M2', buyKrw: 140000, soldUsd: 195.0, profit: '+63,800원', speed: '30일 18건 체결 · 성공률 88%', ebayQ: 'Mega+Charizard+X+ex+SAR+110%2F080', ship: 'card' },
+          { name: '전통 한복 피카츄 LED 라이트 키링 2종', buyKrw: 45000, soldUsd: 115.0, profit: '+72,000원', speed: '30일 8건 체결 · 성공률 92%', ebayQ: 'Pokemon+Korea+Hanbok+Pikachu+LED+keyring', ship: 'card' },
+          { name: '메타몽 프로젝트 디토 173/SV-P 밀봉 프로모', buyKrw: 72000, soldUsd: 125.0, profit: '+48,500원', speed: '30일 22건 체결 · 성공률 95%', ebayQ: 'Pokemon+Ditto+173%2FSV-P+Promo', ship: 'card' },
+          { name: '30주년 한글판 뮤 ex SAR 205/165', buyKrw: 35000, soldUsd: 65.0, profit: '+28,200원', speed: '30일 14건 체결 · 성공률 82%', ebayQ: 'Pokemon+Mew+ex+SAR+Korean+205%2F165', ship: 'card' }
         ]
       },
       sneakers: {
         title: '👟 나이키 / 스니커즈 한정판',
+        desc: '해외 품절 국내 한정 컬러 & KREAM 바닥가와 글로벌 체결가 갭투자',
         keywords: [
           { label: '조던 1 로우 골프', q: '나이키 조던 1 로우 골프' },
           { label: '아디다스 삼바 OG', q: '아디다스 삼바 OG' },
           { label: '덩크 로우 레트로', q: '나이키 덩크 로우' },
           { label: '아디다스 가젤 인도어', q: '아디다스 가젤 인도어' },
-          { label: '트래비스 스캇 조던', q: '트래비스 스캇 조던' },
-          { label: '핸드볼 스페지알', q: '아디다스 스페지알' }
+          { label: '아식스 젤 카야노 14', q: '아식스 젤 카야노 14' }
+        ],
+        items: [
+          { name: '나이키 에어 조던 1 로우 골프 울프 그레이', buyKrw: 168000, soldUsd: 235.0, profit: '+51,200원', speed: '30일 34건 체결 · 성공률 79%', ebayQ: 'Air+Jordan+1+Low+Golf+Wolf+Grey', ship: 'shoes' },
+          { name: '아디다스 삼바 OG 화이트 블랙 (KREAM 소싱)', buyKrw: 115000, soldUsd: 155.0, profit: '+36,400원', speed: '30일 58건 체결 · 성공률 85%', ebayQ: 'Adidas+Samba+OG+White+Black', ship: 'shoes' },
+          { name: '아식스 젤 카야노 14 크림 블랙', buyKrw: 198000, soldUsd: 270.0, profit: '+64,500원', speed: '30일 26건 체결 · 성공률 81%', ebayQ: 'Asics+Gel+Kayano+14+Cream+Black', ship: 'shoes' }
         ]
       },
       lol: {
-        title: '🎮 롤 / T1 / 게임 공식 굿즈',
+        title: '🎮 롤 / T1 / e스포츠 글로벌 굿즈',
+        desc: 'Faker 페이커 유니폼, 월즈 챔피언십 배지 & 전세계 롤 팬덤 필수품',
         keywords: [
-          { label: 'T1 페이커 롤드컵 유니폼', q: 'T1 Faker jersey' },
-          { label: 'T1 2024 월즈 자켓', q: 'T1 Worlds jacket' },
-          { label: '라이엇 공식 피규어', q: '리그오브레전드 피규어' },
-          { label: '메이플스토리 인형', q: '메이플스토리 인형' }
+          { label: 'T1 유니폼 페이커', q: 'T1 유니폼 페이커' },
+          { label: 'T1 월즈 우승 자켓', q: 'T1 월즈 챔피언' },
+          { label: '롤 아케인 굿즈', q: '롤 아케인' },
+          { label: 'LCK 공식 응원봉', q: 'LCK 굿즈' }
+        ],
+        items: [
+          { name: 'T1 Faker 페이커 공식 마킹 월즈 유니폼', buyKrw: 145000, soldUsd: 220.0, profit: '+78,000원', speed: '30일 19건 체결 · 성공률 94%', ebayQ: 'T1+Faker+Jersey+Worlds', ship: 'clothing' },
+          { name: 'T1 공식 챔피언스 키링 세트', buyKrw: 28000, soldUsd: 65.0, profit: '+34,500원', speed: '30일 15건 체결 · 성공률 88%', ebayQ: 'T1+League+of+Legends+Keyring', ship: 'card' }
         ]
       },
       starbucks: {
-        title: '☕ 스타벅스 코리아 한정 MD',
+        title: '☕ 스타벅스 코리아 리미티드 MD',
+        desc: '한국 스타벅스 한정 디자인, 스탠리 콜라보 & 해외 직구족 최고 인기',
         keywords: [
-          { label: '스타벅스 스탠리 텀블러', q: '스탠리 텀블러 591' },
-          { label: '체리블라썸 벚꽃 텀블러', q: '스타벅스 벚꽃 텀블러' },
-          { label: '제주 한정 시티 머그', q: '스타벅스 제주 머그' },
-          { label: '스타벅스 콜드컵', q: '스타벅스 콜드컵' }
+          { label: '스타벅스 스탠리 텀블러', q: '스타벅스 스탠리 텀블러' },
+          { label: '스타벅스 시티 머그 서울', q: '스타벅스 시티머그 서울' },
+          { label: '스타벅스 할로윈 MD', q: '스타벅스 할로윈' },
+          { label: '스타벅스 한복 베어리스타', q: '스타벅스 베어리스타 한복' }
+        ],
+        items: [
+          { name: '스타벅스 코리아 x 스탠리 스트로 보온 텀블러 591ml', buyKrw: 39000, soldUsd: 78.0, profit: '+35,200원', speed: '30일 28건 체결 · 성공률 89%', ebayQ: 'Starbucks+Korea+Stanley+Tumbler', ship: 'shoes' },
+          { name: '스타벅스 코리아 전통 한복 베어리스타 키체인', buyKrw: 26000, soldUsd: 62.0, profit: '+31,000원', speed: '30일 16건 체결 · 성공률 90%', ebayQ: 'Starbucks+Korea+Bearista+Hanbok', ship: 'card' }
         ]
       },
       kbeauty: {
         title: '💄 올리브영 K-뷰티 베스트셀러',
+        desc: '해외 틱톡/유튜브 바이럴 스킨케어, 국내 할인가 매입 후 글로벌 마진',
         keywords: [
           { label: '조선미녀 맑은쌀 선크림', q: '조선미녀 선크림' },
-          { label: '토리든 다이브인 세럼', q: '토리든 세럼' },
+          { label: '토리든 다이브인 세럼', q: '토리든 다이브인' },
           { label: '아누아 어성초 토너', q: '아누아 토너' },
           { label: '코스알엑스 달팽이 크림', q: '코스알엑스 달팽이' },
           { label: '메디큐브 제로 모공패드', q: '메디큐브 모공패드' }
+        ],
+        items: [
+          { name: '조선미녀 맑은쌀 선크림 50ml 2개 세트', buyKrw: 22000, soldUsd: 48.0, profit: '+23,400원', speed: '30일 65건 체결 · 성공률 96%', ebayQ: 'Beauty+of+Joseon+Sunscreen', ship: 'card' },
+          { name: '아누아 어성초 77 진정 토너 250ml 대용량', buyKrw: 18000, soldUsd: 42.0, profit: '+19,800원', speed: '30일 42건 체결 · 성공률 91%', ebayQ: 'Anua+Heartleaf+77+Toner', ship: 'clothing' }
         ]
       },
       kfashion: {
-        title: '👕 K-스트릿 & 디자이너 브랜드',
+        title: '👕 K-스트릿 패션 & 도메스틱',
+        desc: '마뗑킴, 아더에러, 디스이즈네버댓 등 K-패션 해외 정품 품귀 현상',
         keywords: [
-          { label: '마뗑킴 아코디언 지갑', q: '마뗑킴 아코디언 지갑' },
-          { label: '마리떼 프랑소와 저버 티셔츠', q: '마리떼 반팔' },
-          { label: '마르디 메크르디 맨투맨', q: '마르디 맨투맨' },
-          { label: '아더에러 볼캡', q: '아더에러 모자' }
+          { label: '마뗑킴 아코디언 지갑', q: '마뗑킴 지갑' },
+          { label: '아더에러 로고 티셔츠', q: '아더에러 티셔츠' },
+          { label: '디스이즈네버댓 후드', q: '디스이즈네버댓' },
+          { label: '떠그클럽 캡 모자', q: '떠그클럽 모자' }
+        ],
+        items: [
+          { name: '마뗑킴 아코디언 카드 포켓 지갑 블랙', buyKrw: 42000, soldUsd: 85.0, profit: '+41,500원', speed: '30일 31건 체결 · 성공률 93%', ebayQ: 'Matin+Kim+Accordion+Card+Wallet', ship: 'card' },
+          { name: '아더에러 시그니처 로고 반팔 티셔츠', buyKrw: 89000, soldUsd: 145.0, profit: '+52,000원', speed: '30일 14건 체결 · 성공률 86%', ebayQ: 'Ader+Error+T-Shirt', ship: 'clothing' }
         ]
       },
       sanrio: {
-        title: '🧸 산리오 / 라부부 / 캐릭터',
+        title: '🧸 산리오 / 라부부 / 캐릭터 피규어',
+        desc: '팝마트 라부부 블라인드 박스, 한국 한정 산리오 키링 폭발적 인기',
         keywords: [
-          { label: '라부부 마카롱 블라인드박스', q: '라부부 마카롱' },
-          { label: '치이카와 팝업 인형', q: '치이카와 팝업' },
-          { label: '쿠로미 한국 한정 키링', q: '쿠로미 키링' },
-          { label: '팝마트 크라이베이비', q: '팝마트 크라이베이비' }
+          { label: '팝마트 라부부 마카롱', q: '라부부 마카롱' },
+          { label: '산리오 시나모롤 키링', q: '시나모롤 키링' },
+          { label: '쿠로미 한정판 인형', q: '쿠로미 인형' },
+          { label: '먼작귀 치이카와 마스코트', q: '치이카와 키링' }
+        ],
+        items: [
+          { name: '팝마트 라부부 더 몬스터 마카롱 블라인드 박스', buyKrw: 32000, soldUsd: 82.0, profit: '+44,000원', speed: '30일 72건 체결 · 성공률 98%', ebayQ: 'Pop+Mart+Labubu+Macaron', ship: 'clothing' },
+          { name: '치이카와 한국 한정 팝업 마스코트 키링', buyKrw: 18000, soldUsd: 54.0, profit: '+32,200원', speed: '30일 35건 체결 · 성공률 94%', ebayQ: 'Chiikawa+Korea+popup+keychain', ship: 'card' }
         ]
       },
       kpop: {
         title: '🎤 K-POP 공식 포토카드 & 굿즈',
+        desc: 'BTS, 스트레이키즈, 에스파, 뉴진스 럭키드로우 및 공방 미공포',
         keywords: [
           { label: 'BTS 럭키드로우 포카', q: 'BTS photocard' },
           { label: '스트레이키즈 사운드웨이브', q: '스트레이키즈 포카' },
           { label: '뉴진스 위버스 포토카드', q: '뉴진스 포카' },
           { label: '에스파 아르마겟돈 포카', q: '에스파 포카' }
+        ],
+        items: [
+          { name: '스트레이키즈 사운드웨이브 럭키드로우 포토카드', buyKrw: 25000, soldUsd: 68.0, profit: '+39,500원', speed: '30일 48건 체결 · 성공률 97%', ebayQ: 'Stray+Kids+Soundwave+Lucky+Draw', ship: 'card' },
+          { name: '에스파 아르마겟돈 카리나 한정 미공포', buyKrw: 38000, soldUsd: 88.0, profit: '+46,000원', speed: '30일 39건 체결 · 성공률 95%', ebayQ: 'Aespa+Karina+photocard', ship: 'card' }
         ]
       },
       cinema: {
         title: '🎬 영화관 한정판 굿즈 (TTT · 오티)',
+        desc: 'CGV TTT, 메가박스 오리지널 티켓 등 가볍고 단가 높은 종이 굿즈',
         keywords: [
           { label: 'CGV TTT 티켓 한정판', q: 'CGV TTT 티켓' },
           { label: '메가박스 오리지널 티켓', q: '메가박스 오리지널 티켓' },
           { label: '룩백 극장판 특전', q: '룩백 특전' },
           { label: '하이큐 극장판 아트카드', q: '하이큐 아트카드' }
+        ],
+        items: [
+          { name: '메가박스 극장판 애니메이션 오리지널 티켓 세트', buyKrw: 15000, soldUsd: 52.0, profit: '+36,400원', speed: '30일 25건 체결 · 성공률 92%', ebayQ: 'Megabox+Original+Ticket+Korea', ship: 'card' },
+          { name: 'CGV TTT 넘버링 한정판 티켓 컬렉션', buyKrw: 16000, soldUsd: 55.0, profit: '+38,500원', speed: '30일 19건 체결 · 성공률 90%', ebayQ: 'CGV+TTT+Ticket+Korea', ship: 'card' }
         ]
       },
       kfood: {
         title: '🍜 K-푸드 / 불닭 / 스낵',
+        desc: '불닭 시리즈 신작, 허니버터칩, 한정판 스낵 세트 해외 직배송',
         keywords: [
           { label: '삼양 불닭볶음면 카르보', q: '불닭 카르보' },
           { label: '오리온 초코파이 하우스', q: '오리온 초코파이' },
           { label: '해태 허니버터칩', q: '허니버터칩' },
           { label: '맥심 모카골드 마일드', q: '맥심 모카골드' }
+        ],
+        items: [
+          { name: '삼양 불닭볶음면 한정 에디션 4개입 4팩 세트', buyKrw: 18000, soldUsd: 46.0, profit: '+19,500원', speed: '30일 55건 체결 · 성공률 92%', ebayQ: 'Samyang+Buldak+Noodles+pack', ship: 'clothing' }
         ]
       },
       nintendo: {
         title: '👾 닌텐도 / 레고 키덜트',
+        desc: '포켓몬 OLED 한정판 본체, 한국 정발 패키지 & 레고 수집품',
         keywords: [
           { label: '닌텐도 스위치 OLED 포켓몬', q: '스위치 OLED 포켓몬' },
           { label: '젤다의 전설 티어스 코리아', q: '젤다 티어스' },
           { label: '레고 스타워즈 UCS', q: '레고 스타워즈 UCS' }
+        ],
+        items: [
+          { name: '닌텐도 스위치 OLED 스칼렛 바이올렛 에디션 본체', buyKrw: 360000, soldUsd: 410.0, profit: '+75,000원', speed: '30일 12건 체결 · 성공률 83%', ebayQ: 'Nintendo+Switch+OLED+Pokemon+Edition', ship: 'shoes' }
         ]
       },
       tradition: {
         title: '🏺 국립중앙박물관 뮷즈 (한국 전통)',
+        desc: '반가사유상 미니어처, 고려청자 잔, 자개 스마트폰 케이스 등 K-컬처',
         keywords: [
           { label: '국립박물관 반가사유상 미니어처', q: '반가사유상 미니어처' },
           { label: '까치호랑이 머그컵', q: '까치호랑이 머그' },
           { label: '청자 잔 세트', q: '고려청자 잔' }
+        ],
+        items: [
+          { name: '국립중앙박물관 반가사유상 파스텔 미니어처 ver.3', buyKrw: 59000, soldUsd: 115.0, profit: '+48,000원', speed: '30일 17건 체결 · 성공률 91%', ebayQ: 'National+Museum+Korea+Maitreya+figure', ship: 'clothing' },
+          { name: '고려청자 운학문 미니 잔 세트 (고급 오동나무함)', buyKrw: 35000, soldUsd: 79.0, profit: '+37,500원', speed: '30일 11건 체결 · 성공률 87%', ebayQ: 'Korean+Celadon+Teacup+Set', ship: 'clothing' }
         ]
       }
     };
@@ -246,30 +306,109 @@
       const cat = RESEARCH_CATEGORIES[catKey];
       if (!cat) return;
 
-      document.getElementById('rcat-active-title').innerText = cat.title;
+      const titleEl = document.getElementById('rcat-active-title');
+      if (titleEl) titleEl.innerText = cat.title;
+
+      const descEl = document.getElementById('rcat-active-desc');
+      if (descEl) descEl.innerText = cat.desc;
 
       Object.keys(RESEARCH_CATEGORIES).forEach(k => {
         const btn = document.getElementById(`rcat-btn-${k}`);
         if (!btn) return;
         if (k === catKey) {
-          btn.className = 'py-1.5 px-1 rounded-xl bg-indigo-600 text-white border border-indigo-400 transition text-center active:scale-95 shadow';
+          btn.className = 'py-2 px-1.5 rounded-2xl bg-indigo-600 text-white border border-indigo-400 font-bold transition text-center active:scale-95 shadow-lg shadow-indigo-600/30';
         } else {
-          btn.className = 'py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95';
+          btn.className = 'py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95';
         }
       });
 
+      // 키워드 칩 렌더링
       const container = document.getElementById('rcat-keyword-container');
       if (container) {
         container.innerHTML = cat.keywords.map(kw => `
-          <button type="button" onclick="setSourcingKeyword('${kw.q}')" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-indigo-600 text-slate-200 hover:text-white border border-slate-700/80 transition text-xs font-semibold active:scale-95">
-            ${kw.label} ➔
+          <button type="button" onclick="sendToSourcingAnalysis('${kw.q}')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-indigo-600 text-slate-200 hover:text-white border border-slate-700/80 transition text-xs font-semibold active:scale-95 flex items-center space-x-1 shadow-sm">
+            <span>${kw.label}</span>
+            <span class="text-indigo-400 group-hover:text-white">➔</span>
           </button>
+        `).join('');
+      }
+
+      // 카테고리별 실전 매물 카드 렌더링
+      const itemsContainer = document.getElementById('rcat-items-container');
+      if (itemsContainer && cat.items) {
+        itemsContainer.innerHTML = cat.items.map(item => `
+          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 hover:border-indigo-500/40 transition">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-slate-100">${item.name}</h4>
+                <p class="text-[10px] text-emerald-400 font-bold mt-0.5">🔥 ${item.speed}</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-black text-emerald-400">${item.profit}</span>
+                <div class="text-[9px] text-slate-400">예상 순마진</div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+              <div>
+                <span class="text-[10px] text-slate-400 block">국내 매입 기준가</span>
+                <span class="font-bold text-slate-200">${item.buyKrw.toLocaleString()}원</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] text-slate-400 block">eBay Sold 실체결가</span>
+                <span class="font-bold text-indigo-300">$${item.soldUsd.toFixed(1)}</span>
+              </div>
+            </div>
+
+            <div class="flex space-x-1.5 pt-1">
+              <a href="https://www.ebay.com/sch/i.html?_nkw=${item.ebayQ}&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
+                eBay Sold 실체결
+              </a>
+              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(item.name)}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-[11px] rounded-xl text-center transition">
+                국내 최저가 소싱
+              </a>
+              <button onclick="sendToSourcingAnalysis('${item.name}', ${item.buyKrw}, ${item.soldUsd}, '${item.ebayQ}', '${item.ship}')" class="px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
+                ⚡ 분석창
+              </button>
+            </div>
+          </div>
         `).join('');
       }
     }
 
-  // 초기 리서치 카테고리 로드
-  selectResearchCategory("pokemon");
+    function sendToSourcingAnalysis(title, buyKrw = null, soldUsd = null, ebayQ = null, ship = null) {
+      switchTab('sourcing');
+      document.getElementById('sourcing-search-keyword').value = title;
+      runSmartSourcingAnalysis(title);
+      if (buyKrw) document.getElementById('input-custom-buy-price').value = buyKrw;
+      if (soldUsd) document.getElementById('input-custom-sold-usd').value = soldUsd;
+      if (ship) setShippingPreset(ship);
+      recalcSourcingBoard();
+      showToast(`'${title}' 소싱 분석 준비 완료!`, '🎯');
+    }
+
+    // 한정판 발매 레이더 카테고리 필터링
+    function filterDrawEvents(cat) {
+      document.querySelectorAll('.draw-filter-btn').forEach(b => {
+        b.className = 'draw-filter-btn px-2.5 py-1 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95';
+      });
+      const activeBtn = document.getElementById(`draw-fbtn-${cat}`);
+      if (activeBtn) {
+        activeBtn.className = 'draw-filter-btn px-2.5 py-1 rounded-xl bg-rose-600 text-white border border-rose-400 text-xs font-bold transition active:scale-95 shadow';
+      }
+
+      const cards = document.querySelectorAll('.draw-event-card');
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.drawCat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // 초기 리서치 카테고리 로드
+    selectResearchCategory("pokemon");
   </script>
   <style>
     /* Mobile app scroll & touch behavior */
@@ -1099,188 +1238,27 @@
             </div>
           </div>
         </div>
-
-      <!-- 📈 12대 테마 글로벌 리서치 허브 (eBay 베스트셀러 발굴기) -->
-      <div class="bg-slate-900/90 rounded-2xl border border-indigo-500/30 p-4 space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2">
+      <!-- 빠른 탭 이동 배너 (글로벌 리서치 & 발매 레이더) -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <button type="button" onclick="switchTab('research')" class="p-3 rounded-2xl bg-gradient-to-br from-indigo-950/60 to-slate-900 border border-indigo-500/40 hover:border-indigo-400 text-left transition active:scale-95 shadow group">
+          <div class="flex items-center justify-between text-indigo-400 mb-1">
             <span class="text-base">📈</span>
-            <div>
-              <h3 class="text-xs font-bold text-slate-100 flex items-center space-x-1.5">
-                <span>글로벌 리서치 허브</span>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">12대 테마</span>
-              </h3>
-              <p class="text-[10px] text-slate-400">한국 셀러들이 해외로 가장 많이 팔아치우는 12대 카테고리별 실시간 인기 키워드</p>
-            </div>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300">12대 테마</span>
           </div>
-          <span class="text-[10px] text-indigo-400 font-mono font-bold">eBay Live Data</span>
-        </div>
+          <div class="text-xs font-bold text-slate-100 group-hover:text-indigo-300 transition">글로벌 리서치 허브 ➔</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">베스트셀러·포카·굿즈 발굴</div>
+        </button>
 
-        <!-- 12대 카테고리 탭 그리드 -->
-        <div class="grid grid-cols-4 gap-1 text-[11px] font-bold">
-          <button type="button" onclick="selectResearchCategory('pokemon')" id="rcat-btn-pokemon" class="py-1.5 px-1 rounded-xl bg-indigo-600 text-white border border-indigo-400 transition text-center active:scale-95 shadow">
-            🃏 포켓몬/TCG
-          </button>
-          <button type="button" onclick="selectResearchCategory('sneakers')" id="rcat-btn-sneakers" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            👟 나이키/신발
-          </button>
-          <button type="button" onclick="selectResearchCategory('lol')" id="rcat-btn-lol" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🎮 롤/T1/게임
-          </button>
-          <button type="button" onclick="selectResearchCategory('starbucks')" id="rcat-btn-starbucks" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            ☕ 스타벅스MD
-          </button>
-          <button type="button" onclick="selectResearchCategory('kbeauty')" id="rcat-btn-kbeauty" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            💄 올리브영뷰티
-          </button>
-          <button type="button" onclick="selectResearchCategory('kfashion')" id="rcat-btn-kfashion" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            👕 K-스트릿패션
-          </button>
-          <button type="button" onclick="selectResearchCategory('sanrio')" id="rcat-btn-sanrio" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🧸 산리오/라부부
-          </button>
-          <button type="button" onclick="selectResearchCategory('kpop')" id="rcat-btn-kpop" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🎤 K-POP 포카
-          </button>
-          <button type="button" onclick="selectResearchCategory('cinema')" id="rcat-btn-cinema" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🎬 영화관 굿즈
-          </button>
-          <button type="button" onclick="selectResearchCategory('kfood')" id="rcat-btn-kfood" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🍜 K-푸드/스낵
-          </button>
-          <button type="button" onclick="selectResearchCategory('nintendo')" id="rcat-btn-nintendo" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            👾 닌텐도/레고
-          </button>
-          <button type="button" onclick="selectResearchCategory('tradition')" id="rcat-btn-tradition" class="py-1.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95">
-            🏺 국립박물관
-          </button>
-        </div>
-
-        <!-- 선택된 카테고리의 핫 아이템 키워드 풀 -->
-        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="text-slate-400 font-bold" id="rcat-active-title">🃏 포켓몬/트레이딩카드 베스트셀러 발굴</span>
-            <span class="text-indigo-400">탭하면 즉시 마진 분석</span>
-          </div>
-          <div id="rcat-keyword-container" class="flex flex-wrap gap-1.5">
-            <!-- Dynamic keyword chips -->
-          </div>
-        </div>
-      </div>
-
-      <!-- 🚨 한정판 발매 & 팝업스토어 레이더 (Draw Radar) -->
-      <div class="bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900 rounded-2xl border border-rose-500/30 p-4 space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2">
+        <button type="button" onclick="switchTab('draw')" class="p-3 rounded-2xl bg-gradient-to-br from-rose-950/60 to-slate-900 border border-rose-500/40 hover:border-rose-400 text-left transition active:scale-95 shadow group">
+          <div class="flex items-center justify-between text-rose-400 mb-1">
             <span class="text-base">🚨</span>
-            <div>
-              <h3 class="text-xs font-bold text-slate-100 flex items-center space-x-1.5">
-                <span>한정판 발매 & 팝업스토어 레이더</span>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">LIVE</span>
-              </h3>
-              <p class="text-[10px] text-slate-400">나이키 SNKRS 드로우 · KREAM 래플 · 성수/더현대 팝업스토어 실시간 수집</p>
-            </div>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">LIVE</span>
           </div>
-          <span class="text-[10px] text-rose-400 font-mono font-bold">Draw Radar v2</span>
-        </div>
-
-        <!-- 드로우 & 팝업 실전 이벤트 리스트 (4건) -->
-        <div class="space-y-2">
-          <!-- 1. 나이키 드로우 -->
-          <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center space-x-1.5">
-                <span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold text-[10px]">🔥 SNKRS 드로우</span>
-                <span class="font-bold text-slate-100 text-xs">트래비스 스캇 x 에어 조던 1 로우 OG</span>
-              </div>
-              <span class="text-[10px] text-emerald-400 font-bold">+45만 원 프리미엄</span>
-            </div>
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>발매일정: 11월 4일 (월) 10:00~10:30 응모</span>
-              <span class="text-slate-300">발매가 17.9만 ➔ eBay $480.00</span>
-            </div>
-            <div class="flex space-x-2 pt-1">
-              <a href="https://www.nike.com/kr/launch" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 rounded-lg bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-[11px] text-center transition">
-                나이키 공식 응모 바로가기
-              </a>
-              <button onclick="setSourcingKeyword('트래비스 스캇 조던')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium text-[11px] border border-slate-700 transition">
-                시세 분석
-              </button>
-            </div>
-          </div>
-
-          <!-- 2. 포켓몬 팝업스토어 -->
-          <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center space-x-1.5">
-                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px]">📍 오프라인 팝업</span>
-                <span class="font-bold text-slate-100 text-xs">2026 포켓몬 팝업스토어 인 서울</span>
-              </div>
-              <span class="text-[10px] text-emerald-400 font-bold">마진 2.5~3배</span>
-            </div>
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>장소/일정: 서울 성수동 · 11월 1일~20일 현장 운영</span>
-              <span class="text-slate-300">한복 피카츄 키링·인형 2~5만 ➔ eBay $115~$450</span>
-            </div>
-            <div class="flex space-x-2 pt-1">
-              <a href="https://pokemonkorea.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 rounded-lg bg-amber-600/90 hover:bg-amber-600 text-white font-bold text-[11px] text-center transition">
-                포켓몬 팝업 상세/대기 안내
-              </a>
-              <button onclick="setSourcingKeyword('고풍 피카츄')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium text-[11px] border border-slate-700 transition">
-                키링 마진표
-              </button>
-            </div>
-          </div>
-
-          <!-- 3. KREAM 럭키드로우 -->
-          <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center space-x-1.5">
-                <span class="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold text-[10px]">👟 KREAM 래플</span>
-                <span class="font-bold text-slate-100 text-xs">아디다스 삼바 x 퍼렐 윌리엄스 한정</span>
-              </div>
-              <span class="text-[10px] text-emerald-400 font-bold">+18만 원 기대</span>
-            </div>
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>응모일정: 11월 3일 12:00 오픈 · 당첨자 한정 구매</span>
-              <span class="text-slate-300">정가 15.9만 ➔ eBay $260.00</span>
-            </div>
-            <div class="flex space-x-2 pt-1">
-              <a href="https://kream.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-[11px] text-center transition">
-                KREAM 래플 응모창
-              </a>
-              <button onclick="setSourcingKeyword('아디다스 삼바')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium text-[11px] border border-slate-700 transition">
-                삼바 시세
-              </button>
-            </div>
-          </div>
-
-          <!-- 4. 스타벅스 코리아 리미티드 -->
-          <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
-            <div class="flex items-center justify-between text-xs">
-              <div class="flex items-center space-x-1.5">
-                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">☕ 스타벅스 MD</span>
-                <span class="font-bold text-slate-100 text-xs">스타벅스 x 스탠리 한정 텀블러 에디션</span>
-              </div>
-              <span class="text-[10px] text-emerald-400 font-bold">+3.5만 원 순마진</span>
-            </div>
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>발매정보: 스타벅스 코리아 전국 매장 및 SSG 공식</span>
-              <span class="text-slate-300">정가 3.9만 ➔ eBay $78.00 (K-Packet/eGS)</span>
-            </div>
-            <div class="flex space-x-2 pt-1">
-              <a href="https://www.starbucks.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 rounded-lg bg-emerald-600/90 hover:bg-emerald-600 text-white font-bold text-[11px] text-center transition">
-                스타벅스 MD 공지
-              </a>
-              <button onclick="setSourcingKeyword('스탠리 텀블러 591')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 font-medium text-[11px] border border-slate-700 transition">
-                텀블러 마진표
-              </button>
-            </div>
-          </div>
-        </div>
+          <div class="text-xs font-bold text-slate-100 group-hover:text-rose-300 transition">한정판 발매 레이더 ➔</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">SNKRS 드로우·성수 팝업</div>
+        </button>
       </div>
-
-      <!-- 실전 검증 완료 시세차익 추천 매물 (4종) -->
+<!-- 실전 검증 완료 시세차익 추천 매물 (4종) -->
       <div class="space-y-3">
         <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">실전 검증 시세차익 매물 (4건)</h3>
 
@@ -1452,33 +1430,452 @@
       </div>
     </section>
 
-  </main>
+  
+    <!-- TAB 6: 글로벌 리서치 허브 (12대 테마 베스트셀러 발굴) -->
+    <section id="tab-research" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>📈</span>
+          <span>글로벌 리서치 허브 (12대 테마)</span>
+        </h2>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-semibold border border-indigo-500/30">eBay Live Data</span>
+      </div>
+
+      <!-- 리서치 검색 바 -->
+      <div class="bg-slate-900/90 rounded-2xl border border-indigo-500/30 p-4 space-y-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-sm font-bold text-indigo-300">
+            📊
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-100">한국 셀러 글로벌 수출 베스트셀러 발굴기</h3>
+            <p class="text-[10px] text-slate-400">원터치로 테마를 선택하면 해외 거래량과 실체결가, 마진표가 즉시 연동됩니다</p>
+          </div>
+        </div>
+
+        <!-- 12대 테마 탭 그리드 -->
+        <div class="grid grid-cols-4 gap-1.5 text-[11px] pt-1">
+          <button type="button" onclick="selectResearchCategory('pokemon')" id="rcat-btn-pokemon" class="py-2 px-1.5 rounded-2xl bg-indigo-600 text-white border border-indigo-400 font-bold transition text-center active:scale-95 shadow">
+            🃏 포켓몬/TCG
+          </button>
+          <button type="button" onclick="selectResearchCategory('sneakers')" id="rcat-btn-sneakers" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            👟 나이키/신발
+          </button>
+          <button type="button" onclick="selectResearchCategory('lol')" id="rcat-btn-lol" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🎮 롤/T1/게임
+          </button>
+          <button type="button" onclick="selectResearchCategory('starbucks')" id="rcat-btn-starbucks" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            ☕ 스타벅스MD
+          </button>
+          <button type="button" onclick="selectResearchCategory('kbeauty')" id="rcat-btn-kbeauty" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            💄 올리브영뷰티
+          </button>
+          <button type="button" onclick="selectResearchCategory('kfashion')" id="rcat-btn-kfashion" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            👕 K-스트릿패션
+          </button>
+          <button type="button" onclick="selectResearchCategory('sanrio')" id="rcat-btn-sanrio" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🧸 산리오/라부부
+          </button>
+          <button type="button" onclick="selectResearchCategory('kpop')" id="rcat-btn-kpop" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🎤 K-POP 포카
+          </button>
+          <button type="button" onclick="selectResearchCategory('cinema')" id="rcat-btn-cinema" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🎬 영화관 굿즈
+          </button>
+          <button type="button" onclick="selectResearchCategory('kfood')" id="rcat-btn-kfood" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🍜 K-푸드/스낵
+          </button>
+          <button type="button" onclick="selectResearchCategory('nintendo')" id="rcat-btn-nintendo" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            👾 닌텐도/레고
+          </button>
+          <button type="button" onclick="selectResearchCategory('tradition')" id="rcat-btn-tradition" class="py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95">
+            🏺 국립박물관
+          </button>
+        </div>
+
+        <!-- 선택된 테마의 핫 키워드 풀 -->
+        <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <div>
+              <span class="text-slate-100 font-bold block" id="rcat-active-title">🃏 포켓몬 / 트레이딩카드 베스트셀러</span>
+              <span class="text-[10px] text-slate-400" id="rcat-active-desc">해외 포덕 & 수집가들의 절대적인 한정판·SAR·밀봉 프로모 수요</span>
+            </div>
+            <span class="text-[10px] text-indigo-400 font-medium">탭하면 소싱분석 ➔</span>
+          </div>
+          <div id="rcat-keyword-container" class="flex flex-wrap gap-1.5 pt-1">
+            <!-- Dynamic keywords -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 선택된 테마의 실전 추천 아이템 카드 리스트 -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+          <span>🔥 테마별 추천 소싱 타겟</span>
+          <span class="text-[10px] text-indigo-400">eBay Sold 바닥가 기준</span>
+        </h3>
+        <div id="rcat-items-container" class="space-y-3">
+          <!-- Dynamic item cards rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: 한정판 발매 & 팝업스토어 레이더 (Draw & Drop Radar LIVE) -->
+    <section id="tab-draw" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
+          <span>🚨</span>
+          <span>실시간 한정판 발매 & 팝업스토어 레이더</span>
+        </h2>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-semibold border border-rose-500/30">Draw Radar LIVE</span>
+      </div>
+
+      <!-- 드로우 카테고리 필터 바 -->
+      <div class="flex space-x-1.5 overflow-x-auto no-scrollbar py-1">
+        <button type="button" onclick="filterDrawEvents('all')" id="draw-fbtn-all" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-rose-600 text-white border border-rose-400 text-xs font-bold transition active:scale-95 shadow">
+          전체 보기
+        </button>
+        <button type="button" onclick="filterDrawEvents('snkrs')" id="draw-fbtn-snkrs" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          🔥 나이키 SNKRS
+        </button>
+        <button type="button" onclick="filterDrawEvents('popup')" id="draw-fbtn-popup" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          📍 오프라인 팝업
+        </button>
+        <button type="button" onclick="filterDrawEvents('kream')" id="draw-fbtn-kream" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          👟 KREAM 래플
+        </button>
+        <button type="button" onclick="filterDrawEvents('starbucks')" id="draw-fbtn-starbucks" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          ☕ 스타벅스 MD
+        </button>
+        <button type="button" onclick="filterDrawEvents('fashion')" id="draw-fbtn-fashion" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          👕 패션/무신사
+        </button>
+        <button type="button" onclick="filterDrawEvents('cinema')" id="draw-fbtn-cinema" class="draw-filter-btn px-3 py-1.5 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95">
+          🎬 극장 한정 굿즈
+        </button>
+      </div>
+
+      <!-- 실전 한정판 발매 이벤트 리스트 (6종) -->
+      <div id="draw-events-container" class="space-y-3">
+        <!-- 1. 나이키 SNKRS 드로우 -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-rose-500/30 p-4 space-y-2.5 hover:border-rose-400 transition" data-draw-cat="snkrs">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold text-[10px]">🔥 SNKRS 드로우</span>
+              <span class="font-bold text-slate-100 text-xs">트래비스 스캇 x 에어 조던 1 로우 OG</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">+45만 원 프리미엄</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>일정: 11월 4일 (월) 10:00~10:30 응모</span>
+              <span class="text-rose-400 font-bold">D-2 오픈</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">국내 발매가 179,000원</span>
+              <span class="text-indigo-300 font-bold">eBay 최근 체결 $480.00 (~66.2만 원)</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://www.nike.com/kr/launch" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs text-center transition shadow">
+              나이키 공식 응모 바로가기
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Travis+Scott+Jordan+1+Low&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              eBay 체결가
+            </a>
+            <button onclick="sendToSourcingAnalysis('트래비스 스캇 조던', 179000, 480.0, 'Travis+Scott+Jordan+1+Low', 'shoes')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 분석
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. 성수 포켓몬 팝업스토어 -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-amber-500/30 p-4 space-y-2.5 hover:border-amber-400 transition" data-draw-cat="popup">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px]">📍 오프라인 팝업</span>
+              <span class="font-bold text-slate-100 text-xs">2026 포켓몬 팝업스토어 인 서울</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">마진 2.5~3.5배</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>장소: 서울 성수동 · 11월 1일~20일 운영</span>
+              <span class="text-amber-400 font-bold">현장/카카오 예약</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">한복 피카츄 키링·인형 2.5만~4.5만</span>
+              <span class="text-indigo-300 font-bold">eBay $115.00 ~ $450.00</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://pokemonkorea.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs text-center transition shadow">
+              포켓몬 팝업 상세/대기 공지
+            </a>
+            <a href="https://www.daangn.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%ED%95%9C%EB%B3%B5%20%ED%94%BC%EC%B9%B4%EC%B8%84" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              당근 실물매물
+            </a>
+            <button onclick="sendToSourcingAnalysis('고풍 피카츄 키링', 45000, 115.0, 'Pokemon+Korea+Hanbok+Pikachu+LED+keyring', 'card')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 키링 마진
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. KREAM 래플: 삼바 퍼렐 -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-indigo-500/30 p-4 space-y-2.5 hover:border-indigo-400 transition" data-draw-cat="kream">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold text-[10px]">👟 KREAM 래플</span>
+              <span class="font-bold text-slate-100 text-xs">아디다스 삼바 OG x 퍼렐 윌리엄스 한정</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">+18만 원 기대</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>일정: 11월 3일 12:00 오픈 · 회원 응모</span>
+              <span class="text-indigo-400 font-bold">D-1 응모</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">정가 159,000원</span>
+              <span class="text-indigo-300 font-bold">eBay 체결 $260.00 (~35.8만 원)</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://kream.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs text-center transition shadow">
+              KREAM 래플 응모창
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Adidas+Samba+Pharrell&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              eBay 체결가
+            </a>
+            <button onclick="sendToSourcingAnalysis('아디다스 삼바 퍼렐', 159000, 260.0, 'Adidas+Samba+Pharrell', 'shoes')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 분석
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. 스타벅스 스탠리 텀블러 MD -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-emerald-500/30 p-4 space-y-2.5 hover:border-emerald-400 transition" data-draw-cat="starbucks">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">☕ 스타벅스 MD</span>
+              <span class="font-bold text-slate-100 text-xs">스타벅스 코리아 x 스탠리 스트로 텀블러</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">+3.5만 원 순마진</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>발매: 전국 스타벅스 매장 및 SSG 공식몰</span>
+              <span class="text-emerald-400 font-bold">상시 소싱 가능</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">정가 39,000원</span>
+              <span class="text-indigo-300 font-bold">eBay $78.00 (K-Packet 8,980원)</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://www.starbucks.co.kr/" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition shadow">
+              스타벅스 MD 공지
+            </a>
+            <a href="https://www.daangn.com/search/%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4%20%EC%8A%A4%ED%83%A0%EB%A6%AC%20%ED%85%80%EB%B8%94%EB%9F%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              당근 미개봉 매물
+            </a>
+            <button onclick="sendToSourcingAnalysis('스탠리 텀블러', 39000, 78.0, 'Starbucks+Korea+Stanley+Tumbler', 'shoes')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 분석
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. 무신사 단독 드로우: 아식스 x 앤더슨벨 -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-sky-500/30 p-4 space-y-2.5 hover:border-sky-400 transition" data-draw-cat="fashion">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold text-[10px]">👕 무신사 드로우</span>
+              <span class="font-bold text-slate-100 text-xs">아식스 젤 카야노 14 x 앤더슨벨 한정판</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">+16.5만 원 기대</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>일정: 11월 5일 (수) 11:00 오픈 · 무신사 회원</span>
+              <span class="text-sky-400 font-bold">오픈 대기</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">발매가 219,000원</span>
+              <span class="text-indigo-300 font-bold">eBay 글로벌 체결 $340.00</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://www.musinsa.com/raffle" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs text-center transition shadow">
+              무신사 래플 바로가기
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Asics+Gel+Kayano+Andersson+Bell&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              eBay 체결가
+            </a>
+            <button onclick="sendToSourcingAnalysis('아식스 앤더슨벨', 219000, 340.0, 'Asics+Gel+Kayano+Andersson+Bell', 'shoes')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 분석
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. 영화관 한정판 오리지널 티켓 -->
+        <div class="draw-event-card bg-slate-900/90 rounded-2xl border border-purple-500/30 p-4 space-y-2.5 hover:border-purple-400 transition" data-draw-cat="cinema">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold text-[10px]">🎬 극장 한정 굿즈</span>
+              <span class="font-bold text-slate-100 text-xs">극장판 애니메이션 1주차 특전 TTT & 오티</span>
+            </div>
+            <span class="text-xs font-black text-emerald-400">+3.8만 원 순마진</span>
+          </div>
+
+          <div class="bg-slate-950/70 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1">
+            <div class="flex justify-between text-slate-400">
+              <span>장소: CGV · 메가박스 전국 개봉관 선착순</span>
+              <span class="text-purple-400 font-bold">초경량 K-Packet</span>
+            </div>
+            <div class="flex justify-between font-medium">
+              <span class="text-slate-300">티켓 소싱가 15,000원</span>
+              <span class="text-indigo-300 font-bold">eBay $45.00 ~ $60.00</span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 pt-1">
+            <a href="https://m.cgv.co.kr/WebApp/Event/EventList.aspx" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs text-center transition shadow">
+              CGV 이벤트 공지
+            </a>
+            <a href="https://m.bunjang.co.kr/search/products?q=%EC%98%A4%EB%A6%AC%EC%A7%80%EB%84%90%ED%8B%B0%EC%BC%93" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs text-center transition">
+              번장 오티 매물
+            </a>
+            <button onclick="sendToSourcingAnalysis('오리지널 티켓', 15000, 52.0, 'Anime+Original+Ticket+Korea', 'card')" class="py-2 px-3 rounded-xl bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-xs transition active:scale-95">
+              ⚡ 분석
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 리셀 드로우 실전 3대 팁 -->
+      <div class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 text-xs space-y-1.5">
+        <h4 class="font-bold text-slate-200 flex items-center space-x-1">
+          <span>💡</span>
+          <span>크로스보더 리셀 드로우 실전 수칙</span>
+        </h4>
+        <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+          <li>응모 10분 전 결제 카드와 주소지를 각 플랫폼에 반드시 사전 등록해 두세요.</li>
+          <li>신발·패션은 무게 1kg 초과 시 반드시 eGS/EMS 요율을 차감해 역마진을 방지하세요.</li>
+          <li>포켓몬 카드와 영화관 티켓류는 초경량 100g 규격으로 우체국 K-Packet(8,980원) 발송 시 마진이 극대화됩니다.</li>
+        </ul>
+      </div>
+    </section>
+
+</main>
 
   <!-- Mobile Bottom Tab Navigation -->
-  <nav class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur border-t border-slate-800 z-40 px-2 py-2">
-    <div class="max-w-md mx-auto grid grid-cols-5 gap-0.5">
-      <button onclick="switchTab('orders')" id="tab-btn-orders" class="flex flex-col items-center py-1 text-indigo-400 font-bold transition">
-        <span class="text-base">📦</span>
-        <span class="text-[10px] mt-0.5">주문/송장</span>
-      </button>
-      <button onclick="switchTab('listing')" id="tab-btn-listing" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
-        <span class="text-base">⚡</span>
-        <span class="text-[10px] mt-0.5">리스팅</span>
-      </button>
-      <button onclick="switchTab('offers')" id="tab-btn-offers" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
-        <span class="text-base">🏷️</span>
-        <span class="text-[10px] mt-0.5">오퍼/CS</span>
-      </button>
-      <button onclick="switchTab('calculator')" id="tab-btn-calculator" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
-        <span class="text-base">🧮</span>
-        <span class="text-[10px] mt-0.5">마진계산</span>
-      </button>
-      <button onclick="switchTab('sourcing')" id="tab-btn-sourcing" class="flex flex-col items-center py-1 text-slate-400 font-medium transition">
-        <span class="text-base">🎯</span>
-        <span class="text-[10px] mt-0.5">소싱레이더</span>
-      </button>
+  <nav class="fixed bottom-0 inset-x-0 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 z-40 px-2 py-2">
+    <div class="max-w-md mx-auto">
+      <!-- Horizontal Scrollable Category Bar with Smooth Gliding (촤르르륵) -->
+      <div id="bottom-nav-scroll" class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar scroll-smooth px-1 py-0.5">
+        <button onclick="switchTab('orders')" id="tab-btn-orders" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30 transition active:scale-95 shadow">
+          <span class="text-base">📦</span>
+          <span class="text-xs">주문/송장</span>
+        </button>
+        <button onclick="switchTab('listing')" id="tab-btn-listing" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">⚡</span>
+          <span class="text-xs">리스팅</span>
+        </button>
+        <button onclick="switchTab('offers')" id="tab-btn-offers" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">🏷️</span>
+          <span class="text-xs">오퍼/CS</span>
+        </button>
+        <button onclick="switchTab('calculator')" id="tab-btn-calculator" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">🧮</span>
+          <span class="text-xs">마진계산</span>
+        </button>
+        <button onclick="switchTab('sourcing')" id="tab-btn-sourcing" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">🎯</span>
+          <span class="text-xs">소싱레이더</span>
+        </button>
+        <button onclick="switchTab('research')" id="tab-btn-research" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">📈</span>
+          <span class="text-xs">글로벌리서치</span>
+        </button>
+        <button onclick="switchTab('draw')" id="tab-btn-draw" class="flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95">
+          <span class="text-base">🚨</span>
+          <span class="text-xs">발매레이더</span>
+        </button>
+        <!-- 원터치 전체보기 토글 버튼 -->
+        <button onclick="toggleQuickMenuDrawer()" id="tab-btn-drawer" class="flex-shrink-0 flex items-center space-x-1 px-3 py-1.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold border border-slate-700 transition active:scale-95" title="전체 카테고리 촤르륵 열기">
+          <span class="text-xs">☰</span>
+          <span class="text-xs">전체</span>
+        </button>
+      </div>
     </div>
   </nav>
+
+  <!-- 원터치 촤르륵 전체 메뉴 드로어 (Quick Menu Drawer) -->
+  <div id="quick-menu-drawer" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end justify-center transition-opacity duration-300 opacity-0 pointer-events-none" onclick="toggleQuickMenuDrawer(false)">
+    <div class="w-full max-w-md bg-slate-900 border-t border-indigo-500/30 rounded-t-3xl p-5 space-y-4 shadow-2xl transform transition-transform duration-300 translate-y-full" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+        <div class="flex items-center space-x-2">
+          <span class="text-base">⚡</span>
+          <h3 class="text-sm font-bold text-slate-100">BayFlow 전체 카테고리 (원터치 이동)</h3>
+        </div>
+        <button onclick="toggleQuickMenuDrawer(false)" class="text-slate-400 hover:text-white text-lg p-1 font-bold">✕</button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 text-center text-xs">
+        <button onclick="switchTab('orders'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">📦</span>
+          <span class="font-bold text-slate-200">주문/송장</span>
+          <span class="text-[9px] text-slate-500">K-Packet 자동</span>
+        </button>
+        <button onclick="switchTab('listing'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">⚡</span>
+          <span class="font-bold text-slate-200">리스팅</span>
+          <span class="text-[9px] text-slate-500">초안 & 신규출품</span>
+        </button>
+        <button onclick="switchTab('offers'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">🏷️</span>
+          <span class="font-bold text-slate-200">오퍼/CS</span>
+          <span class="text-[9px] text-slate-500">바이어 협상/문의</span>
+        </button>
+        <button onclick="switchTab('calculator'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">🧮</span>
+          <span class="font-bold text-slate-200">마진계산</span>
+          <span class="text-[9px] text-slate-500">20개국 공식 운임</span>
+        </button>
+        <button onclick="switchTab('sourcing'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">🎯</span>
+          <span class="font-bold text-slate-200">소싱레이더</span>
+          <span class="text-[9px] text-slate-500">8대 마켓 시세차익</span>
+        </button>
+        <button onclick="switchTab('research'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">📈</span>
+          <span class="font-bold text-slate-200">글로벌리서치</span>
+          <span class="text-[9px] text-slate-500">12대 테마 베스트</span>
+        </button>
+        <button onclick="switchTab('draw'); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">🚨</span>
+          <span class="font-bold text-slate-200">발매레이더</span>
+          <span class="text-[9px] text-slate-500">SNKRS·팝업 LIVE</span>
+        </button>
+        <button onclick="refreshData(); toggleQuickMenuDrawer(false);" class="p-3 rounded-2xl bg-indigo-950/40 hover:bg-indigo-600/30 border border-indigo-500/40 transition flex flex-col items-center space-y-1 active:scale-95">
+          <span class="text-2xl">🔄</span>
+          <span class="font-bold text-indigo-300">새로고침</span>
+          <span class="text-[9px] text-indigo-400">PWA 캐시 동기화</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Toast Notification -->
   <div id="toast" class="fixed top-16 inset-x-4 max-w-sm mx-auto bg-slate-800/95 border border-indigo-500/40 text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 transition transform -translate-y-12 opacity-0 pointer-events-none z-50">
@@ -1487,18 +1884,50 @@
   </div>
 
   <script>
-    // Tab Switching
+    // Tab Switching & Navigation Engine
+    const ALL_APP_TABS = ['orders', 'listing', 'offers', 'calculator', 'sourcing', 'research', 'draw'];
+
     function switchTab(tabId) {
-      ['orders', 'listing', 'offers', 'calculator', 'sourcing'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
+      ALL_APP_TABS.forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        if (el) el.classList.add('hidden');
         const btn = document.getElementById(`tab-btn-${t}`);
-        btn.classList.remove('text-indigo-400', 'font-bold');
-        btn.classList.add('text-slate-400', 'font-medium');
+        if (btn) {
+          btn.className = 'flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-slate-950/60 text-slate-400 font-medium border border-transparent hover:text-slate-200 transition active:scale-95';
+        }
       });
-      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+      const activeEl = document.getElementById(`tab-${tabId}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+
       const activeBtn = document.getElementById(`tab-btn-${tabId}`);
-      activeBtn.classList.remove('text-slate-400', 'font-medium');
-      activeBtn.classList.add('text-indigo-400', 'font-bold');
+      if (activeBtn) {
+        activeBtn.className = 'flex-shrink-0 flex items-center space-x-1.5 px-3.5 py-1.5 rounded-2xl bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30 transition active:scale-95 shadow';
+        activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Quick Menu Drawer Toggle
+    function toggleQuickMenuDrawer(force) {
+      const drawer = document.getElementById('quick-menu-drawer');
+      if (!drawer) return;
+      const inner = drawer.querySelector('div');
+      const isOpen = !drawer.classList.contains('pointer-events-none');
+      const shouldOpen = force !== undefined ? force : !isOpen;
+
+      if (shouldOpen) {
+        drawer.classList.remove('opacity-0', 'pointer-events-none');
+        drawer.classList.add('opacity-100');
+        inner.classList.remove('translate-y-full');
+        inner.classList.add('translate-y-0');
+      } else {
+        drawer.classList.remove('opacity-100');
+        drawer.classList.add('opacity-0', 'pointer-events-none');
+        inner.classList.remove('translate-y-0');
+        inner.classList.add('translate-y-full');
+      }
     }
 
     // Toast Helper
