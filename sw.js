@@ -1,5 +1,5 @@
-// BayFlow Service Worker v4 (Photo Upload & Listing Engine)
-const CACHE_NAME = 'bayflow-v4';
+// BayFlow Service Worker v5 (Pickle AI Sourcing Radar Engine)
+const CACHE_NAME = 'bayflow-v5';
 const ASSETS = [
   './',
   './index.html',

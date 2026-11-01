@@ -610,26 +610,108 @@
       </div>
     </section>
 
-    <!-- TAB 4: 자동 소싱 레이더 (Arbitrage Radar) -->
+    <!-- TAB 4: 자동 소싱 레이더 (Arbitrage Radar with Pickle Search Engine) -->
     <section id="tab-sourcing" class="hidden space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-sm font-bold text-slate-300 flex items-center space-x-1.5">
           <span>🎯</span>
-          <span>시세차익 자동 소싱 레이더</span>
+          <span>피클 AI x 4대 마켓 시세차익 소싱 레이더</span>
         </h2>
-        <button onclick="simulateScan()" class="text-xs bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 px-2.5 py-1 rounded-lg font-semibold flex items-center space-x-1">
-          <span id="scan-spinner" class="hidden animate-spin">🌀</span>
-          <span>신규 매물 스캔</span>
-        </button>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-500/30">Pickle Engine v1.5</span>
       </div>
 
+      <!-- 피클 AI 통합 크로스 검색엔진 박스 -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-4 space-y-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center text-lg font-black text-white shadow-lg shadow-indigo-500/20">
+            ㅁ
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-100 flex items-center space-x-1.5">
+              <span>피클 실시간 통합 소싱 검색엔진</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">LIVE</span>
+            </h3>
+            <p class="text-[11px] text-slate-400">번개장터 · 당근마켓 · 중고나라 · 구글쇼핑 + eBay Sold 실거래가 동시 매칭</p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="relative">
+            <input type="text" id="sourcing-search-keyword" onkeydown="if(event.key==='Enter') executeSourcingSearch()" placeholder="소싱할 상품명 입력 (예: 고풍 피카츄, 메가 리자몽 X, 산타크루즈)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 pr-20">
+            <button onclick="executeSourcingSearch()" class="absolute right-1.5 top-1.5 bottom-1.5 px-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1">
+              <span>🔍</span>
+              <span>검색</span>
+            </button>
+          </div>
+
+          <!-- 인기 추천 소싱 키워드 칩 -->
+          <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+            <span class="text-slate-400 py-0.5">추천 키워드:</span>
+            <button onclick="setSourcingKeyword('고풍 피카츄')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#고풍 피카츄</button>
+            <button onclick="setSourcingKeyword('메가 리자몽 X ex SAR')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#리자몽 X SAR</button>
+            <button onclick="setSourcingKeyword('메타몽 프로젝트 디토')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#메타몽 프로모</button>
+            <button onclick="setSourcingKeyword('산타크루즈 포켓몬 스케이트보드')" class="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">#산타크루즈 데크</button>
+          </div>
+        </div>
+
+        <!-- 실시간 마켓 바로가기 결과 바 -->
+        <div id="sourcing-results-panel" class="space-y-2 pt-2 border-t border-slate-800/80">
+          <div class="text-[11px] font-bold text-slate-300 flex items-center justify-between">
+            <span id="sourcing-target-title">🎯 '메가 리자몽 X ex SAR' 4대 마켓 + eBay Sold 실시간 매칭</span>
+            <span class="text-[10px] text-emerald-400 font-mono">1클릭 시세 탐색</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <!-- 번개장터 -->
+            <a id="btn-link-bunjang" href="https://m.bunjang.co.kr/search/products?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-rose-500/30 text-center transition block group active:scale-95">
+              <div class="text-base">⚡</div>
+              <div class="text-xs font-bold text-rose-400 group-hover:text-rose-300">번개장터 매물</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">국내 C2C 최저가</div>
+            </a>
+
+            <!-- 당근마켓 -->
+            <a id="btn-link-daangn" href="https://www.daangn.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-orange-500/30 text-center transition block group active:scale-95">
+              <div class="text-base">🥕</div>
+              <div class="text-xs font-bold text-orange-400 group-hover:text-orange-300">당근마켓 매물</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">직거래 네고 매물</div>
+            </a>
+
+            <!-- 중고나라 -->
+            <a id="btn-link-joongna" href="https://web.joongna.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-emerald-500/30 text-center transition block group active:scale-95">
+              <div class="text-base">📦</div>
+              <div class="text-xs font-bold text-emerald-400 group-hover:text-emerald-300">중고나라 매물</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">전국 택배 거래</div>
+            </a>
+
+            <!-- 구글쇼핑 -->
+            <a id="btn-link-google" href="https://www.google.com/search?tbm=shop&q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-sky-500/30 text-center transition block group active:scale-95">
+              <div class="text-base">🔍</div>
+              <div class="text-xs font-bold text-sky-400 group-hover:text-sky-300">구글쇼핑 최저가</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">국내 쇼핑몰 전수</div>
+            </a>
+          </div>
+
+          <!-- eBay Sold 실거래가 바로가기 (핵심!) -->
+          <a id="btn-link-ebay" href="https://www.ebay.com/sch/i.html?_nkw=Mega+Charizard+X+ex+SAR+110%2F080&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="w-full p-2.5 rounded-xl bg-gradient-to-r from-indigo-900/60 to-purple-900/60 hover:from-indigo-900/80 hover:to-purple-900/80 border border-indigo-500/40 text-center transition flex items-center justify-between px-4 group active:scale-98">
+            <div class="flex items-center space-x-2">
+              <span class="text-base">📈</span>
+              <span class="text-xs font-bold text-indigo-200">eBay 완료 실거래가(Sold) 바로 확인</span>
+            </div>
+            <span class="text-[11px] text-indigo-300 font-bold group-hover:underline">실제 체결 바닥가 보기 ➔</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 실전 검증 완료 시세차익 추천 매물 (4종) -->
       <div class="space-y-3">
-        <!-- Item 1 -->
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">실전 검증 시세차익 매물 (4건)</h3>
+
+        <!-- 매물 1: 리자몽 X SAR -->
         <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
           <div class="flex items-start justify-between">
             <div>
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 45%</span>
-              <h3 class="font-bold text-slate-100 text-sm mt-1">포켓몬 메가 리자몽 X ex SAR 110/080</h3>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 45.6%</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">포켓몬 메가 리자몽 X ex SAR 110/080 M2</h3>
             </div>
             <div class="text-right">
               <div class="text-xs font-bold text-emerald-400">+63,800원</div>
@@ -642,26 +724,58 @@
               <span class="font-semibold text-slate-300">140,000 ~ 150,000원</span>
             </div>
             <div>
-              <span class="text-slate-500 block text-[10px]">이베이 최근 거래가 (Sold)</span>
+              <span class="text-slate-500 block text-[10px]">이베이 최근 체결가 (Sold)</span>
               <span class="font-semibold text-sky-400">$195.00 ~ $220.00</span>
             </div>
           </div>
           <div class="flex space-x-2">
-            <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition">
+            <a href="https://m.bunjang.co.kr/search/products?q=%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
               번개장터 매물 보기
-            </button>
-            <button class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition">
-              이베이 1초 리스팅 초안
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Mega+Charizard+X+ex+SAR+110%2F080&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
+              eBay 체결가 확인
+            </a>
+          </div>
+        </div>
+
+        <!-- 매물 2: 고풍 한복 피카츄 키링 2종 -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 144%</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">고풍에디션 전통 한복 피카츄 LED 키링 2종 세트</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold text-emerald-400">+72,000원</div>
+              <div class="text-[10px] text-slate-400">예상 순마진</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-slate-500 block text-[10px]">국내 당근/번장 매입가</span>
+              <span class="font-semibold text-slate-300">40,000 ~ 50,000원</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">이베이 리스팅 초안 세팅</span>
+              <span class="font-semibold text-sky-400">$115.00 (K-Packet $8.50)</span>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <a href="https://www.daangn.com/search/%ED%95%9C%EB% Bok%20%ED%94%BC%EC%20%EC%B9%B4%EC%B8%84%20%ED%82%A4%EB%A7%81" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
+              당근마켓 매물 보기
+            </a>
+            <button onclick="switchTab('listing')" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
+              BayFlow 출품 대기함 ➔
             </button>
           </div>
         </div>
 
-        <!-- Item 2 -->
+        <!-- 매물 3: 메타몽 디토 프로모 -->
         <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
           <div class="flex items-start justify-between">
             <div>
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 52%</span>
-              <h3 class="font-bold text-slate-100 text-sm mt-1">메타몽 프로젝트 디토 173/SV-P 밀봉</h3>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 52.1%</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">메타몽 프로젝트 디토 173/SV-P 밀봉 프로모</h3>
             </div>
             <div class="text-right">
               <div class="text-xs font-bold text-emerald-400">+48,500원</div>
@@ -670,21 +784,56 @@
           </div>
           <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
             <div>
-              <span class="text-slate-500 block text-[10px]">국내 중고나라 시세</span>
+              <span class="text-slate-500 block text-[10px]">국내 중고나라/번장 시세</span>
               <span class="font-semibold text-slate-300">70,000 ~ 75,000원</span>
             </div>
             <div>
-              <span class="text-slate-500 block text-[10px]">이베이 최근 거래가 (Sold)</span>
+              <span class="text-slate-500 block text-[10px]">이베이 최근 체결가 (Sold)</span>
               <span class="font-semibold text-sky-400">$125.00 (실제 판매 완료)</span>
             </div>
           </div>
           <div class="flex space-x-2">
-            <button class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition">
-              국내 매물 알림 켜기
-            </button>
-            <button class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition">
-              추가 리스팅
-            </button>
+            <a href="https://web.joongna.com/search/%EB%A9%94%ED%83%80%EB%AA%BD%20173%2FSV-P" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
+              중고나라 매물 보기
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Pokemon+Ditto+173%2FSV-P+Korean&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
+              eBay 체결가 확인
+            </a>
+          </div>
+        </div>
+
+        <!-- 매물 4: 산타크루즈 포켓몬 스케이트보드 -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">네고 필요 (EMS 전용)</span>
+              <h3 class="font-bold text-slate-100 text-sm mt-1">포켓몬 x 산타크루즈 스케이트보드 3종 세트</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-bold text-amber-400">+15~20만 원</div>
+              <div class="text-[10px] text-slate-400">75만 네고 시 마진</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-slate-500 block text-[10px]">당근마켓 희망가 (네고목표)</span>
+              <span class="font-semibold text-slate-300">90만 원 ➔ 75~80만 원</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">이베이 3종 Sold 합산</span>
+              <span class="font-semibold text-sky-400">$850.00 ~ $950.00</span>
+            </div>
+          </div>
+          <p class="text-[10px] text-amber-300/90 leading-tight">
+            ⚠️ 길이 80cm로 K-Packet 발송 원천 불가 (EMS 배송비 약 7~8만 원 소요, 90만 원 정가 매입 금물)
+          </p>
+          <div class="flex space-x-2">
+            <a href="https://www.daangn.com/search/%EC%82%B0%ED%83%80%ED%81%AC%EB%A3%A8%EC%A6%88%20%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
+              당근 매물 보기
+            </a>
+            <a href="https://www.ebay.com/sch/i.html?_nkw=Santa+Cruz+Pokemon+Skateboard+deck&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
+              eBay 체결가 확인
+            </a>
           </div>
         </div>
       </div>
@@ -1282,9 +1431,33 @@
       renderPhotoPreviews();
     }
 
+    // Sourcing Radar Search Engine Handlers
+    function setSourcingKeyword(kw) {
+      document.getElementById('sourcing-search-keyword').value = kw;
+      executeSourcingSearch();
+    }
+
+    function executeSourcingSearch() {
+      const kw = document.getElementById('sourcing-search-keyword').value.trim();
+      if (!kw) {
+        showToast('검색할 상품명을 입력해 주세요.', '⚠️');
+        return;
+      }
+
+      const enc = encodeURIComponent(kw);
+      document.getElementById('btn-link-bunjang').href = `https://m.bunjang.co.kr/search/products?q=${enc}`;
+      document.getElementById('btn-link-daangn').href = `https://www.daangn.com/search/${enc}`;
+      document.getElementById('btn-link-joongna').href = `https://web.joongna.com/search/${enc}`;
+      document.getElementById('btn-link-google').href = `https://www.google.com/search?tbm=shop&q=${enc}`;
+      document.getElementById('btn-link-ebay').href = `https://www.ebay.com/sch/i.html?_nkw=${enc}&LH_Sold=1&LH_Complete=1`;
+
+      document.getElementById('sourcing-target-title').innerText = `🎯 '${kw}' 4대 마켓 + eBay Sold 실시간 매칭`;
+      showToast(`'${kw}' 4대 마켓 및 이베이 실거래 링크 연동 완료!`, '🎯');
+    }
+
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=4').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=5').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }
