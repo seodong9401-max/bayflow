@@ -329,6 +329,32 @@
             </div>
           </div>
 
+          <!-- 사진 첨부 및 갤러리 미리보기 -->
+          <div>
+            <div class="flex items-center justify-between text-xs mb-1">
+              <label class="text-slate-300 font-medium flex items-center space-x-1">
+                <span>📸</span>
+                <span>상품 실물 사진</span>
+              </label>
+              <span id="photo-count-badge" class="text-[11px] text-slate-400">0 / 24장</span>
+            </div>
+            
+            <input type="file" id="listing-photo-input" multiple accept="image/*" class="hidden" onchange="handlePhotoUpload(this)">
+            
+            <div id="photo-dropzone" onclick="document.getElementById('listing-photo-input').click()" class="border-2 border-dashed border-slate-700 hover:border-indigo-500/70 rounded-xl p-3 text-center cursor-pointer transition bg-slate-950/60 active:scale-98">
+              <div class="flex flex-col items-center space-y-1">
+                <div class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm font-bold">
+                  ➕
+                </div>
+                <div class="text-xs text-slate-200 font-bold">폰 앨범 또는 카메라에서 사진 추가</div>
+                <p class="text-[10px] text-slate-400">최대 24장 동시 선택 가능 · 탭하여 사진 올리기</p>
+              </div>
+            </div>
+
+            <!-- 썸네일 미리보기 그리드 -->
+            <div id="photo-preview-grid" class="hidden grid grid-cols-4 gap-2 mt-2"></div>
+          </div>
+
           <button onclick="submitQuickListing()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition active:scale-98 shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-1.5 mt-2">
             <span>🚀</span>
             <span>eBay 공식 API로 리스팅 생성하기</span>
@@ -1190,6 +1216,56 @@
       }
     }
 
+    let uploadedPhotos = [];
+
+    function handlePhotoUpload(input) {
+      const files = Array.from(input.files);
+      if (!files.length) return;
+
+      files.forEach((file) => {
+        if (uploadedPhotos.length >= 24) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          uploadedPhotos.push({
+            id: Date.now() + Math.random(),
+            src: e.target.result,
+            name: file.name
+          });
+          renderPhotoPreviews();
+        };
+        reader.readAsDataURL(file);
+      });
+      input.value = '';
+    }
+
+    function renderPhotoPreviews() {
+      const grid = document.getElementById('photo-preview-grid');
+      const badge = document.getElementById('photo-count-badge');
+      badge.innerText = `${uploadedPhotos.length} / 24장`;
+
+      if (uploadedPhotos.length === 0) {
+        grid.classList.add('hidden');
+        grid.innerHTML = '';
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      grid.innerHTML = uploadedPhotos.map((photo, idx) => `
+        <div class="relative group rounded-lg overflow-hidden border ${idx === 0 ? 'border-indigo-500 ring-2 ring-indigo-500/30' : 'border-slate-800'} bg-slate-950 aspect-square">
+          <img src="${photo.src}" class="w-full h-full object-cover" alt="미리보기">
+          ${idx === 0 ? '<span class="absolute top-1 left-1 bg-indigo-600 text-[9px] font-bold text-white px-1 py-0.2 rounded shadow">대표</span>' : ''}
+          <button onclick="removePhoto(${idx}); event.stopPropagation();" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-slate-900/80 hover:bg-rose-600 text-white text-[11px] flex items-center justify-center transition shadow">
+            ✕
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function removePhoto(idx) {
+      uploadedPhotos.splice(idx, 1);
+      renderPhotoPreviews();
+    }
+
     function submitQuickListing() {
       const title = document.getElementById('quick-listing-title').value.trim();
       const price = document.getElementById('quick-listing-price').value.trim();
@@ -1197,15 +1273,18 @@
         showToast('상품명과 판매 희망가를 입력해 주세요.', '⚠️');
         return;
       }
-      showToast(`⚡ eBay API 초안 등록 완료: '${title}' ($${price}) - 락 해제 후 원클릭 출품 대기`, '📝');
+      const photoMsg = uploadedPhotos.length > 0 ? ` (사진 ${uploadedPhotos.length}장 첨부)` : '';
+      showToast(`⚡ eBay API 초안 등록 완료: '${title}' ($${price})${photoMsg} - 락 해제 후 원클릭 출품 대기`, '📝');
       document.getElementById('quick-listing-title').value = '';
       document.getElementById('quick-listing-price').value = '';
       document.getElementById('title-char-count').innerText = '0 / 80자';
+      uploadedPhotos = [];
+      renderPhotoPreviews();
     }
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=3').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=4').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }

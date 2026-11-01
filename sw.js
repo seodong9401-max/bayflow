@@ -1,5 +1,5 @@
-// BayFlow Service Worker v3 (Network-First with Instant Update)
-const CACHE_NAME = 'bayflow-v3';
+// BayFlow Service Worker v4 (Photo Upload & Listing Engine)
+const CACHE_NAME = 'bayflow-v4';
 const ASSETS = [
   './',
   './index.html',
