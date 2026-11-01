@@ -1,5 +1,5 @@
-// BayFlow Service Worker v11 (Dedicated Research & Draw Radar Tabs with Horizontal Glide Bar)
-const CACHE_NAME = 'bayflow-v11';
+// BayFlow Service Worker v12 (Original 5-Grid Navigation & Full All-Categories Hub with Draw Radar Engine)
+const CACHE_NAME = 'bayflow-v12';
 const ASSETS = [
   './',
   './index.html',
