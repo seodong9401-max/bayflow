@@ -1,5 +1,5 @@
-// BayFlow Service Worker v22 (10-Channel Sourcing Pipeline & Clean Architecture)
-const CACHE_NAME = 'bayflow-v22';
+// BayFlow Service Worker v23 (eBay Real Orders & Korea Post K-Packet Integration)
+const CACHE_NAME = 'bayflow-v23';
 const ASSETS = [
   './',
   './index.html',
