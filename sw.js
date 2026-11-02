@@ -1,5 +1,5 @@
-// BayFlow Service Worker v21 (Unified Sourcing Engine & Clean Architecture)
-const CACHE_NAME = 'bayflow-v21';
+// BayFlow Service Worker v22 (10-Channel Sourcing Pipeline & Clean Architecture)
+const CACHE_NAME = 'bayflow-v22';
 const ASSETS = [
   './',
   './index.html',
