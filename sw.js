@@ -1,5 +1,5 @@
-// BayFlow Service Worker v18 (Dynamic Trends Pool & Shuffler)
-const CACHE_NAME = 'bayflow-v18';
+// BayFlow Service Worker v19 (Korean Sourcing Titles, Volumetric Weight & Full Category Fee Sync)
+const CACHE_NAME = 'bayflow-v19';
 const ASSETS = [
   './',
   './index.html',
