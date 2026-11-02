@@ -1228,6 +1228,24 @@
                 이베이 Sold 직통 ➔
               </a>
             </div>
+
+            <!-- 🤖 매일 새벽 무인 자동 갱신 툴바 & 다른 추천 새로고침 -->
+            <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs shadow">
+              <div class="flex items-center space-x-1.5 text-slate-400 text-[11px]">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="trend-update-time">매일 06:00 자동 갱신 (36개 꿀템 풀)</span>
+              </div>
+              <div class="flex items-center space-x-1.5">
+                <button type="button" onclick="shuffleVerifiedItems()" class="px-2.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-[11px] flex items-center space-x-1 border border-amber-500/40 transition active:scale-95 shadow">
+                  <span>🔄</span>
+                  <span>다른 추천 보기</span>
+                </button>
+                <button type="button" onclick="fetchVerifiedItemsCloud()" class="px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] flex items-center space-x-1 transition active:scale-95 shadow">
+                  <span>⚡</span>
+                  <span>동기화</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2051,6 +2069,7 @@
       } else if (subTabId === 'research') {
         selectResearchCategory(currentResearchCat);
       } else if (subTabId === 'verified') {
+        fetchVerifiedItemsCloud(true);
         renderVerifiedItems();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2776,12 +2795,45 @@
       renderVerifiedItems();
     }
 
+    let activeVerifiedItems = [...VERIFIED_ITEMS];
+
+    async function fetchVerifiedItemsCloud(silent = false) {
+      try {
+        const resp = await fetch('./data/verified_items.json?t=' + Date.now());
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && Array.isArray(data.items) && data.items.length > 0) {
+            activeVerifiedItems = data.items;
+            const timeElem = document.getElementById('trend-update-time');
+            if (timeElem && data.updatedAt) {
+              timeElem.innerText = `갱신: ${data.updatedAt} (${data.items.length}개 꿀템 풀)`;
+            }
+            if (!silent) showToast(`최신 트렌드 ${data.items.length}개 꿀템 동기화 완료! ⚡`, '🤖');
+            renderVerifiedItems();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not fetch cloud verified items, fallback to local pool:', e);
+      }
+      if (!silent) showToast('기본 검증 추천 데이터가 활성화되었습니다.', 'ℹ️');
+    }
+
+    function shuffleVerifiedItems() {
+      for (let i = activeVerifiedItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeVerifiedItems[i], activeVerifiedItems[j]] = [activeVerifiedItems[j], activeVerifiedItems[i]];
+      }
+      showToast('새로운 추천 매물로 교체되었습니다! 🎲', '🔄');
+      renderVerifiedItems();
+    }
+
     function renderVerifiedItems() {
       const container = document.getElementById('verified-items-container');
       if (!container) return;
       const q = (document.getElementById('verified-search-input')?.value || '').trim().toLowerCase();
 
-      let items = VERIFIED_ITEMS.filter(it => {
+      let items = activeVerifiedItems.filter(it => {
         if (currentVerifiedFilter !== 'all' && it.category !== currentVerifiedFilter) return false;
         if (!q) return true;
         const text = (it.title + ' ' + it.ebayTitle + ' ' + (it.tags || []).join(' ')).toLowerCase();

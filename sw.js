@@ -1,5 +1,5 @@
-// BayFlow Service Worker v17 (10 Full Sourcing Categories & Dynamic eBay Sold Bridge)
-const CACHE_NAME = 'bayflow-v17';
+// BayFlow Service Worker v18 (Dynamic Trends Pool & Shuffler)
+const CACHE_NAME = 'bayflow-v18';
 const ASSETS = [
   './',
   './index.html',
@@ -26,9 +26,9 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Network-First for HTML/Navigation, Cache-First for others
+// Network-First for HTML/Navigation and data files, Cache-First for static assets
 self.addEventListener('fetch', (e) => {
-  if (e.request.mode === 'navigate' || e.request.url.includes('index.html') || e.request.url.endsWith('/bayflow/')) {
+  if (e.request.mode === 'navigate' || e.request.url.includes('index.html') || e.request.url.endsWith('/bayflow/') || e.request.url.includes('verified_items.json')) {
     e.respondWith(
       fetch(e.request)
         .then((res) => {
