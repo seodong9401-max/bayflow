@@ -1,5 +1,5 @@
-// BayFlow Service Worker v27 (Sender #1 Single Address & E-post Custom Registration Mapping)
-const CACHE_NAME = 'bayflow-v27';
+// BayFlow Service Worker v28 (eBay Raw vs E-post Side-by-Side Comparison & Chrome Bookmarklet Tool)
+const CACHE_NAME = 'bayflow-v28';
 const ASSETS = [
   './',
   './index.html',
