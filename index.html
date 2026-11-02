@@ -28,567 +28,7 @@
           }
         }
       }
-    }
-
-    // K-Packet 100x150 라벨 인쇄 모달 제어 (SL43 감열 회전 출력)
-    function openKpacketPrintModal(tracking, title, buyer, addr, weight, val) {
-      document.getElementById('modal-print-tracking').innerText = tracking;
-      document.getElementById('modal-print-buyer').innerText = `${buyer} (USA)`;
-      document.getElementById('preview-mini-tracking').innerText = tracking;
-      document.getElementById('preview-mini-buyer').innerText = buyer;
-      document.getElementById('modal-kpacket-print').classList.remove('hidden');
-    }
-
-    function closeKpacketPrintModal() {
-      document.getElementById('modal-kpacket-print').classList.add('hidden');
-    }
-
-    function triggerPrintKpacket() {
-      const tracking = document.getElementById('modal-print-tracking').innerText;
-      showToast(`${tracking} 송장 인쇄창을 엽니다. (100×150mm 여백 0 설정)`, '🖨️');
-      
-      const printWin = window.open('', '_blank', 'width=450,height=650');
-      if (printWin) {
-        printWin.document.write(`
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <title>K-Packet 송장 인쇄 - ${tracking}</title>
-            <style>
-              @page { size: 100mm 150mm portrait; margin: 0; }
-              body { margin: 0; padding: 4mm; font-family: -apple-system, sans-serif; background: #fff; color: #000; box-sizing: border-box; }
-              .label-box { width: 92mm; height: 142mm; border: 2px solid #000; padding: 3mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
-              .header { border-bottom: 2px solid #000; padding-bottom: 2mm; display: flex; justify-content: space-between; align-items: center; }
-              .tracking { font-family: monospace; font-size: 16px; font-weight: bold; }
-              .address-sec { padding: 3mm 0; border-bottom: 1px solid #000; font-size: 11px; line-height: 1.4; }
-              .customs-sec { padding: 2mm 0; font-size: 10px; border-bottom: 1px solid #000; }
-              .barcode-box { text-align: center; padding-top: 3mm; }
-              .barcode-lines { font-family: monospace; font-size: 26px; letter-spacing: 2px; font-weight: bold; }
-            </style>
-          </head>
-          <body>
-            <div class="label-box">
-              <div class="header">
-                <b>KOREA POST K-Packet</b>
-                <span class="tracking">${tracking}</span>
-              </div>
-              <div class="address-sec">
-                <b>FROM:</b> (YUL)컴퍼니 / 서광주우체국 (TEL: 010-5686-1424)<br>
-                Gwangju, Republic of Korea
-              </div>
-              <div class="address-sec">
-                <b>TO:</b> and_550413 (USA)<br>
-                123 Market St, Apt 4B<br>
-                San Francisco, CA 94105, United States
-              </div>
-              <div class="customs-sec">
-                <b>CUSTOMS DECLARATION (CN22)</b><br>
-                1. Item: Trading Card Game / Collectibles<br>
-                2. Weight: 80g | Value: $125.00 USD | Origin: KR<br>
-                3. HS Code: 9504.40.0000 (IOSS: IM2760000427)
-              </div>
-              <div class="barcode-box">
-                <div class="barcode-lines">||| | ||||| |||| | |||||||| |||</div>
-                <div class="tracking">${tracking}</div>
-              </div>
-            </div>
-            <script>
-              window.onload = function() { window.print(); };
-            <\/script>
-          </body>
-          </html>
-        `);
-        printWin.document.close();
-      } else {
-        window.print();
-      }
-    }
-
-    // 국세청 부가세 영세율 신고용 수출실적명세서 CSV 다운로드
-    function downloadTaxExportCsv() {
-      const rows = [
-        ['주문번호', '주문일시', '바이어', '수출국가', '품목명', 'K-Packet등기번호', '통화', '결제금액(USD)', '적용환율', '원화환산액(KRW)', 'HS코드', '영세율구분'],
-        ['26-1028-4401', '2026-11-01 14:22', 'and_550413', 'US', 'Pokemon TCG Ditto 173/SV-P Promo', 'LP192837465KR', 'USD', '125.00', '1380', '172500', '9504.40.0000', '수출실적명세서(영세율)'],
-        ['26-1025-1102', '2026-10-25 18:05', 'darkrain65', 'AU', 'Mega Charizard X ex SAR 110/080', 'LP881023941KR', 'USD', '185.00', '1380', '255300', '9504.40.0000', '수출실적명세서(영세율)'],
-        ['26-1022-9012', '2026-10-22 09:30', 'jafarph0', 'BN', 'Mega Festa Magikarp Promo 040/M-P', 'LP982341203KR', 'USD', '48.00', '1380', '66240', '9504.40.0000', '수출실적명세서(영세율)']
-      ];
-
-      const csvContent = '\uFEFF' + rows.map(e => e.join(',')).join('\n');
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `eBay_수출실적명세서_영세율_${new Date().toISOString().slice(0, 10)}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast('국세청 영세율 신고용 수출실적 엑셀(CSV) 다운로드 완료!', '📑');
-    }
-
-
-    // 📈 12대 테마 글로벌 리서치 데이터베이스 (카테고리별 베스트셀러 & 팩트 지표)
-    const RESEARCH_CATEGORIES = {
-      pokemon: {
-        title: '🃏 포켓몬 / 트레이딩카드 베스트셀러',
-        desc: '해외 포덕 & 수집가들의 절대적인 한정판·SAR·밀봉 프로모 수요',
-        keywords: [
-          { label: '메가 리자몽 X ex SAR', q: '메가 리자몽 X ex SAR' },
-          { label: '한복 피카츄 키링', q: '고풍 피카츄' },
-          { label: '메타몽 173/SV-P', q: '메타몽 프로젝트 디토' },
-          { label: '한글판 뮤 ex SAR', q: '뮤 ex SAR' },
-          { label: '포켓몬 151 한국판 박스', q: '포켓몬 151 박스' },
-          { label: '테라스탈 데뷔 한글판', q: '테라스탈 데뷔' }
-        ],
-        items: [
-          { name: '포켓몬 메가 리자몽 X ex SAR 110/080 M2', buyKrw: 140000, soldUsd: 195.0, profit: '+63,800원', speed: '30일 18건 체결 · 성공률 88%', ebayQ: 'Mega+Charizard+X+ex+SAR+110%2F080', ship: 'card' },
-          { name: '전통 한복 피카츄 LED 라이트 키링 2종', buyKrw: 45000, soldUsd: 115.0, profit: '+72,000원', speed: '30일 8건 체결 · 성공률 92%', ebayQ: 'Pokemon+Korea+Hanbok+Pikachu+LED+keyring', ship: 'card' },
-          { name: '메타몽 프로젝트 디토 173/SV-P 밀봉 프로모', buyKrw: 72000, soldUsd: 125.0, profit: '+48,500원', speed: '30일 22건 체결 · 성공률 95%', ebayQ: 'Pokemon+Ditto+173%2FSV-P+Promo', ship: 'card' },
-          { name: '30주년 한글판 뮤 ex SAR 205/165', buyKrw: 35000, soldUsd: 65.0, profit: '+28,200원', speed: '30일 14건 체결 · 성공률 82%', ebayQ: 'Pokemon+Mew+ex+SAR+Korean+205%2F165', ship: 'card' }
-        ]
-      },
-      sneakers: {
-        title: '👟 나이키 / 스니커즈 한정판',
-        desc: '해외 품절 국내 한정 컬러 & KREAM 바닥가와 글로벌 체결가 갭투자',
-        keywords: [
-          { label: '조던 1 로우 골프', q: '나이키 조던 1 로우 골프' },
-          { label: '아디다스 삼바 OG', q: '아디다스 삼바 OG' },
-          { label: '덩크 로우 레트로', q: '나이키 덩크 로우' },
-          { label: '아디다스 가젤 인도어', q: '아디다스 가젤 인도어' },
-          { label: '아식스 젤 카야노 14', q: '아식스 젤 카야노 14' }
-        ],
-        items: [
-          { name: '나이키 에어 조던 1 로우 골프 울프 그레이', buyKrw: 168000, soldUsd: 235.0, profit: '+51,200원', speed: '30일 34건 체결 · 성공률 79%', ebayQ: 'Air+Jordan+1+Low+Golf+Wolf+Grey', ship: 'shoes' },
-          { name: '아디다스 삼바 OG 화이트 블랙 (KREAM 소싱)', buyKrw: 115000, soldUsd: 155.0, profit: '+36,400원', speed: '30일 58건 체결 · 성공률 85%', ebayQ: 'Adidas+Samba+OG+White+Black', ship: 'shoes' },
-          { name: '아식스 젤 카야노 14 크림 블랙', buyKrw: 198000, soldUsd: 270.0, profit: '+64,500원', speed: '30일 26건 체결 · 성공률 81%', ebayQ: 'Asics+Gel+Kayano+14+Cream+Black', ship: 'shoes' }
-        ]
-      },
-      lol: {
-        title: '🎮 롤 / T1 / e스포츠 글로벌 굿즈',
-        desc: 'Faker 페이커 유니폼, 월즈 챔피언십 배지 & 전세계 롤 팬덤 필수품',
-        keywords: [
-          { label: 'T1 유니폼 페이커', q: 'T1 유니폼 페이커' },
-          { label: 'T1 월즈 우승 자켓', q: 'T1 월즈 챔피언' },
-          { label: '롤 아케인 굿즈', q: '롤 아케인' },
-          { label: 'LCK 공식 응원봉', q: 'LCK 굿즈' }
-        ],
-        items: [
-          { name: 'T1 Faker 페이커 공식 마킹 월즈 유니폼', buyKrw: 145000, soldUsd: 220.0, profit: '+78,000원', speed: '30일 19건 체결 · 성공률 94%', ebayQ: 'T1+Faker+Jersey+Worlds', ship: 'clothing' },
-          { name: 'T1 공식 챔피언스 키링 세트', buyKrw: 28000, soldUsd: 65.0, profit: '+34,500원', speed: '30일 15건 체결 · 성공률 88%', ebayQ: 'T1+League+of+Legends+Keyring', ship: 'card' }
-        ]
-      },
-      starbucks: {
-        title: '☕ 스타벅스 코리아 리미티드 MD',
-        desc: '한국 스타벅스 한정 디자인, 스탠리 콜라보 & 해외 직구족 최고 인기',
-        keywords: [
-          { label: '스타벅스 스탠리 텀블러', q: '스타벅스 스탠리 텀블러' },
-          { label: '스타벅스 시티 머그 서울', q: '스타벅스 시티머그 서울' },
-          { label: '스타벅스 할로윈 MD', q: '스타벅스 할로윈' },
-          { label: '스타벅스 한복 베어리스타', q: '스타벅스 베어리스타 한복' }
-        ],
-        items: [
-          { name: '스타벅스 코리아 x 스탠리 스트로 보온 텀블러 591ml', buyKrw: 39000, soldUsd: 78.0, profit: '+35,200원', speed: '30일 28건 체결 · 성공률 89%', ebayQ: 'Starbucks+Korea+Stanley+Tumbler', ship: 'shoes' },
-          { name: '스타벅스 코리아 전통 한복 베어리스타 키체인', buyKrw: 26000, soldUsd: 62.0, profit: '+31,000원', speed: '30일 16건 체결 · 성공률 90%', ebayQ: 'Starbucks+Korea+Bearista+Hanbok', ship: 'card' }
-        ]
-      },
-      kbeauty: {
-        title: '💄 올리브영 K-뷰티 베스트셀러',
-        desc: '해외 틱톡/유튜브 바이럴 스킨케어, 국내 할인가 매입 후 글로벌 마진',
-        keywords: [
-          { label: '조선미녀 맑은쌀 선크림', q: '조선미녀 선크림' },
-          { label: '토리든 다이브인 세럼', q: '토리든 다이브인' },
-          { label: '아누아 어성초 토너', q: '아누아 토너' },
-          { label: '코스알엑스 달팽이 크림', q: '코스알엑스 달팽이' },
-          { label: '메디큐브 제로 모공패드', q: '메디큐브 모공패드' }
-        ],
-        items: [
-          { name: '조선미녀 맑은쌀 선크림 50ml 2개 세트', buyKrw: 22000, soldUsd: 48.0, profit: '+23,400원', speed: '30일 65건 체결 · 성공률 96%', ebayQ: 'Beauty+of+Joseon+Sunscreen', ship: 'card' },
-          { name: '아누아 어성초 77 진정 토너 250ml 대용량', buyKrw: 18000, soldUsd: 42.0, profit: '+19,800원', speed: '30일 42건 체결 · 성공률 91%', ebayQ: 'Anua+Heartleaf+77+Toner', ship: 'clothing' }
-        ]
-      },
-      kfashion: {
-        title: '👕 K-스트릿 패션 & 도메스틱',
-        desc: '마뗑킴, 아더에러, 디스이즈네버댓 등 K-패션 해외 정품 품귀 현상',
-        keywords: [
-          { label: '마뗑킴 아코디언 지갑', q: '마뗑킴 지갑' },
-          { label: '아더에러 로고 티셔츠', q: '아더에러 티셔츠' },
-          { label: '디스이즈네버댓 후드', q: '디스이즈네버댓' },
-          { label: '떠그클럽 캡 모자', q: '떠그클럽 모자' }
-        ],
-        items: [
-          { name: '마뗑킴 아코디언 카드 포켓 지갑 블랙', buyKrw: 42000, soldUsd: 85.0, profit: '+41,500원', speed: '30일 31건 체결 · 성공률 93%', ebayQ: 'Matin+Kim+Accordion+Card+Wallet', ship: 'card' },
-          { name: '아더에러 시그니처 로고 반팔 티셔츠', buyKrw: 89000, soldUsd: 145.0, profit: '+52,000원', speed: '30일 14건 체결 · 성공률 86%', ebayQ: 'Ader+Error+T-Shirt', ship: 'clothing' }
-        ]
-      },
-      sanrio: {
-        title: '🧸 산리오 / 라부부 / 캐릭터 피규어',
-        desc: '팝마트 라부부 블라인드 박스, 한국 한정 산리오 키링 폭발적 인기',
-        keywords: [
-          { label: '팝마트 라부부 마카롱', q: '라부부 마카롱' },
-          { label: '산리오 시나모롤 키링', q: '시나모롤 키링' },
-          { label: '쿠로미 한정판 인형', q: '쿠로미 인형' },
-          { label: '먼작귀 치이카와 마스코트', q: '치이카와 키링' }
-        ],
-        items: [
-          { name: '팝마트 라부부 더 몬스터 마카롱 블라인드 박스', buyKrw: 32000, soldUsd: 82.0, profit: '+44,000원', speed: '30일 72건 체결 · 성공률 98%', ebayQ: 'Pop+Mart+Labubu+Macaron', ship: 'clothing' },
-          { name: '치이카와 한국 한정 팝업 마스코트 키링', buyKrw: 18000, soldUsd: 54.0, profit: '+32,200원', speed: '30일 35건 체결 · 성공률 94%', ebayQ: 'Chiikawa+Korea+popup+keychain', ship: 'card' }
-        ]
-      },
-      kpop: {
-        title: '🎤 K-POP 공식 포토카드 & 굿즈',
-        desc: 'BTS, 스트레이키즈, 에스파, 뉴진스 럭키드로우 및 공방 미공포',
-        keywords: [
-          { label: 'BTS 럭키드로우 포카', q: 'BTS photocard' },
-          { label: '스트레이키즈 사운드웨이브', q: '스트레이키즈 포카' },
-          { label: '뉴진스 위버스 포토카드', q: '뉴진스 포카' },
-          { label: '에스파 아르마겟돈 포카', q: '에스파 포카' }
-        ],
-        items: [
-          { name: '스트레이키즈 사운드웨이브 럭키드로우 포토카드', buyKrw: 25000, soldUsd: 68.0, profit: '+39,500원', speed: '30일 48건 체결 · 성공률 97%', ebayQ: 'Stray+Kids+Soundwave+Lucky+Draw', ship: 'card' },
-          { name: '에스파 아르마겟돈 카리나 한정 미공포', buyKrw: 38000, soldUsd: 88.0, profit: '+46,000원', speed: '30일 39건 체결 · 성공률 95%', ebayQ: 'Aespa+Karina+photocard', ship: 'card' }
-        ]
-      },
-      cinema: {
-        title: '🎬 영화관 한정판 굿즈 (TTT · 오티)',
-        desc: 'CGV TTT, 메가박스 오리지널 티켓 등 가볍고 단가 높은 종이 굿즈',
-        keywords: [
-          { label: 'CGV TTT 티켓 한정판', q: 'CGV TTT 티켓' },
-          { label: '메가박스 오리지널 티켓', q: '메가박스 오리지널 티켓' },
-          { label: '룩백 극장판 특전', q: '룩백 특전' },
-          { label: '하이큐 극장판 아트카드', q: '하이큐 아트카드' }
-        ],
-        items: [
-          { name: '메가박스 극장판 애니메이션 오리지널 티켓 세트', buyKrw: 15000, soldUsd: 52.0, profit: '+36,400원', speed: '30일 25건 체결 · 성공률 92%', ebayQ: 'Megabox+Original+Ticket+Korea', ship: 'card' },
-          { name: 'CGV TTT 넘버링 한정판 티켓 컬렉션', buyKrw: 16000, soldUsd: 55.0, profit: '+38,500원', speed: '30일 19건 체결 · 성공률 90%', ebayQ: 'CGV+TTT+Ticket+Korea', ship: 'card' }
-        ]
-      },
-      kfood: {
-        title: '🍜 K-푸드 / 불닭 / 스낵',
-        desc: '불닭 시리즈 신작, 허니버터칩, 한정판 스낵 세트 해외 직배송',
-        keywords: [
-          { label: '삼양 불닭볶음면 카르보', q: '불닭 카르보' },
-          { label: '오리온 초코파이 하우스', q: '오리온 초코파이' },
-          { label: '해태 허니버터칩', q: '허니버터칩' },
-          { label: '맥심 모카골드 마일드', q: '맥심 모카골드' }
-        ],
-        items: [
-          { name: '삼양 불닭볶음면 한정 에디션 4개입 4팩 세트', buyKrw: 18000, soldUsd: 46.0, profit: '+19,500원', speed: '30일 55건 체결 · 성공률 92%', ebayQ: 'Samyang+Buldak+Noodles+pack', ship: 'clothing' }
-        ]
-      },
-      nintendo: {
-        title: '👾 닌텐도 / 레고 키덜트',
-        desc: '포켓몬 OLED 한정판 본체, 한국 정발 패키지 & 레고 수집품',
-        keywords: [
-          { label: '닌텐도 스위치 OLED 포켓몬', q: '스위치 OLED 포켓몬' },
-          { label: '젤다의 전설 티어스 코리아', q: '젤다 티어스' },
-          { label: '레고 스타워즈 UCS', q: '레고 스타워즈 UCS' }
-        ],
-        items: [
-          { name: '닌텐도 스위치 OLED 스칼렛 바이올렛 에디션 본체', buyKrw: 360000, soldUsd: 410.0, profit: '+75,000원', speed: '30일 12건 체결 · 성공률 83%', ebayQ: 'Nintendo+Switch+OLED+Pokemon+Edition', ship: 'shoes' }
-        ]
-      },
-      tradition: {
-        title: '🏺 국립중앙박물관 뮷즈 (한국 전통)',
-        desc: '반가사유상 미니어처, 고려청자 잔, 자개 스마트폰 케이스 등 K-컬처',
-        keywords: [
-          { label: '국립박물관 반가사유상 미니어처', q: '반가사유상 미니어처' },
-          { label: '까치호랑이 머그컵', q: '까치호랑이 머그' },
-          { label: '청자 잔 세트', q: '고려청자 잔' }
-        ],
-        items: [
-          { name: '국립중앙박물관 반가사유상 파스텔 미니어처 ver.3', buyKrw: 59000, soldUsd: 115.0, profit: '+48,000원', speed: '30일 17건 체결 · 성공률 91%', ebayQ: 'National+Museum+Korea+Maitreya+figure', ship: 'clothing' },
-          { name: '고려청자 운학문 미니 잔 세트 (고급 오동나무함)', buyKrw: 35000, soldUsd: 79.0, profit: '+37,500원', speed: '30일 11건 체결 · 성공률 87%', ebayQ: 'Korean+Celadon+Teacup+Set', ship: 'clothing' }
-        ]
-      }
     };
-
-    function selectResearchCategory(catKey) {
-      const cat = RESEARCH_CATEGORIES[catKey];
-      if (!cat) return;
-
-      const titleEl = document.getElementById('rcat-active-title');
-      if (titleEl) titleEl.innerText = cat.title;
-
-      const descEl = document.getElementById('rcat-active-desc');
-      if (descEl) descEl.innerText = cat.desc;
-
-      Object.keys(RESEARCH_CATEGORIES).forEach(k => {
-        const btn = document.getElementById(`rcat-btn-${k}`);
-        if (!btn) return;
-        if (k === catKey) {
-          btn.className = 'py-2 px-1.5 rounded-2xl bg-indigo-600 text-white border border-indigo-400 font-bold transition text-center active:scale-95 shadow-lg shadow-indigo-600/30';
-        } else {
-          btn.className = 'py-2 px-1.5 rounded-2xl bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium transition text-center active:scale-95';
-        }
-      });
-
-      // 키워드 칩 렌더링
-      const container = document.getElementById('rcat-keyword-container');
-      if (container) {
-        container.innerHTML = cat.keywords.map(kw => `
-          <button type="button" onclick="sendToSourcingAnalysis('${kw.q}')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-indigo-600 text-slate-200 hover:text-white border border-slate-700/80 transition text-xs font-semibold active:scale-95 flex items-center space-x-1 shadow-sm">
-            <span>${kw.label}</span>
-            <span class="text-indigo-400 group-hover:text-white">➔</span>
-          </button>
-        `).join('');
-      }
-
-      // 카테고리별 실전 매물 카드 렌더링
-      const itemsContainer = document.getElementById('rcat-items-container');
-      if (itemsContainer && cat.items) {
-        itemsContainer.innerHTML = cat.items.map(item => `
-          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 hover:border-indigo-500/40 transition">
-            <div class="flex items-start justify-between">
-              <div>
-                <h4 class="text-xs font-bold text-slate-100">${item.name}</h4>
-                <p class="text-[10px] text-emerald-400 font-bold mt-0.5">🔥 ${item.speed}</p>
-              </div>
-              <div class="text-right">
-                <span class="text-xs font-black text-emerald-400">${item.profit}</span>
-                <div class="text-[9px] text-slate-400">예상 순마진</div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
-              <div>
-                <span class="text-[10px] text-slate-400 block">국내 매입 기준가</span>
-                <span class="font-bold text-slate-200">${item.buyKrw.toLocaleString()}원</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">eBay Sold 실체결가</span>
-                <span class="font-bold text-indigo-300">$${item.soldUsd.toFixed(1)}</span>
-              </div>
-            </div>
-
-            <div class="flex space-x-1.5 pt-1">
-              <a href="https://www.ebay.com/sch/i.html?_nkw=${item.ebayQ}&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
-                eBay Sold 실체결
-              </a>
-              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(item.name)}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-[11px] rounded-xl text-center transition">
-                국내 최저가 소싱
-              </a>
-              <button onclick="sendToSourcingAnalysis('${item.name}', ${item.buyKrw}, ${item.soldUsd}, '${item.ebayQ}', '${item.ship}')" class="px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
-                ⚡ 분석창
-              </button>
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-
-    function sendToSourcingAnalysis(title, buyKrw = null, soldUsd = null, ebayQ = null, ship = null) {
-      switchTab('all'); switchAllSubTab('sourcing');
-      document.getElementById('sourcing-search-keyword').value = title;
-      runSmartSourcingAnalysis(title);
-      if (buyKrw) document.getElementById('input-custom-buy-price').value = buyKrw;
-      if (soldUsd) document.getElementById('input-custom-sold-usd').value = soldUsd;
-      if (ship) setShippingPreset(ship);
-      recalcSourcingBoard();
-      showToast(`'${title}' 소싱 분석 준비 완료!`, '🎯');
-    }
-
-);
-    }
-
-    // 초기 리서치 카테고리 로드
-    selectResearchCategory("pokemon");
-
-    // 🎯 스마트 사입처 찾기 & 단계별 소싱 파이프라인 (셀러박스 리버싱 연동)
-    let activeSourcingItem = VERIFIED_ITEMS[0];
-
-    function setSourcingInputMode(mode) {
-      ['text', 'url', 'photo'].forEach(m => {
-        const box = document.getElementById('smode-box-' + m);
-        const btn = document.getElementById('smode-btn-' + m);
-        if (box) box.classList.toggle('hidden', m !== mode);
-        if (btn) {
-          if (m === mode) {
-            btn.className = 'flex-1 py-1.5 rounded-lg bg-indigo-600 text-white font-bold transition shadow';
-          } else {
-            btn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition font-medium';
-          }
-        }
-      });
-    }
-
-    function startSourcingForItem(itemId) {
-      const it = (activeVerifiedItems && activeVerifiedItems.find(x => x.id === itemId)) || VERIFIED_ITEMS.find(x => x.id === itemId);
-      if (!it) return;
-
-      switchTab('all');
-      switchAllSubTab('sourcing');
-
-      const kwInput = document.getElementById('sourcing-search-keyword');
-      if (kwInput) kwInput.value = it.bunjangQuery || it.title;
-
-      activeSourcingItem = it;
-      renderSourcingPipeline(it);
-      showToast(`'${it.title}' 사입처 찾기가 시작되었습니다! 🎯`, '🔍');
-    }
-
-    function renderSourcingPipeline(it) {
-      if (!it) return;
-      document.getElementById('pipeline-item-title').innerHTML = `<span class="text-amber-400">🇰🇷</span> <span>${it.title}</span>`;
-      document.getElementById('pipeline-item-subtitle').innerText = `🇺🇸 ${it.ebayTitle}`;
-      document.getElementById('pipeline-ebay-usd').innerText = `$${it.ebayUsd.toFixed(2)}`;
-      document.getElementById('pipeline-ebay-krw').innerText = `약 ${Math.round(it.ebayUsd * 1334).toLocaleString()}원`;
-      document.getElementById('pipeline-target-buy').innerText = `${it.targetBuyKrw.toLocaleString()}원`;
-      document.getElementById('pipeline-profit-krw').innerText = `+${it.profitKrw.toLocaleString()}원`;
-      document.getElementById('pipeline-roi').innerText = `${it.roi} ROI`;
-      document.getElementById('pipeline-box-size').innerText = it.boxSize || '에어캡 안전봉투';
-      document.getElementById('pipeline-weight-badge').innerText = `청구 ${it.appliedWeight || 200}g (${it.weightNote || '실제 무게'})`;
-      
-      const customInput = document.getElementById('pipeline-custom-buy-input');
-      if (customInput) customInput.value = it.targetBuyKrw;
-
-      // Update 10 Sourcing Destination links
-      const q = it.bunjangQuery || it.title;
-      const qEnc = encodeURIComponent(q);
-      const qImgEnc = encodeURIComponent(q + ' 사입');
-
-      const slinks = {
-        'slink-bunjang': `https://m.bunjang.co.kr/search/products?q=${qEnc}&order=price_asc`,
-        'slink-daangn': `https://www.daangn.com/search/${qEnc}`,
-        'slink-joongna': `https://web.joongna.com/search/${qEnc}`,
-        'slink-kream': `https://kream.co.kr/search?keyword=${qEnc}`,
-        'slink-naver': `https://search.shopping.naver.com/search/all?query=${qEnc}`,
-        'slink-coupang': `https://www.coupang.com/np/search?component=&q=${qEnc}`,
-        'slink-musinsa': `https://www.musinsa.com/search/goods?keyword=${qEnc}`,
-        'slink-oliveyoung': `https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=${qEnc}`,
-        'slink-buyee': `https://buyee.jp/mercari/search?keyword=${qEnc}`,
-        'slink-google-img': `https://www.google.com/search?tbm=isch&q=${qImgEnc}`
-      };
-
-      for (const [elemId, href] of Object.entries(slinks)) {
-        const a = document.getElementById(elemId);
-        if (a) a.href = href;
-      }
-
-      recalcSourcingPipeline();
-    }
-
-    function recalcSourcingPipeline() {
-      if (!activeSourcingItem) return;
-      const it = activeSourcingItem;
-      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || 0;
-      const grossKrw = it.ebayUsd * 1334;
-      
-      // Category fee rate
-      const catRate = CATEGORY_FEES[it.category] || 13.25;
-      const ebayFeeKrw = ((it.ebayUsd * (catRate / 100)) + 0.40 + (it.ebayUsd * 0.0145)) * 1334;
-      const buyerTaxFeeKrw = (it.ebayUsd * 0.08 * 0.147) * 1334;
-      const payoFeeKrw = (grossKrw - ebayFeeKrw) * 0.02;
-      
-      // Shipping cost based on applied weight
-      const shipRateTable = { 100: 8090, 200: 8980, 300: 10500, 400: 11500, 500: 12500, 1000: 18000, 1500: 24000, 2000: 30000 };
-      const shipKrw = shipRateTable[it.appliedWeight || 200] || 8980;
-
-      const totalExpense = customBuy + ebayFeeKrw + buyerTaxFeeKrw + payoFeeKrw + shipKrw;
-      const netProfit = Math.round(grossKrw - totalExpense);
-      const roi = customBuy > 0 ? ((netProfit / customBuy) * 100).toFixed(1) : 0;
-
-      const profitElem = document.getElementById('pipeline-live-profit');
-      if (profitElem) {
-        profitElem.innerText = (netProfit >= 0 ? '+' : '') + netProfit.toLocaleString() + '원';
-        profitElem.className = netProfit >= 0 ? 'text-sm font-black text-emerald-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
-      }
-      const roiElem = document.getElementById('pipeline-live-roi');
-      if (roiElem) {
-        roiElem.innerText = (roi >= 0 ? '+' : '') + roi + '%';
-        roiElem.className = roi >= 0 ? 'text-sm font-black text-sky-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
-      }
-    }
-
-    function sendPipelineToCalculator() {
-      if (!activeSourcingItem) return;
-      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || activeSourcingItem.targetBuyKrw;
-      loadIntoCalculator(activeSourcingItem.ebayUsd, activeSourcingItem.appliedWeight || 200, customBuy, activeSourcingItem.category);
-    }
-
-    function runSmartSourcingAnalysis(targetKw = null) {
-      const kw = targetKw || document.getElementById('sourcing-search-keyword')?.value.trim();
-      if (!kw) {
-        showToast('검색할 상품명을 입력해 주세요!', '⚠️');
-        return;
-      }
-
-      // Check if keyword matches any verified item
-      const matched = VERIFIED_ITEMS.find(x => x.title.includes(kw) || x.bunjangQuery.includes(kw) || x.ebayTitle.toLowerCase().includes(kw.toLowerCase()));
-      if (matched) {
-        activeSourcingItem = matched;
-        renderSourcingPipeline(matched);
-      } else {
-        // Create custom dynamic sourcing item
-        activeSourcingItem = {
-          id: 'custom-' + Date.now(),
-          category: 'pokemon',
-          categoryName: '기타 품목',
-          title: kw,
-          ebayTitle: kw,
-          ebayUsd: 50.0,
-          ebayKrw: 66700,
-          targetBuyKrw: 25000,
-          profitKrw: 18500,
-          roi: '+74%',
-          boxSize: '규격 포장 박스',
-          actualWeight: 150,
-          volWeight: 200,
-          appliedWeight: 200,
-          weightNote: '표준 200g 요금 적용',
-          bunjangQuery: kw
-        };
-        renderSourcingPipeline(activeSourcingItem);
-      }
-      showToast(`'${kw}' 10대 사입처 직통 검색 완료!`, '🔍');
-    }
-
-    function handleSourcingUrlSubmit() {
-      const urlInput = document.getElementById('sourcing-search-url');
-      const url = (urlInput ? urlInput.value : '').trim();
-      if (!url) {
-        showToast('분석할 마켓 상품 링크를 붙여넣어 주세요!', '⚠️');
-        return;
-      }
-      
-      let keyword = '소싱 상품';
-      try {
-        const parsed = new URL(url);
-        const q = parsed.searchParams.get('q') || parsed.searchParams.get('query') || parsed.searchParams.get('keyword');
-        if (q) keyword = decodeURIComponent(q);
-        else keyword = parsed.pathname.split('/').filter(Boolean).pop() || '소싱 상품';
-      } catch (e) {
-        keyword = url.slice(0, 30);
-      }
-
-      document.getElementById('sourcing-search-keyword').value = keyword;
-      setSourcingInputMode('text');
-      runSmartSourcingAnalysis(keyword);
-      showToast(`링크에서 '${keyword}' 추출 완료! 사입처를 검색합니다.`, '🔗');
-    }
-
-    function handleSourcingPhotoFile(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-
-      const previewBox = document.getElementById('sourcing-photo-preview-box');
-      const previewImg = document.getElementById('sourcing-photo-preview-img');
-      const nameElem = document.getElementById('sourcing-photo-name');
-
-      if (previewBox && previewImg) {
-        previewImg.src = URL.createObjectURL(file);
-        previewBox.classList.remove('hidden');
-      }
-      if (nameElem) {
-        nameElem.innerText = file.name;
-      }
-
-      // Extract cleaned keyword from filename
-      let kw = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
-      document.getElementById('sourcing-search-keyword').value = kw;
-      runSmartSourcingAnalysis(kw);
-      showToast(`'${file.name}' 사진 인식 완료! 사입처를 검색합니다.`, '📸');
-    }
-
   </script>
   <style>
     /* Mobile app scroll & touch behavior */
@@ -5014,6 +4454,325 @@
       uploadedPhotos = [];
       renderPhotoPreviews();
     }
+
+    // K-Packet 100x150 라벨 인쇄 모달 제어 (SL43 감열 회전 출력)
+    function openKpacketPrintModal(tracking, title, buyer, addr, weight, val) {
+      document.getElementById('modal-print-tracking').innerText = tracking;
+      document.getElementById('modal-print-buyer').innerText = `${buyer} (USA)`;
+      document.getElementById('preview-mini-tracking').innerText = tracking;
+      document.getElementById('preview-mini-buyer').innerText = buyer;
+      document.getElementById('modal-kpacket-print').classList.remove('hidden');
+    }
+
+    function closeKpacketPrintModal() {
+      document.getElementById('modal-kpacket-print').classList.add('hidden');
+    }
+
+    function triggerPrintKpacket() {
+      const tracking = document.getElementById('modal-print-tracking').innerText;
+      showToast(`${tracking} 송장 인쇄창을 엽니다. (100×150mm 여백 0 설정)`, '🖨️');
+      
+      const printWin = window.open('', '_blank', 'width=450,height=650');
+      if (printWin) {
+        printWin.document.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>K-Packet 송장 인쇄 - ${tracking}</title>
+            <style>
+              @page { size: 100mm 150mm portrait; margin: 0; }
+              body { margin: 0; padding: 4mm; font-family: -apple-system, sans-serif; background: #fff; color: #000; box-sizing: border-box; }
+              .label-box { width: 92mm; height: 142mm; border: 2px solid #000; padding: 3mm; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; }
+              .header { border-bottom: 2px solid #000; padding-bottom: 2mm; display: flex; justify-content: space-between; align-items: center; }
+              .tracking { font-family: monospace; font-size: 16px; font-weight: bold; }
+              .address-sec { padding: 3mm 0; border-bottom: 1px solid #000; font-size: 11px; line-height: 1.4; }
+              .customs-sec { padding: 2mm 0; font-size: 10px; border-bottom: 1px solid #000; }
+              .barcode-box { text-align: center; padding-top: 3mm; }
+              .barcode-lines { font-family: monospace; font-size: 26px; letter-spacing: 2px; font-weight: bold; }
+            </style>
+         
+
+
+    // 📈 12대 테마 글로벌 리서치 데이터베이스
+    const RESEARCH_CATEGORIES = {
+      pokemon: {
+        title: '🃏 포켓몬 / 트레이딩카드 베스트셀러',
+        desc: '해외 포덕 & 수집가들의 절대적인 한정판·SAR·밀봉 프로모 수요',
+        keywords: [
+          { label: '메가 리자몽 X ex SAR', q: '메가 리자몽 X ex SAR' },
+          { label: '한복 피카츄 키링', q: '고풍 피카츄' },
+          { label: '메타몽 173/SV-P', q: '메타몽 프로젝트 디토' },
+          { label: '한글판 뮤 ex SAR', q: '뮤 ex SAR' }
+        ],
+        items: [
+          { name: '포켓몬 메가 리자몽 X ex SAR 110/080 M2', buyKrw: 140000, soldUsd: 195.0, profit: '+63,800원', speed: '30일 18건 체결 · 성공률 88%', ebayQ: 'Mega+Charizard+X+ex+SAR+110%2F080', ship: 'card' },
+          { name: '전통 한복 피카츄 LED 라이트 키링 2종', buyKrw: 45000, soldUsd: 115.0, profit: '+72,000원', speed: '30일 8건 체결 · 성공률 92%', ebayQ: 'Pokemon+Korea+Hanbok+Pikachu+LED+keyring', ship: 'card' },
+          { name: '메타몽 프로젝트 디토 173/SV-P 밀봉 프로모', buyKrw: 72000, soldUsd: 125.0, profit: '+48,500원', speed: '30일 22건 체결 · 성공률 95%', ebayQ: 'Pokemon+Ditto+173%2FSV-P+Promo', ship: 'card' }
+        ]
+      },
+      sneakers: {
+        title: '👟 나이키 / 스니커즈 한정판',
+        desc: '해외 품절 국내 한정 컬러 & KREAM 바닥가와 글로벌 체결가 갭투자',
+        keywords: [
+          { label: '조던 1 로우 골프', q: '나이키 조던 1 로우 골프' },
+          { label: '아디다스 삼바 OG', q: '아디다스 삼바 OG' }
+        ],
+        items: [
+          { name: '나이키 에어 조던 1 로우 골프 울프 그레이', buyKrw: 168000, soldUsd: 235.0, profit: '+51,200원', speed: '30일 34건 체결 · 성공률 79%', ebayQ: 'Air+Jordan+1+Low+Golf+Wolf+Grey', ship: 'shoes' },
+          { name: '아디다스 삼바 OG 화이트 블랙 (KREAM 소싱)', buyKrw: 115000, soldUsd: 155.0, profit: '+36,400원', speed: '30일 58건 체결 · 성공률 85%', ebayQ: 'Adidas+Samba+OG+White+Black', ship: 'shoes' }
+        ]
+      }
+    };
+
+    function selectResearchCategory(catKey) {
+      const cat = RESEARCH_CATEGORIES[catKey] || RESEARCH_CATEGORIES['pokemon'];
+      if (!cat) return;
+
+      const titleElem = document.getElementById('rcat-title');
+      const descElem = document.getElementById('rcat-desc');
+      if (titleElem) titleElem.innerText = cat.title;
+      if (descElem) descElem.innerText = cat.desc;
+
+      const kwContainer = document.getElementById('rcat-keywords-container');
+      if (kwContainer && cat.keywords) {
+        kwContainer.innerHTML = cat.keywords.map(kw => `
+          <button onclick="startSourcingWithKeyword('${kw.q}')" class="px-3 py-1.5 rounded-xl bg-slate-950/80 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500/40 text-xs font-medium text-slate-300 hover:text-white transition flex items-center space-x-1.5 group active:scale-95">
+            <span>${kw.label}</span>
+            <span class="text-indigo-400 group-hover:text-white">➔</span>
+          </button>
+        `).join('');
+      }
+
+      const itemsContainer = document.getElementById('rcat-items-container');
+      if (itemsContainer && cat.items) {
+        itemsContainer.innerHTML = cat.items.map(item => `
+          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 hover:border-indigo-500/40 transition">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="text-xs font-bold text-slate-100">${item.name}</h4>
+                <p class="text-[10px] text-emerald-400 font-bold mt-0.5">🔥 ${item.speed}</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-black text-emerald-400">${item.profit}</span>
+                <div class="text-[9px] text-slate-400">예상 순마진</div>
+              </div>
+            </div>
+            <div class="flex space-x-1.5 pt-1">
+              <a href="https://www.ebay.com/sch/i.html?_nkw=${item.ebayQ}&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-indigo-600/90 hover:bg-indigo-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
+                eBay Sold 실체결
+              </a>
+              <button onclick="startSourcingWithKeyword('${item.name}')" class="flex-1 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] rounded-xl text-center transition shadow active:scale-95">
+                🎯 사입처 찾기
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function startSourcingWithKeyword(kw) {
+      switchTab('all');
+      switchAllSubTab('sourcing');
+      document.getElementById('sourcing-search-keyword').value = kw;
+      runSmartSourcingAnalysis(kw);
+    }
+
+
+
+    // 🎯 스마트 사입처 찾기 & 단계별 소싱 파이프라인 (셀러박스 리버싱 연동)
+    let activeSourcingItem = VERIFIED_ITEMS[0];
+
+    function setSourcingInputMode(mode) {
+      ['text', 'url', 'photo'].forEach(m => {
+        const box = document.getElementById('smode-box-' + m);
+        const btn = document.getElementById('smode-btn-' + m);
+        if (box) box.classList.toggle('hidden', m !== mode);
+        if (btn) {
+          if (m === mode) {
+            btn.className = 'flex-1 py-1.5 rounded-lg bg-indigo-600 text-white font-bold transition shadow';
+          } else {
+            btn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition font-medium';
+          }
+        }
+      });
+    }
+
+    function startSourcingForItem(itemId) {
+      const it = (activeVerifiedItems && activeVerifiedItems.find(x => x.id === itemId)) || VERIFIED_ITEMS.find(x => x.id === itemId);
+      if (!it) return;
+
+      switchTab('all');
+      switchAllSubTab('sourcing');
+
+      const kwInput = document.getElementById('sourcing-search-keyword');
+      if (kwInput) kwInput.value = it.bunjangQuery || it.title;
+
+      activeSourcingItem = it;
+      renderSourcingPipeline(it);
+      showToast(`'${it.title}' 사입처 찾기가 시작되었습니다! 🎯`, '🔍');
+    }
+
+    function renderSourcingPipeline(it) {
+      if (!it) return;
+      document.getElementById('pipeline-item-title').innerHTML = `<span class="text-amber-400">🇰🇷</span> <span>${it.title}</span>`;
+      document.getElementById('pipeline-item-subtitle').innerText = `🇺🇸 ${it.ebayTitle || it.title}`;
+      document.getElementById('pipeline-ebay-usd').innerText = `$${it.ebayUsd.toFixed(2)}`;
+      document.getElementById('pipeline-ebay-krw').innerText = `약 ${Math.round(it.ebayUsd * 1334).toLocaleString()}원`;
+      document.getElementById('pipeline-target-buy').innerText = `${it.targetBuyKrw.toLocaleString()}원`;
+      document.getElementById('pipeline-profit-krw').innerText = `+${it.profitKrw.toLocaleString()}원`;
+      document.getElementById('pipeline-roi').innerText = `${it.roi} ROI`;
+      document.getElementById('pipeline-box-size').innerText = it.boxSize || '에어캡 안전봉투';
+      document.getElementById('pipeline-weight-badge').innerText = `청구 ${it.appliedWeight || 200}g (${it.weightNote || '실제 무게'})`;
+      
+      const customInput = document.getElementById('pipeline-custom-buy-input');
+      if (customInput) customInput.value = it.targetBuyKrw;
+
+      // Update 10 Sourcing Destination links
+      const q = it.bunjangQuery || it.title;
+      const qEnc = encodeURIComponent(q);
+      const qImgEnc = encodeURIComponent(q + ' 사입');
+
+      const slinks = {
+        'slink-bunjang': `https://m.bunjang.co.kr/search/products?q=${qEnc}&order=price_asc`,
+        'slink-daangn': `https://www.daangn.com/search/${qEnc}`,
+        'slink-joongna': `https://web.joongna.com/search/${qEnc}`,
+        'slink-kream': `https://kream.co.kr/search?keyword=${qEnc}`,
+        'slink-naver': `https://search.shopping.naver.com/search/all?query=${qEnc}`,
+        'slink-coupang': `https://www.coupang.com/np/search?component=&q=${qEnc}`,
+        'slink-musinsa': `https://www.musinsa.com/search/goods?keyword=${qEnc}`,
+        'slink-oliveyoung': `https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=${qEnc}`,
+        'slink-buyee': `https://buyee.jp/mercari/search?keyword=${qEnc}`,
+        'slink-google-img': `https://www.google.com/search?tbm=isch&q=${qImgEnc}`
+      };
+
+      for (const [elemId, href] of Object.entries(slinks)) {
+        const a = document.getElementById(elemId);
+        if (a) a.href = href;
+      }
+
+      recalcSourcingPipeline();
+    }
+
+    function recalcSourcingPipeline() {
+      if (!activeSourcingItem) return;
+      const it = activeSourcingItem;
+      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || 0;
+      const grossKrw = it.ebayUsd * 1334;
+      
+      // Category fee rate
+      const catRate = (typeof CATEGORY_FEES !== 'undefined' && CATEGORY_FEES[it.category]) || 13.25;
+      const ebayFeeKrw = ((it.ebayUsd * (catRate / 100)) + 0.40 + (it.ebayUsd * 0.0145)) * 1334;
+      const buyerTaxFeeKrw = (it.ebayUsd * 0.08 * 0.147) * 1334;
+      const payoFeeKrw = (grossKrw - ebayFeeKrw) * 0.02;
+      
+      // Shipping cost based on applied weight
+      const shipRateTable = { 100: 8090, 200: 8980, 300: 10500, 400: 11500, 500: 12500, 1000: 18000, 1500: 24000, 2000: 30000 };
+      const shipKrw = shipRateTable[it.appliedWeight || 200] || 8980;
+
+      const totalExpense = customBuy + ebayFeeKrw + buyerTaxFeeKrw + payoFeeKrw + shipKrw;
+      const netProfit = Math.round(grossKrw - totalExpense);
+      const roi = customBuy > 0 ? ((netProfit / customBuy) * 100).toFixed(1) : 0;
+
+      const profitElem = document.getElementById('pipeline-live-profit');
+      if (profitElem) {
+        profitElem.innerText = (netProfit >= 0 ? '+' : '') + netProfit.toLocaleString() + '원';
+        profitElem.className = netProfit >= 0 ? 'text-sm font-black text-emerald-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
+      }
+      const roiElem = document.getElementById('pipeline-live-roi');
+      if (roiElem) {
+        roiElem.innerText = (roi >= 0 ? '+' : '') + roi + '%';
+        roiElem.className = roi >= 0 ? 'text-sm font-black text-sky-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
+      }
+    }
+
+    function sendPipelineToCalculator() {
+      if (!activeSourcingItem) return;
+      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || activeSourcingItem.targetBuyKrw;
+      loadIntoCalculator(activeSourcingItem.ebayUsd, activeSourcingItem.appliedWeight || 200, customBuy, activeSourcingItem.category);
+    }
+
+    function runSmartSourcingAnalysis(targetKw = null) {
+      const kw = targetKw || document.getElementById('sourcing-search-keyword')?.value.trim();
+      if (!kw) {
+        showToast('검색할 상품명을 입력해 주세요!', '⚠️');
+        return;
+      }
+
+      const matched = VERIFIED_ITEMS.find(x => x.title.includes(kw) || (x.bunjangQuery && x.bunjangQuery.includes(kw)) || (x.ebayTitle && x.ebayTitle.toLowerCase().includes(kw.toLowerCase())));
+      if (matched) {
+        activeSourcingItem = matched;
+        renderSourcingPipeline(matched);
+      } else {
+        activeSourcingItem = {
+          id: 'custom-' + Date.now(),
+          category: 'pokemon',
+          categoryName: '기타 품목',
+          title: kw,
+          ebayTitle: kw,
+          ebayUsd: 50.0,
+          ebayKrw: 66700,
+          targetBuyKrw: 25000,
+          profitKrw: 18500,
+          roi: '+74%',
+          boxSize: '규격 포장 박스',
+          actualWeight: 150,
+          volWeight: 200,
+          appliedWeight: 200,
+          weightNote: '표준 200g 요금 적용',
+          bunjangQuery: kw
+        };
+        renderSourcingPipeline(activeSourcingItem);
+      }
+      showToast(`'${kw}' 10대 사입처 직통 검색 완료!`, '🔍');
+    }
+
+    function handleSourcingUrlSubmit() {
+      const urlInput = document.getElementById('sourcing-search-url');
+      const url = (urlInput ? urlInput.value : '').trim();
+      if (!url) {
+        showToast('분석할 마켓 상품 링크를 붙여넣어 주세요!', '⚠️');
+        return;
+      }
+      
+      let keyword = '소싱 상품';
+      try {
+        const parsed = new URL(url);
+        const q = parsed.searchParams.get('q') || parsed.searchParams.get('query') || parsed.searchParams.get('keyword');
+        if (q) keyword = decodeURIComponent(q);
+        else keyword = parsed.pathname.split('/').filter(Boolean).pop() || '소싱 상품';
+      } catch (e) {
+        keyword = url.slice(0, 30);
+      }
+
+      document.getElementById('sourcing-search-keyword').value = keyword;
+      setSourcingInputMode('text');
+      runSmartSourcingAnalysis(keyword);
+      showToast(`링크에서 '${keyword}' 추출 완료! 사입처를 검색합니다.`, '🔗');
+    }
+
+    function handleSourcingPhotoFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const previewBox = document.getElementById('sourcing-photo-preview-box');
+      const previewImg = document.getElementById('sourcing-photo-preview-img');
+      const nameElem = document.getElementById('sourcing-photo-name');
+
+      if (previewBox && previewImg) {
+        previewImg.src = URL.createObjectURL(file);
+        previewBox.classList.remove('hidden');
+      }
+      if (nameElem) {
+        nameElem.innerText = file.name;
+      }
+
+      let kw = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+      document.getElementById('sourcing-search-keyword').value = kw;
+      runSmartSourcingAnalysis(kw);
+      showToast(`'${file.name}' 사진 인식 완료! 사입처를 검색합니다.`, '📸');
+    }
+
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
