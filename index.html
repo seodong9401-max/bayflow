@@ -4664,6 +4664,10 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 [예약신청] 버튼을 눌�
 4. URL: 방금 복사된 코드 붙여넣기 (Ctrl+V) 후 [저장]
 
 ⭐ 이제 어떤 새로운 주문이 들어오든, 북마크를 다시 고치실 필요 없이 PC에서 클릭만 하면 항상 최신 주문이 우체국 개별등록에 0.1초 만에 자동 채워집니다!`);
+      }).catch(() => {
+        prompt('아래 자바스크립트 코드를 복사하세요:', bookmarkletCode);
+      });
+    }
 
     // 대조 데이터 JSON 복사
     function copyOrderDataJson(orderId) {
