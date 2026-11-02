@@ -1,5 +1,5 @@
-// BayFlow Service Worker v28 (eBay Raw vs E-post Side-by-Side Comparison & Chrome Bookmarklet Tool)
-const CACHE_NAME = 'bayflow-v28';
+// BayFlow Service Worker v29 (Smart Cloud Bookmarklet & Real-Time E-Post Synchronization)
+const CACHE_NAME = 'bayflow-v29';
 const ASSETS = [
   './',
   './index.html',
