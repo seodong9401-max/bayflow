@@ -1,5 +1,5 @@
-// BayFlow Service Worker v35 (Added Cloudflare Tunnel Direct Bridge to Korea Post)
-const CACHE_NAME = 'bayflow-v35';
+// BayFlow Service Worker v36 (Margin Volumetric Weight vs Real Weight Auto Rate & SellerBox Viral Draw News Radar)
+const CACHE_NAME = 'bayflow-v36';
 const ASSETS = [
   './',
   './index.html',

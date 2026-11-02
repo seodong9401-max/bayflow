@@ -123,35 +123,6 @@
         </div>
       </div>
 
-      <!-- ⚡ PC 크롬 1초 자동입력 북마크 도구 배너 (방법 2) -->
-      <div class="bg-gradient-to-r from-amber-950/40 via-slate-900 to-indigo-950/40 border border-amber-500/40 rounded-2xl p-4 shadow-xl space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-2.5">
-            <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-500/30">⚡</div>
-            <div>
-              <div class="flex items-center space-x-1.5">
-                <span class="font-bold text-slate-100 text-sm">PC 크롬 '우체국 1초 자동입력' 북마크 도구</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/40">2번 방법</span>
-              </div>
-              <p class="text-[11px] text-slate-400 mt-0.5">PC 우체국 '개별등록' 창에서 클릭 한 번으로 모든 입력 칸 자동 완성!</p>
-            </div>
-          </div>
-          <button onclick="copyChromeBookmarklet()" class="px-3 py-1.5 text-xs rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black transition active:scale-95 shadow flex items-center space-x-1">
-            <span>📋</span>
-            <span>북마크 코드 1초 복사</span>
-          </button>
-        </div>
-        <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-          <div class="flex items-center space-x-1.5 text-amber-300 font-semibold">
-            <span>💡</span>
-            <span>사용 방법 (30초 등록):</span>
-          </div>
-          <p>1. PC 크롬 북마크바(Ctrl+Shift+B) 빈 곳 우클릭 ➔ <strong>'페이지 추가'</strong> 클릭</p>
-          <p>2. 이름: <code class="text-amber-300 bg-slate-900 px-1 py-0.5 rounded">[📮 우체국 1초 자동입력]</code> / URL: 위에서 복사한 코드 붙여넣기 후 저장</p>
-          <p>3. PC 우체국 <code class="text-indigo-300">[접수신청 > 접수정보등록 > 개별등록]</code> 화면 띄우고 북마크 클릭 ➔ <strong>0.1초 만에 전체 칸 채움 완료!</strong></p>
-        </div>
-      </div>
-
       <!-- 🌐 Cloudflare 백엔드 터널 연동 배너 -->
       <div class="bg-gradient-to-r from-sky-950/40 via-slate-900 to-indigo-950/40 border border-sky-500/40 rounded-2xl p-4 shadow-xl space-y-2.5">
         <div class="flex items-center justify-between">
@@ -569,18 +540,46 @@
               </select>
             </div>
 
-            <div class="space-y-1">
-              <label class="text-slate-400 font-medium text-[11px]">포장 중량</label>
-              <select id="calc-weight" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
-                <option value="100">100g (카드 1~3장)</option>
-                <option value="200" selected>200g (카드/키링)</option>
-                <option value="300">300g (피규어 등)</option>
-                <option value="400">400g (소형 박스)</option>
-                <option value="500">500g (인형/세트)</option>
-                <option value="1000">1,000g (1kg)</option>
-                <option value="1500">1,500g (1.5kg)</option>
-                <option value="2000">2,000g (2kg 한도)</option>
-              </select>
+            <!-- 포장 실무게 및 박스 부피무게 계산기 (L×W×H ÷ 6000) -->
+            <div class="col-span-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-300 flex items-center space-x-1">
+                  <span>⚖️</span>
+                  <span>포장 실무게 및 박스 부피무게 (가로×세로×높이 ÷ 6000)</span>
+                </span>
+                <span id="chargeable-weight-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">최종 청구: 200g</span>
+              </div>
+              <div class="grid grid-cols-4 gap-2">
+                <div class="space-y-1">
+                  <label class="text-[10px] text-slate-400">실무게 (g)</label>
+                  <input type="number" id="calc-real-weight" value="200" step="10" min="10" max="20000" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[10px] text-slate-400">가로 (cm)</label>
+                  <input type="number" id="calc-dim-l" value="15" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[10px] text-slate-400">세로 (cm)</label>
+                  <input type="number" id="calc-dim-w" value="10" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="space-y-1">
+                  <label class="text-[10px] text-slate-400">높이 (cm)</label>
+                  <input type="number" id="calc-dim-h" value="3" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/80">
+                <div class="text-slate-400 flex items-center space-x-1.5 text-[10px]">
+                  <span>부피무게: <b id="calc-vol-weight" class="text-amber-400 font-mono">75g</b></span>
+                  <span class="text-slate-600">|</span>
+                  <span id="calc-heavier-note" class="text-emerald-400 font-bold">실무게(200g) 채택 ✅</span>
+                </div>
+                <!-- 빠른 박스 규격 프리셋 버튼 -->
+                <div class="flex items-center space-x-1">
+                  <button type="button" onclick="setBoxPreset(15, 10, 2, 100)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">에어캡봉투</button>
+                  <button type="button" onclick="setBoxPreset(22, 19, 9, 250)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">우체국1호</button>
+                  <button type="button" onclick="setBoxPreset(27, 18, 15, 450)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">우체국2호</button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1387,9 +1386,50 @@
             </div>
           </div>
 
+          <!-- 📱 SNS 4대 바이럴 채널 실시간 모니터링 허브 -->
+          <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-2.5 rounded-xl border border-rose-500/30 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-rose-300 flex items-center space-x-1">
+                <span>🔥</span>
+                <span>SNS 4대 바이럴 채널 실시간 트렌드 모니터링</span>
+              </span>
+              <span class="text-[9px] text-slate-400">실시간 직통</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px]">
+              <a href="https://www.instagram.com/explore/tags/%EC%84%B1%EC%88%98%ED%8C%9D%EC%97%85/" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">📸</span>
+                  <span class="text-[10px] font-bold text-pink-400 group-hover:text-pink-300">인스타그램</span>
+                </div>
+                <span class="text-[9px] text-slate-500">#성수팝업</span>
+              </a>
+              <a href="https://www.tiktok.com/tag/%ED%95%B4%EC%92%9D%EC%A7%81%EA%B5%AC" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🎵</span>
+                  <span class="text-[10px] font-bold text-sky-400 group-hover:text-sky-300">틱톡 바이럴</span>
+                </div>
+                <span class="text-[9px] text-slate-500">#해외직구</span>
+              </a>
+              <a href="https://www.threads.net/search?q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4%20%ED%82%A4%EB%A7%81" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🧵</span>
+                  <span class="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">스레드 핫이슈</span>
+                </div>
+                <span class="text-[9px] text-slate-500">#콜라보키링</span>
+              </a>
+              <a href="https://x.com/search?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%ED%8C%9D%EC%97%85" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🐦</span>
+                  <span class="text-[10px] font-bold text-indigo-400 group-hover:text-indigo-300">X (트위터)</span>
+                </div>
+                <span class="text-[9px] text-slate-500">#실시간트렌드</span>
+              </a>
+            </div>
+          </div>
+
           <!-- 실시간 검색 입력 -->
           <div class="relative">
-            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (미국, 중국, 일본, 조던, 라부부, 성수, 포켓몬, 티켓...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
+            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (연예인, 뉴진스, BTS, 패션, 산산기어, 악세사리, 키링, 팝업, 드로우, 뉴스...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
           </div>
 
           <!-- 카테고리 필터 바 (텍스트 줄바꿈 완전 차단) -->
@@ -1397,38 +1437,32 @@
             <button type="button" onclick="filterDrawEvents('all')" id="draw-fbtn-all" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-rose-600 text-white border border-rose-400 text-xs font-bold transition active:scale-95 shadow">
               전체
             </button>
-            <button type="button" onclick="filterDrawEvents('fav')" id="draw-fbtn-fav" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              ⭐ 탑셀러 픽
+            <button type="button" onclick="filterDrawEvents('celeb')" id="draw-fbtn-celeb" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🌟 연예인·아이돌
             </button>
-            <button type="button" onclick="filterDrawEvents('us')" id="draw-fbtn-us" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🇺🇸 미국·글로벌
+            <button type="button" onclick="filterDrawEvents('fashion')" id="draw-fbtn-fashion" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              👗 패션·스트릿
             </button>
-            <button type="button" onclick="filterDrawEvents('cn')" id="draw-fbtn-cn" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🇨🇳 중국 바이럴
+            <button type="button" onclick="filterDrawEvents('acc')" id="draw-fbtn-acc" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              💍 악세사리·키링
             </button>
-            <button type="button" onclick="filterDrawEvents('jp')" id="draw-fbtn-jp" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🇯🇵 일본 한정
+            <button type="button" onclick="filterDrawEvents('viral')" id="draw-fbtn-viral" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🔥 SNS 바이럴
             </button>
             <button type="button" onclick="filterDrawEvents('draw')" id="draw-fbtn-draw" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🔥 스니커즈·래플
-            </button>
-            <button type="button" onclick="filterDrawEvents('tcg')" id="draw-fbtn-tcg" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🃏 TCG·포켓몬
+              👟 드로우·응모
             </button>
             <button type="button" onclick="filterDrawEvents('popup')" id="draw-fbtn-popup" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              📍 성수·더현대 팝업
+              📍 팝업스토어
             </button>
             <button type="button" onclick="filterDrawEvents('goods')" id="draw-fbtn-goods" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
               🎬 영화관 MD
             </button>
-            <button type="button" onclick="filterDrawEvents('fashion')" id="draw-fbtn-fashion" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              👗 스트릿·패션
+            <button type="button" onclick="filterDrawEvents('news')" id="draw-fbtn-news" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🗞️ 실시간 뉴스
             </button>
-            <button type="button" onclick="filterDrawEvents('toy')" id="draw-fbtn-toy" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🧸 아트토이·팝마트
-            </button>
-            <button type="button" onclick="filterDrawEvents('starbucks')" id="draw-fbtn-starbucks" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              ☕ 스타벅스·MD
+            <button type="button" onclick="filterDrawEvents('fav')" id="draw-fbtn-fav" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              ⭐ 탑셀러 픽
             </button>
           </div>
         </div>
@@ -3925,30 +3959,58 @@
       return { k: 'none', d: null };
     }
 
+    // 🎯 실시간 드로우 & 뉴스 데이터 로드 (셀러박스 리버싱 128건 및 SNS 바이럴 피드)
+    async function loadDrawRadarData() {
+      try {
+        const res = await fetch('data/draw_radar_items.json?t=' + Date.now());
+        if (res.ok) {
+          const remoteItems = await res.json();
+          if (Array.isArray(remoteItems) && remoteItems.length > 0) {
+            DRAW_RADAR_ITEMS = remoteItems;
+          }
+        }
+      } catch (e) {
+        console.warn('draw radar remote load fallback to builtin', e);
+      }
+      renderDrawEvents();
+    }
+
     function renderDrawEvents() {
       const q = (document.getElementById('draw-search-input')?.value || '').trim().toLowerCase();
       const filter = currentDrawFilter;
       const container = document.getElementById('draw-items-list');
       if (!container) return;
 
-      const favKeys = ['포켓몬', '피카츄', '나이키', '조던', '삼바', '스타벅스', '라부부', '팝마트', '티켓', '오리지널', '굿즈', '팝업', 't1', '롤'];
+      const favKeys = ['포켓몬', '피카츄', '나이키', '조던', '삼바', '스타벅스', '라부부', '팝마트', '티켓', '오리지널', '굿즈', '팝업', 't1', '롤', '뉴진스', 'bts', '산산기어', '키링'];
 
       let filtered = DRAW_RADAR_ITEMS.filter(item => {
-        if (filter === 'fav') {
-          const text = (item.title + ' ' + (item.summary || '') + ' ' + (item.matched || []).join(' ')).toLowerCase();
+        const itemKind = (item.kind || '').toLowerCase();
+        const itemSource = (item.source || '').toLowerCase();
+        const itemTags = (item.tags || item.matched || []).map(t => String(t).toLowerCase());
+        const text = (item.title + ' ' + (item.summary || '') + ' ' + itemTags.join(' ')).toLowerCase();
+
+        if (filter === 'celeb') {
+          if (itemKind !== 'celeb' && !itemTags.some(t => ['연예인', '아이돌', 'bts', '뉴진스', '아이브', '지수', '블핑', 'kpop'].includes(t))) return false;
+        } else if (filter === 'fashion') {
+          if (itemKind !== 'fashion' && !itemTags.some(t => ['패션', '스트릿', '의류', '산산기어', '떠그클럽', '마리떼', '고프코어', '무신사'].includes(t))) return false;
+        } else if (filter === 'acc') {
+          if (itemKind !== 'acc' && !itemTags.some(t => ['악세사리', '키링', '인형', '산리오', '스타벅스', '모남희'].includes(t))) return false;
+        } else if (filter === 'viral') {
+          if (itemKind !== 'viral' && !['tiktok', 'instagram', 'threads', 'x_twitter'].includes(itemSource) && !itemTags.some(t => ['바이럴', '틱톡', '인스타', '스레드', '트위터', '품절대란'].includes(t))) return false;
+        } else if (filter === 'draw') {
+          if (itemKind !== 'draw' && itemSource !== 'nike' && itemSource !== 'kream' && !itemTags.some(t => ['드로우', '래플', '스니커즈'].includes(t))) return false;
+        } else if (filter === 'popup') {
+          if (itemKind !== 'popup' && itemSource !== 'popply' && !itemTags.some(t => ['팝업', '팝업스토어', '성수'].includes(t))) return false;
+        } else if (filter === 'goods') {
+          if (itemKind !== 'goods' && itemSource !== 'cinema' && !itemTags.some(t => ['영화관', 'cgv', '메가박스', '굿즈', 'md'].includes(t))) return false;
+        } else if (filter === 'news') {
+          if (itemKind !== 'news' && itemSource !== 'gnews' && !itemTags.some(t => ['뉴스', '언론', '보도'].includes(t))) return false;
+        } else if (filter === 'fav') {
           if (!favKeys.some(k => text.includes(k))) return false;
-        } else if (filter === 'us') {
-          if (item.region !== 'us') return false;
-        } else if (filter === 'cn') {
-          if (item.region !== 'cn') return false;
-        } else if (filter === 'jp') {
-          if (item.region !== 'jp') return false;
-        } else if (filter !== 'all') {
-          if (item.kind !== filter) return false;
         }
+
         if (q) {
-          const haystack = (item.title + ' ' + (item.summary || '') + ' ' + (item.matched || []).join(' ') + ' ' + (item.brand || '') + ' ' + (item.place || '')).toLowerCase();
-          if (!haystack.includes(q)) return false;
+          if (!text.includes(q)) return false;
         }
         return true;
       });
@@ -3957,7 +4019,7 @@
       if (countEl) countEl.innerText = filtered.length + '건';
 
       if (filtered.length === 0) {
-        container.innerHTML = '<div class="text-center py-10 text-slate-500 text-xs">일치하는 발매/드로우 일정이 없습니다.</div>';
+        container.innerHTML = '<div class="text-center py-10 text-slate-500 text-xs">일치하는 발매/드로우/뉴스 일정이 없습니다.</div>';
         return;
       }
 
@@ -3973,43 +4035,52 @@
         }
 
         let kindBadge = '';
-        if (item.kind === 'draw') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold">🔥 드로우</span>';
-        else if (item.kind === 'tcg') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">🃏 TCG</span>';
+        if (item.kind === 'celeb') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 text-[10px] font-bold">🌟 연예인·아이돌</span>';
+        else if (item.kind === 'fashion') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-bold">👗 패션·스트릿</span>';
+        else if (item.kind === 'acc') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">💍 악세사리·키링</span>';
+        else if (item.kind === 'viral') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold">🔥 SNS 바이럴</span>';
+        else if (item.kind === 'draw') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 text-[10px] font-bold">👟 드로우</span>';
         else if (item.kind === 'popup') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">📍 팝업</span>';
-        else if (item.kind === 'goods') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-bold">🎬 영화관MD</span>';
-        else if (item.kind === 'fashion') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 text-[10px] font-bold">👗 패션</span>';
-        else if (item.kind === 'toy') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-[10px] font-bold">🧸 토이</span>';
-        else if (item.kind === 'starbucks') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">☕ 스타벅스</span>';
+        else if (item.kind === 'goods') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-bold">🎬 영화관MD</span>';
+        else if (item.kind === 'news') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-bold">🗞️ 뉴스</span>';
         else kindBadge = '<span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] font-bold">발매</span>';
 
-        let regionBadge = '';
-        if (item.region === 'us') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-bold">🇺🇸 미국</span>';
-        else if (item.region === 'cn') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 text-[10px] font-bold">🇨🇳 중국</span>';
-        else if (item.region === 'jp') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">🇯🇵 일본</span>';
-        else regionBadge = '<span class="px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 text-[10px] font-bold">🇰🇷 한국</span>';
+        let sourceBadge = '';
+        const src = (item.source || '').toLowerCase();
+        if (src === 'instagram') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-pink-950/70 text-pink-400 text-[9px] font-bold border border-pink-800/40">📸 인스타그램</span>';
+        else if (src === 'tiktok') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-950/70 text-sky-400 text-[9px] font-bold border border-sky-800/40">🎵 틱톡</span>';
+        else if (src === 'threads') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-950/70 text-emerald-400 text-[9px] font-bold border border-emerald-800/40">🧵 스레드</span>';
+        else if (src === 'x_twitter') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-indigo-950/70 text-indigo-400 text-[9px] font-bold border border-indigo-800/40">🐦 X(트위터)</span>';
+        else if (src === 'popply') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-teal-950/70 text-teal-400 text-[9px] font-bold border border-teal-800/40">팝플리(Popply)</span>';
+        else if (src === 'kream') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 text-[9px] font-bold">KREAM</span>';
+        else if (src === 'nike') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-red-950/70 text-red-400 text-[9px] font-bold border border-red-800/40">NIKE</span>';
+        else if (src === 'cinema') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-purple-950/70 text-purple-400 text-[9px] font-bold border border-purple-800/40">CGV/메가박스</span>';
+        else if (src === 'gnews') sourceBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-950/70 text-sky-400 text-[9px] font-bold border border-sky-800/40">구글뉴스</span>';
+        else if (item.sourceLabel) sourceBadge = `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] font-bold">${item.sourceLabel}</span>`;
+
+        const linkUrl = item.link || item.url || '#';
 
         return `
           <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-3.5 space-y-2 hover:border-rose-500/40 transition">
             <div class="flex items-start justify-between gap-2">
               <div class="space-y-1 flex-1">
                 <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                  ${regionBadge}
                   ${kindBadge}
-                  <span class="text-[10px] text-slate-400 font-medium">${item.sourceLabel || item.brand || '소싱처'}</span>
+                  ${sourceBadge}
                   ${badgeHtml}
                 </div>
                 <h4 class="text-xs font-bold text-slate-100 leading-snug">${item.title}</h4>
               </div>
             </div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">${item.summary}</p>
+            <p class="text-[11px] text-slate-400 leading-relaxed">${item.summary || ''}</p>
             <div class="flex space-x-1.5 pt-1">
-              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
+              <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
                 공식 링크 바로가기 ➔
               </a>
               <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-[11px] rounded-xl text-center transition">
                 국내 시세
               </a>
-              <button onclick="sendToSourcingAnalysis('${item.title}', ${item.buyKrw || 50000}, ${item.soldUsd || 85.0}, null, '${item.ship || 'card'}')" class="py-1.5 px-3 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
+              <button onclick="sendToSourcingAnalysis('${item.title.replace(/'/g, "\\'")}', 45000, 75.0, null, 'card')" class="py-1.5 px-3 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
                 ⚡ 마진분석
               </button>
             </div>
@@ -5217,16 +5288,77 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예�
       }
     };
 
-    // 배송 옵션 변경 핸들러
+    // 박스 프리셋 설정
+    function setBoxPreset(l, w, h, g) {
+      const lEl = document.getElementById('calc-dim-l');
+      const wEl = document.getElementById('calc-dim-w');
+      const hEl = document.getElementById('calc-dim-h');
+      const gEl = document.getElementById('calc-real-weight');
+      if (lEl) lEl.value = l;
+      if (wEl) wEl.value = w;
+      if (hEl) hEl.value = h;
+      if (gEl) gEl.value = g;
+      onWeightOrDimensionChange();
+    }
+
+    // 실무게 vs 부피무게 (가로×세로×높이 ÷ 6000) 계산 및 청구 무게 산출
+    function onWeightOrDimensionChange() {
+      onShippingOptionChange();
+    }
+
+    function getChargeableWeightInfo() {
+      const realG = parseFloat(document.getElementById('calc-real-weight')?.value) || 200;
+      const l = parseFloat(document.getElementById('calc-dim-l')?.value) || 15;
+      const w = parseFloat(document.getElementById('calc-dim-w')?.value) || 10;
+      const h = parseFloat(document.getElementById('calc-dim-h')?.value) || 3;
+
+      // 부피무게 공식: (가로 × 세로 × 높이 cm) / 6000 kg -> g 단위
+      const volG = Math.round((l * w * h / 6000.0) * 1000);
+
+      const volElem = document.getElementById('calc-vol-weight');
+      if (volElem) volElem.innerText = volG + 'g';
+
+      // 최종 청구 무게: 실무게 vs 부피무게 중 큰 값
+      const chargeableG = Math.max(realG, volG);
+
+      const noteElem = document.getElementById('calc-heavier-note');
+      if (noteElem) {
+        if (volG > realG) {
+          noteElem.className = 'text-amber-400 font-bold';
+          noteElem.innerText = `부피무게(${volG}g) 채택 ⚠️`;
+        } else {
+          noteElem.className = 'text-emerald-400 font-bold';
+          noteElem.innerText = `실무게(${realG}g) 채택 ✅`;
+        }
+      }
+
+      const badge = document.getElementById('chargeable-weight-badge');
+      if (badge) badge.innerText = `최종 청구: ${chargeableG >= 1000 ? (chargeableG/1000).toFixed(1)+'kg' : chargeableG+'g'}`;
+
+      // 요율표 구간 매핑 (100g 단위 올림: 100, 200, 300, 400, 500, 1000, 1500, 2000)
+      let bracket = 200;
+      if (chargeableG <= 100) bracket = 100;
+      else if (chargeableG <= 200) bracket = 200;
+      else if (chargeableG <= 300) bracket = 300;
+      else if (chargeableG <= 400) bracket = 400;
+      else if (chargeableG <= 500) bracket = 500;
+      else if (chargeableG <= 1000) bracket = 1000;
+      else if (chargeableG <= 1500) bracket = 1500;
+      else bracket = 2000;
+
+      return { realG, volG, chargeableG, bracket };
+    }
+
+    // 배송 옵션 변경 핸들러 (셀러박스 리버싱 공식 운임 & 실무게 vs 부피무게 자동 판정)
     function onShippingOptionChange() {
       const countryEl = document.getElementById('calc-country');
       const serviceEl = document.getElementById('calc-shipping-service');
-      const weightEl = document.getElementById('calc-weight');
-      if (!countryEl || !serviceEl || !weightEl) return;
+      if (!countryEl || !serviceEl) return;
 
       const country = countryEl.value;
       const service = serviceEl.value;
-      const weight = parseInt(weightEl.value) || 200;
+      const { chargeableG, bracket } = getChargeableWeightInfo();
+      const weight = bracket;
 
       // 선택 서비스 요금 계산
       const serviceData = SHIPPING_RATES[service];
@@ -5252,8 +5384,8 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예�
       }
 
       // 4사 비교 미니 테이블 업데이트
-      const weightLabel = weight >= 1000 ? (weight / 1000) + 'kg' : weight + 'g';
-      document.getElementById('comp-weight-label').innerText = weightLabel + ' 기준';
+      const weightLabel = chargeableG >= 1000 ? (chargeableG / 1000).toFixed(1) + 'kg' : chargeableG + 'g';
+      document.getElementById('comp-weight-label').innerText = weightLabel + ' 기준 (공식운임)';
       const kpFee = SHIPPING_RATES.kpacket.rates[country]?.[weight] ?? '-';
       const egsStdFee = SHIPPING_RATES.egs_standard.rates[country]?.[weight] ?? '-';
       const emsFee = SHIPPING_RATES.ems.rates[country]?.[weight] || SHIPPING_RATES.ems.rates[country]?.[500] || '-';
@@ -5778,6 +5910,7 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예�
     onShippingOptionChange();
     loadOrdersData();
     updateTunnelStatus();
+    loadDrawRadarData();
   </script>
 </body>
 </html>
