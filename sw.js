@@ -1,5 +1,5 @@
-// BayFlow Service Worker v36 (Margin Volumetric Weight vs Real Weight Auto Rate & SellerBox Viral Draw News Radar)
-const CACHE_NAME = 'bayflow-v36';
+// BayFlow Service Worker v37 (Embedded Viral Celeb Fashion Acc News Feed & Postal Rates Engine)
+const CACHE_NAME = 'bayflow-v37';
 const ASSETS = [
   './',
   './index.html',
