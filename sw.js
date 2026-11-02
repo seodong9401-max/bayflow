@@ -1,5 +1,5 @@
-// BayFlow Service Worker v32 (Added National Tax Service Zero-VAT Export & Customs Engine)
-const CACHE_NAME = 'bayflow-v32';
+// BayFlow Service Worker v33 (Ebay Real Order & Korea Post Official 70-Col Excel Sync)
+const CACHE_NAME = 'bayflow-v33';
 const ASSETS = [
   './',
   './index.html',
