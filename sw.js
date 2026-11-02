@@ -1,5 +1,5 @@
-// BayFlow Service Worker v34 (Korea Post Individual Registration Standby Workflow & Cleaned Buyer Data)
-const CACHE_NAME = 'bayflow-v34';
+// BayFlow Service Worker v35 (Added Cloudflare Tunnel Direct Bridge to Korea Post)
+const CACHE_NAME = 'bayflow-v35';
 const ASSETS = [
   './',
   './index.html',

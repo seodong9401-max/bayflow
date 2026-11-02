@@ -7,9 +7,19 @@ Python FastAPI 서버: 이베이 주문 연동, 우체국 K-Packet API 연동, �
 import os
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 app = FastAPI(title="BayFlow eBay Automation API", version="1.4.0")
+
+# CORS 허용 (모바일 BayFlow 앱 https://seodong9401-max.github.io 및 로컬 접속 지원)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 1. 우체국 오픈API 연동 (K-Packet 국제 우편 접수)
 POST_OFFICE_CUSTNO = os.getenv("POST_OFFICE_CUSTNO", "0005353247")
