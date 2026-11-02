@@ -1,5 +1,5 @@
-// BayFlow Service Worker v15 (Global Radar Hub & Live Custom Price Sourcing)
-const CACHE_NAME = 'bayflow-v15';
+// BayFlow Service Worker v16 (Live eBay Sold Search & Transaction Volume Modal)
+const CACHE_NAME = 'bayflow-v16';
 const ASSETS = [
   './',
   './index.html',
