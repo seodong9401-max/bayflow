@@ -3372,7 +3372,6 @@
         wSelect.value = String(matched);
       }
       onShippingOptionChange();
-    loadOrdersData();
       calculateMargin();
       showToast('계산기에 $' + priceUsd + ' · ' + (weightGrams || 200) + 'g 포장 운임이 자동 반영되었습니다!', '🧮');
     }
@@ -4005,14 +4004,7 @@
 
     // 실시간 주문 데이터 로드 및 로컬 스토리지 병합
     async function loadOrdersData() {
-      try {
-        const res = await fetch('data/pending_orders.json?v=' + Date.now());
-        if (res.ok) {
-          pendingOrders = await res.json();
-        } else {
-          pendingOrders = getFallbackOrders();
-        }
-      } catch (e) {
+      if (!pendingOrders || pendingOrders.length === 0) {
         pendingOrders = getFallbackOrders();
       }
 
@@ -4028,6 +4020,27 @@
       });
 
       renderOrdersList();
+
+      try {
+        const res = await fetch('data/pending_orders.json?v=' + Date.now());
+        if (res.ok) {
+          const fresh = await res.json();
+          if (Array.isArray(fresh) && fresh.length > 0) {
+            fresh.forEach(o => {
+              if (savedBooked[o.orderId]) {
+                o.tracking = savedBooked[o.orderId].tracking;
+                o.status = 'BOOKED';
+                o.statusKo = '우체국 접수 완료 (등기번호 발급)';
+                o.bookedAt = savedBooked[o.orderId].bookedAt;
+              }
+            });
+            pendingOrders = fresh;
+            renderOrdersList();
+          }
+        }
+      } catch (e) {
+        // fallback already rendered
+      }
     }
 
     function getFallbackOrders() {
@@ -5315,7 +5328,7 @@
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=24').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=25').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }
@@ -5341,6 +5354,7 @@
 
     // Initial calculation on load
     onShippingOptionChange();
+    loadOrdersData();
   </script>
 </body>
 </html>
