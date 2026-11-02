@@ -12,9 +12,11 @@ from pydantic import BaseModel
 app = FastAPI(title="BayFlow eBay Automation API", version="1.4.0")
 
 # 1. 우체국 오픈API 연동 (K-Packet 국제 우편 접수)
-POST_OFFICE_API_KEY = os.getenv("POST_OFFICE_AUTH_KEY", "")
-POST_OFFICE_SECURITY_KEY = os.getenv("POST_OFFICE_SECURITY_KEY", "")
-POST_OFFICE_CONTRACT_NO = os.getenv("POST_OFFICE_CONTRACT_NO", "")
+POST_OFFICE_CUSTNO = os.getenv("POST_OFFICE_CUSTNO", "0005353247")
+POST_OFFICE_APPRNO = os.getenv("POST_OFFICE_APPRNO", "50037J1011")
+POST_OFFICE_EMSKEY = os.getenv("POST_OFFICE_AUTH_KEY", "REMOVED_POST_OFFICE_AUTH_KEY")
+POST_OFFICE_SECKEY = os.getenv("POST_OFFICE_SECURITY_KEY", "REMOVED_POST_OFFICE_KEY")
+POST_OFFICE_CONTRACT_NO = os.getenv("POST_OFFICE_CONTRACT_NO", "50037J1011")
 
 class KPacketRequest(BaseModel):
     order_id: str
@@ -24,25 +26,108 @@ class KPacketRequest(BaseModel):
     recipient_state: str
     recipient_country: str
     recipient_zipcode: str
+    recipient_tel: str = ""
+    recipient_email: str = ""
     item_title: str
-    item_weight_g: int = 80
+    item_weight_g: int = 100
     declared_value_usd: float
+    hs_code: str = "9504400000"
 
 @app.post("/api/shipping/kpacket/create")
 def create_kpacket_label(req: KPacketRequest):
     """
-    우체국 e-Shipping 계약고객 API를 호출하여 K-Packet 송장번호를 자동 채번합니다.
+    우체국 e-Shipping 계약고객 OpenAPI(SEED128)를 실시간 호출하여 우체국 본사 DB에 전산 등록하고 K-Packet 등기번호를 채번합니다.
     """
-    tracking_number = f"LP{abs(hash(req.order_id)) % 100000000:08d}KR"
-    return {
-        "status": "success",
-        "order_id": req.order_id,
-        "carrier": "Korea Post (K-Packet)",
-        "tracking_number": tracking_number,
-        "ebay_sync": True,
-        "contract_no": POST_OFFICE_CONTRACT_NO,
-        "message": f"우체국 송장 {tracking_number} 발급 및 eBay 전송 완료"
+    import urllib.request, xml.etree.ElementTree as ET
+    from seed128 import encrypt_seed
+
+    params = {
+        'custno': POST_OFFICE_CUSTNO,
+        'apprno': POST_OFFICE_APPRNO,
+        'premiumcd': '14',
+        'em_ee': 'rl',
+        'countrycd': req.recipient_country.upper(),
+        'totweight': str(req.item_weight_g),
+        'boyn': 'N',
+        'boprc': '0',
+        'orderno': req.order_id,
+        'sender': 'Seo Dongwook',
+        'senderzipcode': '61985',
+        'senderaddr1': '105-2602, 27 World cup 4 gang-ro',
+        'senderaddr2': 'Seo-gu',
+        'senderaddr3': 'Gwangju',
+        'sendertelno1': '82',
+        'sendertelno2': '10',
+        'sendertelno3': '5686',
+        'sendertelno4': '1424',
+        'sendermobile1': '82',
+        'sendermobile2': '10',
+        'sendermobile3': '5686',
+        'sendermobile4': '1424',
+        'senderemail': 'seodong9401@gmail.com',
+        'receivename': req.recipient_name,
+        'receivezipcode': req.recipient_zipcode,
+        'receiveaddr1': req.recipient_state,
+        'receiveaddr2': req.recipient_city,
+        'receiveaddr3': req.recipient_address,
+        'receivetelno1': '61' if req.recipient_country.upper() == 'AU' else ('1' if req.recipient_country.upper() in ['US', 'CA'] else '82'),
+        'receivetelno2': '4',
+        'receivetelno3': '1234',
+        'receivetelno4': '5678',
+        'receivetelno': req.recipient_tel or '0412345678',
+        'receivemail': req.recipient_email or 'buyer@ebay.com',
+        'boxlength': '20',
+        'boxwidth': '15',
+        'boxheight': '5',
+        'EM_gubun': 'Merchandise',
+        'contents': req.item_title or 'Playing cards',
+        'number': '1',
+        'weight': str(req.item_weight_g),
+        'value': str(int(req.declared_value_usd)),
+        'hs_code': req.hs_code or '9504400000',
+        'origin': 'KR',
+        'currunitcd': 'USD',
+        'mpid': 'POST_A000001',
+        'nspid': 'POST_A000001',
+        'spid': 'NA',
+        'volmwghtapplyexceptyn': 'N'
     }
+
+    raw_query = '&'.join(f'{k}={v}' for k, v in params.items())
+    enc = encrypt_seed(POST_OFFICE_SECKEY, raw_query)
+
+    url = f'https://eship.epost.go.kr/api.EmsApplyInsertReceiveTempCmdNew.ems?key={POST_OFFICE_EMSKEY}&regData={enc}'
+    http_req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    try:
+        with urllib.request.urlopen(http_req, timeout=10) as resp:
+            body = resp.read().decode('utf-8', errors='replace')
+            root = ET.fromstring(body)
+            err = root.find('error')
+            if err is not None:
+                err_code = root.findtext('.//error_code', 'ERR')
+                err_msg = root.findtext('.//message', '우체국 전산 등록 오류')
+                raise HTTPException(status_code=400, detail=f"[{err_code}] {err_msg}")
+
+            regino = root.findtext('regino', '')
+            receiveseq = root.findtext('receiveseq', '')
+            reqno = root.findtext('reqno', '')
+            price = root.findtext('prerecevprc', '8500')
+
+            return {
+                "status": "success",
+                "order_id": req.order_id,
+                "carrier": "Korea Post (K-Packet)",
+                "tracking_number": regino,
+                "receive_seq": receiveseq,
+                "reservation_no": reqno,
+                "estimated_fee": int(price),
+                "post_office": "서광주우체국",
+                "message": f"우체국 본사 전산 등록 완료! 등기번호: {regino}"
+            }
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # 2. eBay 공식 개발자 API 키셋 연동 (Production)

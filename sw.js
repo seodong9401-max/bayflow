@@ -1,5 +1,5 @@
-// BayFlow Service Worker v25 (Immediate Order Render & e-Shipping Sync)
-const CACHE_NAME = 'bayflow-v25';
+// BayFlow Service Worker v26 (Live Korea Post OpenAPI Connected & Registered)
+const CACHE_NAME = 'bayflow-v26';
 const ASSETS = [
   './',
   './index.html',
