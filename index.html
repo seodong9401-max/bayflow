@@ -4589,7 +4589,11 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 [예약신청] 버튼을 눌�
         "내용품명1", "수량1", "단가1", "총중량1", "HS부호1"
       ];
 
-      const rows = pendingOrders.map(o => [
+      // 미발급(등기번호 없는 대기건) 우선 추출, 없으면 전체
+      const targetOrders = pendingOrders.filter(o => !o.tracking);
+      const toExport = targetOrders.length > 0 ? targetOrders : pendingOrders;
+
+      const rows = toExport.map(o => [
         `"${o.orderId}"`,
         `"${EPOST_CONFIG.senderNameEn}"`,
         `"${EPOST_CONFIG.senderTel}"`,
