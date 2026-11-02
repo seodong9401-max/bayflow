@@ -1,5 +1,5 @@
-// BayFlow Service Worker v23 (eBay Real Orders & Korea Post K-Packet Integration)
-const CACHE_NAME = 'bayflow-v23';
+// BayFlow Service Worker v24 (eBay Real Orders & Korea Post K-Packet Integration - Fixed Script Parsing)
+const CACHE_NAME = 'bayflow-v24';
 const ASSETS = [
   './',
   './index.html',

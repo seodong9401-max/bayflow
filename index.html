@@ -4399,14 +4399,17 @@
       <div>계약고객: 50037J1011 (서광주)</div>
     </div>
   </div>
-  <script>
-    window.onload = function() { window.print(); }
-  </script>
 </body>
 </html>`;
 
       printWin.document.write(labelHtml);
       printWin.document.close();
+      setTimeout(() => {
+        try {
+          printWin.focus();
+          printWin.print();
+        } catch (e) {}
+      }, 400);
     }
 
     // 우체국 계약고객시스템(e-Shipping) 엑셀 일괄 등록 양식 다운로드 (.csv)
@@ -5312,7 +5315,7 @@
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=23').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=24').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }
