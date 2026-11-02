@@ -1,5 +1,5 @@
-// BayFlow Service Worker v37 (Embedded Viral Celeb Fashion Acc News Feed & Postal Rates Engine)
-const CACHE_NAME = 'bayflow-v37';
+// BayFlow Service Worker v38 (Massive 1,592 Items Celeb 86 & Fashion 125 Viral Radar)
+const CACHE_NAME = 'bayflow-v38';
 const ASSETS = [
   './',
   './index.html',

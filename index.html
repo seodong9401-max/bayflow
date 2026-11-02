@@ -4154,21 +4154,21 @@
         const text = (item.title + ' ' + (item.summary || '') + ' ' + itemTags.join(' ')).toLowerCase();
 
         if (filter === 'celeb') {
-          if (itemKind !== 'celeb' && !itemTags.some(t => ['연예인', '아이돌', 'bts', '뉴진스', '아이브', '지수', '블핑', 'kpop'].includes(t))) return false;
+          if (itemKind !== 'celeb' && !itemTags.some(t => ['연예인', '아이돌', 'bts', '방탄', '뉴진스', '에스파', '블랙핑크', '세븐틴', '아이브', '지수', '블핑', 'kpop', '팬덤', '굿즈', '포카', '하이브', 'sm', 'jyp', 'yg'].includes(t)) && !text.includes('아이돌') && !text.includes('연예인') && !text.includes('팬덤')) return false;
         } else if (filter === 'fashion') {
-          if (itemKind !== 'fashion' && !itemTags.some(t => ['패션', '스트릿', '의류', '산산기어', '떠그클럽', '마리떼', '고프코어', '무신사'].includes(t))) return false;
+          if (itemKind !== 'fashion' && !itemTags.some(t => ['패션', '스트릿', '의류', '산산기어', '떠그클럽', '마리떼', '고프코어', '무신사', '나이키', '아디다스', '스니커즈', '자켓', '코트', '패딩'].includes(t)) && !text.includes('패션') && !text.includes('스트릿') && !text.includes('의류')) return false;
         } else if (filter === 'acc') {
-          if (itemKind !== 'acc' && !itemTags.some(t => ['악세사리', '키링', '인형', '산리오', '스타벅스', '모남희'].includes(t))) return false;
+          if (itemKind !== 'acc' && !itemTags.some(t => ['악세사리', '키링', '인형', '산리오', '스타벅스', '모남희', '가방', '지갑'].includes(t)) && !text.includes('키링') && !text.includes('악세사리')) return false;
         } else if (filter === 'viral') {
-          if (itemKind !== 'viral' && !['tiktok', 'instagram', 'threads', 'x_twitter'].includes(itemSource) && !itemTags.some(t => ['바이럴', '틱톡', '인스타', '스레드', '트위터', '품절대란'].includes(t))) return false;
+          if (itemKind !== 'viral' && !['tiktok', 'instagram', 'threads', 'x_twitter'].includes(itemSource) && !itemTags.some(t => ['바이럴', '틱톡', '인스타', '스레드', '트위터', '품절대란', '오픈런'].includes(t)) && !text.includes('바이럴') && !text.includes('오픈런') && !text.includes('대란')) return false;
         } else if (filter === 'draw') {
-          if (itemKind !== 'draw' && itemSource !== 'nike' && itemSource !== 'kream' && !itemTags.some(t => ['드로우', '래플', '스니커즈'].includes(t))) return false;
+          if (itemKind !== 'draw' && itemSource !== 'nike' && itemSource !== 'kream' && !itemTags.some(t => ['드로우', '래플', '스니커즈', '응모'].includes(t))) return false;
         } else if (filter === 'popup') {
-          if (itemKind !== 'popup' && itemSource !== 'popply' && !itemTags.some(t => ['팝업', '팝업스토어', '성수'].includes(t))) return false;
+          if (itemKind !== 'popup' && itemSource !== 'popply' && !itemTags.some(t => ['팝업', '팝업스토어', '성수'].includes(t)) && !text.includes('팝업')) return false;
         } else if (filter === 'goods') {
-          if (itemKind !== 'goods' && itemSource !== 'cinema' && !itemTags.some(t => ['영화관', 'cgv', '메가박스', '굿즈', 'md'].includes(t))) return false;
+          if (itemKind !== 'goods' && itemSource !== 'cinema' && !itemTags.some(t => ['영화관', 'cgv', '메가박스', '굿즈', 'md'].includes(t)) && !text.includes('굿즈')) return false;
         } else if (filter === 'news') {
-          if (itemKind !== 'news' && itemSource !== 'gnews' && !itemTags.some(t => ['뉴스', '언론', '보도'].includes(t))) return false;
+          if (itemKind !== 'news' && itemSource !== 'gnews' && !itemTags.some(t => ['뉴스', '언론', '보도'].includes(t)) && !text.includes('뉴스')) return false;
         } else if (filter === 'fav') {
           if (!favKeys.some(k => text.includes(k))) return false;
         }
