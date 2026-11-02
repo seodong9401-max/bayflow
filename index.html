@@ -1181,19 +1181,52 @@
             </div>
 
             <input type="search" id="verified-search-input" oninput="renderVerifiedItems()" placeholder="내부 픽 검색 (예: emis, 제니, 뉴진스, 피카츄...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-amber-500">
-            <div class="flex space-x-1 overflow-x-auto no-scrollbar">
-              <button type="button" onclick="filterVerifiedCategory('all')" id="vcat-btn-all" class="flex-1 min-w-[60px] py-1.5 px-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition text-center whitespace-nowrap shadow">
+            <!-- 카테고리 필터 칩 (10대 전 카테고리 가로 스크롤) -->
+            <div class="flex space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
+              <button type="button" onclick="filterVerifiedCategory('all')" id="vcat-btn-all" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition active:scale-95 shadow">
                 전체
               </button>
-              <button type="button" onclick="filterVerifiedCategory('fashion')" id="vcat-btn-fashion" class="flex-1 min-w-[80px] py-1.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs transition text-center whitespace-nowrap">
-                👗 K-패션/모자
+              <button type="button" onclick="filterVerifiedCategory('acc')" id="vcat-btn-acc" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                💍 악세사리/쥬얼리
               </button>
-              <button type="button" onclick="filterVerifiedCategory('kpop')" id="vcat-btn-kpop" class="flex-1 min-w-[80px] py-1.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs transition text-center whitespace-nowrap">
+              <button type="button" onclick="filterVerifiedCategory('cap')" id="vcat-btn-cap" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                🧢 모자/볼캡
+              </button>
+              <button type="button" onclick="filterVerifiedCategory('clothing')" id="vcat-btn-clothing" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                👗 스트릿/의류
+              </button>
+              <button type="button" onclick="filterVerifiedCategory('sneakers')" id="vcat-btn-sneakers" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                👟 스니커즈/신발
+              </button>
+              <button type="button" onclick="filterVerifiedCategory('beauty')" id="vcat-btn-beauty" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                💄 K-뷰티/스킨케어
+              </button>
+              <button type="button" onclick="filterVerifiedCategory('kpop')" id="vcat-btn-kpop" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
                 🎤 K-POP 굿즈
               </button>
-              <button type="button" onclick="filterVerifiedCategory('pokemon')" id="vcat-btn-pokemon" class="flex-1 min-w-[80px] py-1.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs transition text-center whitespace-nowrap">
-                🃏 포켓몬/한정판
+              <button type="button" onclick="filterVerifiedCategory('pokemon')" id="vcat-btn-pokemon" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                🃏 포켓몬/TCG
               </button>
+              <button type="button" onclick="filterVerifiedCategory('character')" id="vcat-btn-character" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                🧸 캐릭터/키링
+              </button>
+              <button type="button" onclick="filterVerifiedCategory('starbucks')" id="vcat-btn-starbucks" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
+                ☕ 스타벅스/텀블러
+              </button>
+            </div>
+
+            <!-- 이베이 공식 카테고리 실시간 직통 연결 바 -->
+            <div id="cat-direct-bar" class="flex items-center justify-between bg-slate-950/90 p-2.5 rounded-xl border border-indigo-500/40 text-xs shadow">
+              <div class="flex items-center space-x-2">
+                <span class="text-base" id="cat-direct-icon">🌐</span>
+                <div>
+                  <div class="text-[11px] font-bold text-indigo-300" id="cat-direct-title">전체 한국 셀러 실시간 판매완료(Sold)</div>
+                  <div class="text-[9px] text-slate-400" id="cat-direct-desc">한국 우수셀러들의 최신 체결 실거래 매물</div>
+                </div>
+              </div>
+              <a id="cat-direct-link" href="https://www.ebay.com/sch/i.html?_nkw=korea&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[11px] whitespace-nowrap transition active:scale-95 shadow">
+                이베이 Sold 직통 ➔
+              </a>
             </div>
           </div>
         </div>
@@ -2118,66 +2151,40 @@
       showToast(`'${q}' 이베이 실시간 체결창 연결!`, '🔍');
     }
 
-    // 🔥 실전 검증 베스트셀러 픽 데이터 (최근 30일 10~50건 완판 & 왓치 20명 이상)
+    // 🔥 실전 검증 베스트셀러 픽 데이터 (10대 카테고리 19선 · 30일 10~50건 완판 & 왓치 20명 이상)
     const VERIFIED_ITEMS = [
+      // 💍 1. 악세사리 / 쥬얼리 (사모님 추천)
       {
-        id: "emis-cap",
-        category: "fashion",
-        categoryName: "👗 K-패션",
-        title: "이미스 (emis) 뉴 로고 코튼 볼캡",
-        ebayTitle: "emis New Logo Cotton Cap Korean Streetwear Ball Cap",
-        badge: "🔥 30일 34건 완판",
-        watchers: "👀 46명 찜",
-        status: "적극 사입 (회전율 1위)",
-        ebayUsd: 45.0,
-        ebayKrw: 62100,
-        targetBuyKrw: 29000,
-        profitKrw: 13620,
-        roi: "+47%",
-        weightCat: "clothing",
-        priceRange: "$42.00 ~ $48.50",
-        salesVelocity: "1.1일당 1건 완판 🔥",
-        topBuyers: "🇺🇸 미국 62% · 🇦🇺 호주 18% · 🇬🇧 영국 12%",
+        id: "chrome-necklace",
+        category: "acc",
+        categoryName: "💍 악세사리",
+        title: "연예인 착용 써지컬/실버925 십자가 체인 목걸이",
+        ebayTitle: "Korean Idol Style Silver 925 Cross Pendant Chain Necklace",
+        badge: "🔥 30일 38건 완판",
+        watchers: "👀 51명 찜",
+        status: "사모님 추천 (초경량)",
+        ebayUsd: 48.0,
+        ebayKrw: 66240,
+        targetBuyKrw: 22000,
+        profitKrw: 21500,
+        roi: "+98%",
+        weightCat: "card",
+        priceRange: "$44.00 ~ $52.00",
+        salesVelocity: "0.8일당 1건 완판 🔥",
+        topBuyers: "🇺🇸 미국 65% · 🇦🇺 호주 20% · 🇬🇧 영국 15%",
         recentSold: [
-          { date: "11/01", price: "$45.00", country: "🇺🇸 미국" },
-          { date: "10/29", price: "$44.00", country: "🇦🇺 호주" },
-          { date: "10/26", price: "$48.50", country: "🇬🇧 영국" }
+          { date: "11/02", price: "$48.00", country: "🇺🇸 미국" },
+          { date: "10/31", price: "$46.00", country: "🇦🇺 호주" },
+          { date: "10/28", price: "$50.00", country: "🇬🇧 영국" }
         ],
-        bunjangQuery: "emis 볼캡",
-        ebayQuery: "emis cap",
-        tags: ["#제니착용", "#연예인모자", "#바이럴", "#품절대란"]
-      },
-      {
-        id: "mardi-tshirt",
-        category: "fashion",
-        categoryName: "👗 K-패션",
-        title: "마르디 메크르디 플라워마르디 반팔 티셔츠",
-        ebayTitle: "Mardi Mercredi T-Shirt Flower Mardi Print Tee Top",
-        badge: "🔥 30일 28건 완판",
-        watchers: "👀 39명 찜",
-        status: "안전 사입",
-        ebayUsd: 58.0,
-        ebayKrw: 80040,
-        targetBuyKrw: 38000,
-        profitKrw: 18400,
-        roi: "+48%",
-        weightCat: "clothing",
-        priceRange: "$52.00 ~ $62.00",
-        salesVelocity: "1.2일당 1건 완판 🔥",
-        topBuyers: "🇯🇵 일본 45% · 🇺🇸 미국 35% · 🇹🇼 대만 15%",
-        recentSold: [
-          { date: "11/01", price: "$58.00", country: "🇯🇵 일본" },
-          { date: "10/30", price: "$55.00", country: "🇺🇸 미국" },
-          { date: "10/27", price: "$60.00", country: "🇯🇵 일본" }
-        ],
-        bunjangQuery: "마르디 플라워 티셔츠",
-        ebayQuery: "Mardi Mercredi tshirt",
-        tags: ["#김고은", "#여름필수", "#스테디셀러"]
+        bunjangQuery: "실버 925 십자가 목걸이",
+        ebayQuery: "Korean idol silver necklace",
+        tags: ["#아이돌착용", "#악세사리", "#초경량우체국", "#고마진"]
       },
       {
         id: "matin-kim-wallet",
-        category: "fashion",
-        categoryName: "👗 K-패션",
+        category: "acc",
+        categoryName: "💍 악세사리/지갑",
         title: "마뗑킴 (Matin Kim) 아코디언 미니 카드지갑",
         ebayTitle: "Matin Kim Accordion Mini Wallet Card Holder Silver Plate",
         badge: "🔥 30일 22건 완판",
@@ -2202,9 +2209,36 @@
         tags: ["#시그니처메탈", "#경량소싱", "#글로벌인기"]
       },
       {
+        id: "tamburins-egg-lipbalm",
+        category: "acc",
+        categoryName: "💍 뷰티/악세사리",
+        title: "탬버린즈 (TAMBURINS) 에그 립밤 + 진주 케이스",
+        ebayTitle: "TAMBURINS Egg Lip Balm Pearl Case Rose Woody Blackpink Jennie",
+        badge: "🔥 30일 42건 완판",
+        watchers: "👀 58명 찜",
+        status: "제니 바이럴 효자템",
+        ebayUsd: 55.0,
+        ebayKrw: 75900,
+        targetBuyKrw: 32000,
+        profitKrw: 24200,
+        roi: "+76%",
+        weightCat: "card",
+        priceRange: "$50.00 ~ $58.00",
+        salesVelocity: "0.7일당 1건 완판 🔥",
+        topBuyers: "🇺🇸 미국 52% · 🇯🇵 일본 30% · 🇸🇬 싱가포르 18%",
+        recentSold: [
+          { date: "11/02", price: "$55.00", country: "🇯🇵 일본" },
+          { date: "10/30", price: "$52.00", country: "🇺🇸 미국" },
+          { date: "10/27", price: "$58.00", country: "🇸🇬 싱가포르" }
+        ],
+        bunjangQuery: "탬버린즈 에그 립밤",
+        ebayQuery: "TAMBURINS Egg Lip Balm Jennie",
+        tags: ["#성수탬버린즈", "#제니립밤", "#진주케이스", "#여성바이어선호"]
+      },
+      {
         id: "gentle-monster",
-        category: "fashion",
-        categoryName: "👗 K-패션",
+        category: "acc",
+        categoryName: "💍 아이웨어/악세사리",
         title: "젠틀몬스터 2026 제니 바이럴 선글라스",
         ebayTitle: "Gentle Monster Jennie Sunglasses Baby Pony Cat Eye",
         badge: "🔥 30일 19건 완판",
@@ -2228,10 +2262,99 @@
         ebayQuery: "Gentle Monster Jennie",
         tags: ["#제니선글라스", "#고단가수출", "#해외직구1위"]
       },
+
+      // 🧢 2. 모자 / 볼캡
+      {
+        id: "emis-cap",
+        category: "cap",
+        categoryName: "🧢 모자/볼캡",
+        title: "이미스 (emis) 뉴 로고 코튼 볼캡",
+        ebayTitle: "emis New Logo Cotton Cap Korean Streetwear Ball Cap",
+        badge: "🔥 30일 34건 완판",
+        watchers: "👀 46명 찜",
+        status: "적극 사입 (회전율 1위)",
+        ebayUsd: 45.0,
+        ebayKrw: 62100,
+        targetBuyKrw: 29000,
+        profitKrw: 13620,
+        roi: "+47%",
+        weightCat: "clothing",
+        priceRange: "$42.00 ~ $48.50",
+        salesVelocity: "1.1일당 1건 완판 🔥",
+        topBuyers: "🇺🇸 미국 62% · 🇦🇺 호주 18% · 🇬🇧 영국 12%",
+        recentSold: [
+          { date: "11/01", price: "$45.00", country: "🇺🇸 미국" },
+          { date: "10/29", price: "$44.00", country: "🇦🇺 호주" },
+          { date: "10/26", price: "$48.50", country: "🇬🇧 영국" }
+        ],
+        bunjangQuery: "emis 볼캡",
+        ebayQuery: "emis cap",
+        tags: ["#제니착용", "#연예인모자", "#바이럴", "#품절대란"]
+      },
+
+      // 👗 3. 스트릿 / 의류
+      {
+        id: "mardi-tshirt",
+        category: "clothing",
+        categoryName: "👗 스트릿/의류",
+        title: "마르디 메크르디 플라워마르디 반팔 티셔츠",
+        ebayTitle: "Mardi Mercredi T-Shirt Flower Mardi Print Tee Top",
+        badge: "🔥 30일 28건 완판",
+        watchers: "👀 39명 찜",
+        status: "안전 사입",
+        ebayUsd: 58.0,
+        ebayKrw: 80040,
+        targetBuyKrw: 38000,
+        profitKrw: 18400,
+        roi: "+48%",
+        weightCat: "clothing",
+        priceRange: "$52.00 ~ $62.00",
+        salesVelocity: "1.2일당 1건 완판 🔥",
+        topBuyers: "🇯🇵 일본 45% · 🇺🇸 미국 35% · 🇹🇼 대만 15%",
+        recentSold: [
+          { date: "11/01", price: "$58.00", country: "🇯🇵 일본" },
+          { date: "10/30", price: "$55.00", country: "🇺🇸 미국" },
+          { date: "10/27", price: "$60.00", country: "🇯🇵 일본" }
+        ],
+        bunjangQuery: "마르디 플라워 티셔츠",
+        ebayQuery: "Mardi Mercredi tshirt",
+        tags: ["#김고은", "#여름필수", "#스테디셀러"]
+      },
+
+      // 👟 4. 스니커즈 / 신발
+      {
+        id: "adidas-samba-og",
+        category: "sneakers",
+        categoryName: "👟 스니커즈",
+        title: "아디다스 삼바 OG 클라우드 화이트 (B75806)",
+        ebayTitle: "Adidas Samba OG Cloud White Core Black B75806 Authentic",
+        badge: "🔥 30일 36건 완판",
+        watchers: "👀 68명 찜",
+        status: "스테디셀러 사입",
+        ebayUsd: 125.0,
+        ebayKrw: 172500,
+        targetBuyKrw: 109000,
+        profitKrw: 28500,
+        roi: "+26%",
+        weightCat: "shoes",
+        priceRange: "$118.00 ~ $132.00",
+        salesVelocity: "0.8일당 1건 완판",
+        topBuyers: "🇺🇸 미국 70% · 🇨🇦 캐나다 15% · 🇦🇺 호주 15%",
+        recentSold: [
+          { date: "11/01", price: "$125.00", country: "🇺🇸 미국" },
+          { date: "10/30", price: "$128.00", country: "🇺🇸 미국" },
+          { date: "10/27", price: "$120.00", country: "🇨🇦 캐나다" }
+        ],
+        bunjangQuery: "아디다스 삼바 OG 화이트 260",
+        ebayQuery: "Adidas Samba OG White B75806",
+        tags: ["#스니커즈", "#크림사입", "#박스포장", "#글로벌완판"]
+      },
+
+      // 💄 5. K-뷰티 / 스킨케어
       {
         id: "nonfiction-hand",
-        category: "fashion",
-        categoryName: "👗 K-뷰티/라이프",
+        category: "beauty",
+        categoryName: "💄 K-뷰티",
         title: "논픽션 (Nonfiction) 핸드크림 50ml + 포터블",
         ebayTitle: "Nonfiction Hand Cream 50ml Gentle Night Santal Cream",
         badge: "🔥 30일 31건 완판",
@@ -2255,6 +2378,120 @@
         ebayQuery: "Nonfiction Hand cream",
         tags: ["#올리브영1위", "#성수동선물", "#가벼운무게"]
       },
+      {
+        id: "beauty-of-joseon-sun",
+        category: "beauty",
+        categoryName: "💄 K-뷰티",
+        title: "조선미녀 맑은쌀 선크림 SPF50+ 50ml (2개 세트)",
+        ebayTitle: "Beauty of Joseon Relief Sun Rice Probiotics SPF50 50ml 2 Pack",
+        badge: "🔥 30일 53건 완판",
+        watchers: "👀 82명 찜",
+        status: "틱톡 바이럴 1위",
+        ebayUsd: 36.0,
+        ebayKrw: 49680,
+        targetBuyKrw: 18000,
+        profitKrw: 14800,
+        roi: "+82%",
+        weightCat: "clothing",
+        priceRange: "$32.00 ~ $38.00",
+        salesVelocity: "0.6일당 1건 완판 (초고속 🔥)",
+        topBuyers: "🇺🇸 미국 75% · 🇬🇧 영국 15% · 🇨🇦 캐나다 10%",
+        recentSold: [
+          { date: "11/02", price: "$36.00", country: "🇺🇸 미국" },
+          { date: "11/01", price: "$35.00", country: "🇺🇸 미국" },
+          { date: "10/30", price: "$38.00", country: "🇬🇧 영국" }
+        ],
+        bunjangQuery: "조선미녀 맑은쌀 선크림",
+        ebayQuery: "Beauty of Joseon Relief Sun 2 Pack",
+        tags: ["#올리브영수출", "#틱톡선크림", "#재구매1위", "#가벼운무게"]
+      },
+
+      // 🧸 6. 캐릭터 / 키링 / MD
+      {
+        id: "monamhee-keyring",
+        category: "character",
+        categoryName: "🧸 캐릭터/키링",
+        title: "모남희 (MONAMHEE) 블핑 로제 착용 블핑이 키링",
+        ebayTitle: "MONAMHEE Blackpink Rose Plush Doll Keyring Bag Charm Official",
+        badge: "🔥 30일 24건 완판",
+        watchers: "👀 43명 찜",
+        status: "연예인 가방 악세사리",
+        ebayUsd: 55.0,
+        ebayKrw: 75900,
+        targetBuyKrw: 28000,
+        profitKrw: 26500,
+        roi: "+95%",
+        weightCat: "card",
+        priceRange: "$50.00 ~ $60.00",
+        salesVelocity: "1.2일당 1건 완판 🔥",
+        topBuyers: "🇺🇸 미국 48% · 🇯🇵 일본 35% · 🇹🇼 대만 17%",
+        recentSold: [
+          { date: "11/01", price: "$55.00", country: "🇯🇵 일본" },
+          { date: "10/28", price: "$52.00", country: "🇺🇸 미국" },
+          { date: "10/24", price: "$60.00", country: "🇹🇼 대만" }
+        ],
+        bunjangQuery: "모남희 키링",
+        ebayQuery: "Monamhee plush keyring Rose",
+        tags: ["#로제키링", "#가방키링", "#성수동핫플", "#초경량배송"]
+      },
+      {
+        id: "seongsu-hanbok-keyring",
+        category: "character",
+        categoryName: "🧸 캐릭터/키링",
+        title: "성수 팝업 한복 피카츄 LED 라이트 키링",
+        ebayTitle: "Pokemon Korea Hanbok Pikachu LED Light Keyring Seongsu Popup",
+        badge: "🔥 30일 16건 완판",
+        watchers: "👀 31명 찜",
+        status: "대박 마진템 (+6.8만)",
+        ebayUsd: 115.0,
+        ebayKrw: 158700,
+        targetBuyKrw: 45000,
+        profitKrw: 68500,
+        roi: "+152%",
+        weightCat: "card",
+        priceRange: "$105.00 ~ $125.00",
+        salesVelocity: "1.8일당 1건 완판 🔥",
+        topBuyers: "🇺🇸 미국 55% · 🇯🇵 일본 25% · 🇦🇺 호주 15%",
+        recentSold: [
+          { date: "10/31", price: "$115.00", country: "🇺🇸 미국" },
+          { date: "10/26", price: "$110.00", country: "🇯🇵 일본" },
+          { date: "10/22", price: "$120.00", country: "🇦🇺 호주" }
+        ],
+        bunjangQuery: "한복 피카츄 키링",
+        ebayQuery: "Pokemon Korea Hanbok Pikachu keyring",
+        tags: ["#성수팝업한정", "#현장품절템", "#미개봉새상품"]
+      },
+
+      // ☕ 7. 스타벅스 / 텀블러
+      {
+        id: "starbucks-korea-tumbler",
+        category: "starbucks",
+        categoryName: "☕ 스타벅스",
+        title: "스타벅스 코리아 전통 자개 청자 텀블러 MD",
+        ebayTitle: "Starbucks Korea Traditional Mother of Pearl Tumbler Limited Edition",
+        badge: "🔥 30일 17건 완판",
+        watchers: "👀 38명 찜",
+        status: "외국인 선물 1위",
+        ebayUsd: 65.0,
+        ebayKrw: 89700,
+        targetBuyKrw: 35000,
+        profitKrw: 28500,
+        roi: "+81%",
+        weightCat: "clothing",
+        priceRange: "$58.00 ~ $70.00",
+        salesVelocity: "1.7일당 1건 완판",
+        topBuyers: "🇺🇸 미국 60% · 🇸🇬 싱가포르 25% · 🇦🇺 호주 15%",
+        recentSold: [
+          { date: "10/31", price: "$65.00", country: "🇺🇸 미국" },
+          { date: "10/27", price: "$62.00", country: "🇸🇬 싱가포르" },
+          { date: "10/23", price: "$68.00", country: "🇺🇸 미국" }
+        ],
+        bunjangQuery: "스타벅스 전통 자개 텀블러",
+        ebayQuery: "Starbucks Korea Traditional Tumbler",
+        tags: ["#한국한정MD", "#자개텀블러", "#안전포장", "#고급선물"]
+      },
+
+      // 🎤 8. K-POP 굿즈 & 포토카드
       {
         id: "newjeans-bunjy",
         category: "kpop",
@@ -2363,6 +2600,8 @@
         ebayQuery: "SEVENTEEN follow trading card",
         tags: ["#미개봉팩", "#일본바이어인기", "#초경량"]
       },
+
+      // 🃏 9. 포켓몬 카드 & 한국 한정판
       {
         id: "ditto-promo",
         category: "pokemon",
@@ -2418,33 +2657,6 @@
         tags: ["#한국전통굿즈", "#북미셀렉템", "#미개봉"]
       },
       {
-        id: "seongsu-hanbok-keyring",
-        category: "pokemon",
-        categoryName: "🃏 포켓몬",
-        title: "성수 팝업 한복 피카츄 LED 라이트 키링",
-        ebayTitle: "Pokemon Korea Hanbok Pikachu LED Light Keyring Seongsu Popup",
-        badge: "🔥 30일 16건 완판",
-        watchers: "👀 31명 찜",
-        status: "대박 마진템 (+6.8만)",
-        ebayUsd: 115.0,
-        ebayKrw: 158700,
-        targetBuyKrw: 45000,
-        profitKrw: 68500,
-        roi: "+152%",
-        weightCat: "card",
-        priceRange: "$105.00 ~ $125.00",
-        salesVelocity: "1.8일당 1건 완판 🔥",
-        topBuyers: "🇺🇸 미국 55% · 🇯🇵 일본 25% · 🇦🇺 호주 15%",
-        recentSold: [
-          { date: "10/31", price: "$115.00", country: "🇺🇸 미국" },
-          { date: "10/26", price: "$110.00", country: "🇯🇵 일본" },
-          { date: "10/22", price: "$120.00", country: "🇦🇺 호주" }
-        ],
-        bunjangQuery: "한복 피카츄 키링",
-        ebayQuery: "Pokemon Korea Hanbok Pikachu keyring",
-        tags: ["#성수팝업한정", "#현장품절템", "#미개봉새상품"]
-      },
-      {
         id: "magikarp-promo",
         category: "pokemon",
         categoryName: "🃏 포켓몬",
@@ -2473,19 +2685,94 @@
       }
     ];
 
+    const VERIFIED_CATEGORIES = {
+      all: {
+        icon: "🌐",
+        title: "전체 한국 셀러 실시간 판매완료(Sold)",
+        desc: "한국 우수셀러들의 최신 체결 실거래 매물 전체",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      acc: {
+        icon: "💍",
+        title: "악세사리/쥬얼리 이베이 Sold 실시간 연동",
+        desc: "실버925 목걸이·반지·팔찌·키링 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(jewelry%2C+necklace%2C+ring%2C+bracelet%2C+silver%2C+keyring)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      cap: {
+        icon: "🧢",
+        title: "연예인 모자/볼캡 이베이 Sold 실시간 연동",
+        desc: "이미스·마뗑킴·연예인 볼캡/비니 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(cap%2C+ballcap%2C+beanie%2C+hat)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      clothing: {
+        icon: "👗",
+        title: "K-스트릿/의류 이베이 Sold 실시간 연동",
+        desc: "마르디·스투시·연예인 티셔츠/후드 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(tshirt%2C+hoodie%2C+streetwear%2C+jacket)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      sneakers: {
+        icon: "👟",
+        title: "한정판 스니커즈 이베이 Sold 실시간 연동",
+        desc: "조던·삼바·아디다스·나이키 한정판 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(sneakers%2C+jordan%2C+samba%2C+nike%2C+shoes)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      beauty: {
+        icon: "💄",
+        title: "K-뷰티/스킨케어 이베이 Sold 실시간 연동",
+        desc: "논픽션·조선미녀·세럼·선크림 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(skincare%2C+serum%2C+sun+cream%2C+beauty%2C+toner)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      kpop: {
+        icon: "🎤",
+        title: "K-POP 굿즈/포카 이베이 Sold 실시간 연동",
+        desc: "아이돌 미공포·응원봉·포토카드 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=kpop+(photocard%2C+album%2C+lightstick%2C+pob)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      pokemon: {
+        icon: "🃏",
+        title: "포켓몬 카드 한국 한정판 이베이 Sold 연동",
+        desc: "프로모·밀봉팩·SAR·한국 독점 배포판 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=pokemon+(korean%2C+promo%2C+sealed%2C+booster%2C+card)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      character: {
+        icon: "🧸",
+        title: "캐릭터/키링/팝업 이베이 Sold 실시간 연동",
+        desc: "모남희·팝마트 라부부·성수 팝업 굿즈 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(keyring%2C+plush%2C+doll%2C+popup%2C+goods)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      starbucks: {
+        icon: "☕",
+        title: "스타벅스 코리아 텀블러/MD 이베이 Sold 연동",
+        desc: "한국 전통 자개 MD·시티 머그 체결 매물",
+        url: "https://www.ebay.com/sch/i.html?_nkw=starbucks+korea+(tumbler%2C+mug%2C+cold+cup%2C+md)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      }
+    };
+
     function filterVerifiedCategory(cat) {
       currentVerifiedFilter = cat;
-      const cats = ['all', 'fashion', 'kpop', 'pokemon'];
+      const cats = ['all', 'acc', 'cap', 'clothing', 'sneakers', 'beauty', 'kpop', 'pokemon', 'character', 'starbucks'];
       cats.forEach(c => {
         const btn = document.getElementById('vcat-btn-' + c);
         if (btn) {
           if (c === cat) {
-            btn.className = 'flex-1 min-w-[70px] py-1.5 px-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition text-center whitespace-nowrap shadow';
+            btn.className = 'vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition active:scale-95 shadow';
           } else {
-            btn.className = 'flex-1 min-w-[70px] py-1.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs transition text-center whitespace-nowrap';
+            btn.className = 'vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95';
           }
         }
       });
+
+      // Update eBay direct connection bar
+      const catInfo = VERIFIED_CATEGORIES[cat] || VERIFIED_CATEGORIES.all;
+      const iconElem = document.getElementById('cat-direct-icon');
+      const titleElem = document.getElementById('cat-direct-title');
+      const descElem = document.getElementById('cat-direct-desc');
+      const linkElem = document.getElementById('cat-direct-link');
+      if (iconElem) iconElem.innerText = catInfo.icon;
+      if (titleElem) titleElem.innerText = catInfo.title;
+      if (descElem) descElem.innerText = catInfo.desc;
+      if (linkElem) linkElem.href = catInfo.url;
+
       renderVerifiedItems();
     }
 

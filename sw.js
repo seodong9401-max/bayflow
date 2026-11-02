@@ -1,5 +1,5 @@
-// BayFlow Service Worker v16 (Live eBay Sold Search & Transaction Volume Modal)
-const CACHE_NAME = 'bayflow-v16';
+// BayFlow Service Worker v17 (10 Full Sourcing Categories & Dynamic eBay Sold Bridge)
+const CACHE_NAME = 'bayflow-v17';
 const ASSETS = [
   './',
   './index.html',
