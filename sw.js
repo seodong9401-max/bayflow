@@ -1,5 +1,5 @@
-// BayFlow Service Worker v31 (Correct Real eBay Shipping Details: Patrick Daly-andrusiak)
-const CACHE_NAME = 'bayflow-v31';
+// BayFlow Service Worker v32 (Added National Tax Service Zero-VAT Export & Customs Engine)
+const CACHE_NAME = 'bayflow-v32';
 const ASSETS = [
   './',
   './index.html',

@@ -107,14 +107,18 @@
         </div>
         
         <!-- 우체국 원클릭 빠른 도구 바 -->
-        <div class="grid grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
-          <button onclick="downloadEpostExcel()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold py-2 px-3 rounded-xl border border-slate-700 flex items-center justify-center space-x-1.5 transition active:scale-98">
+        <div class="grid grid-cols-3 gap-2 pt-1 border-t border-slate-800/80">
+          <button onclick="downloadEpostExcel()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold py-2 px-2.5 rounded-xl border border-slate-700 flex items-center justify-center space-x-1.5 transition active:scale-98">
             <span>📥</span>
-            <span>우체국 엑셀 일괄 양식 다운로드</span>
+            <span>우체국 접수 엑셀</span>
           </button>
-          <a href="https://biz.epost.go.kr" target="_blank" rel="noopener noreferrer" class="bg-slate-800 hover:bg-slate-700 text-indigo-300 text-xs font-bold py-2 px-3 rounded-xl border border-slate-700 flex items-center justify-center space-x-1.5 transition active:scale-98">
+          <button onclick="downloadTaxReportExcel()" class="bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 text-xs font-bold py-2 px-2.5 rounded-xl border border-indigo-500/40 flex items-center justify-center space-x-1.5 transition active:scale-98">
+            <span>📊</span>
+            <span>국세청 영세율 엑셀</span>
+          </button>
+          <a href="https://biz.epost.go.kr" target="_blank" rel="noopener noreferrer" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold py-2 px-2.5 rounded-xl border border-slate-700 flex items-center justify-center space-x-1.5 transition active:scale-98">
             <span>🔗</span>
-            <span>우체국 e-Shipping 계약창 열기</span>
+            <span>우체국 창 열기</span>
           </a>
         </div>
       </div>
@@ -4625,6 +4629,53 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 [예약신청] 버튼을 눌�
       URL.revokeObjectURL(url);
 
       showToast('우체국 e-Shipping 엑셀 일괄 양식 다운로드 완료!', '📥');
+    }
+
+    // 📊 국세청 홈택스 부가세 영세율(0%) & 소득세 수출실적명세서 엑셀 다운로드
+    function downloadTaxReportExcel() {
+      const headers = [
+        "판매일자", "발송일자", "주문번호", "우체국등기번호(수출증빙)", "바이어국가", "품명", "HS부호(세관코드)",
+        "외화결제액(USD)", "적용환율(기준환율)", "원화환산매출액(원)", "이베이수수료(USD)", "페이오니아수수료(USD)", "정산실수령액(원)", "비고"
+      ];
+
+      const rate = 1380.0;
+      const rows = pendingOrders.map(o => {
+        const usd = Number(o.totalUsd || 0);
+        const krwSales = Math.round(usd * rate);
+        const ebayFeeUsd = (usd * 0.1325 + 0.40 + usd * 0.0145).toFixed(2);
+        const payoFeeUsd = (usd * 0.02).toFixed(2);
+        const netKrw = Math.round((usd - parseFloat(ebayFeeUsd) - parseFloat(payoFeeUsd)) * rate - (o.estimatedPostKrw || 8130));
+
+        return [
+          `"${o.created ? o.created.slice(0,10) : new Date().toISOString().slice(0,10)}"`,
+          `"${o.shippedAt ? o.shippedAt.slice(0,10) : new Date().toISOString().slice(0,10)}"`,
+          `"${o.orderId}"`,
+          `"${o.tracking || '발송대기(LP/LI...KR)'}"`,
+          `"${o.countryName || o.country}"`,
+          `"${o.customsDesc || 'Playing cards'}"`,
+          `"${o.hsCode || '9504400000'}"`,
+          `"${usd.toFixed(2)}"`,
+          `"${rate}"`,
+          `"${krwSales}"`,
+          `"${ebayFeeUsd}"`,
+          `"${payoFeeUsd}"`,
+          `"${netKrw}"`,
+          `"부가가치세법 제21조 영세율 수출 (우체국 K-Packet 간이수출)"`
+        ];
+      });
+
+      const csvContent = "\uFEFF" + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ebay_vat_zero_tax_export_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('국세청 부가세 영세율 세금신고 엑셀 다운로드 완료!', '📊');
     }
 
     // 이베이 주문 새로고침
