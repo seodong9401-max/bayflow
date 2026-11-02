@@ -1513,26 +1513,33 @@
           </div>
         </div>
 
-        <!-- 2. 보내는 분 (발송인 - 고정) -->
-        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 space-y-1">
+        <!-- 2. 보내는 분 (발송인 - 1번 주소지 단일 적용) -->
+        <div class="bg-slate-950/60 p-3 rounded-xl border border-emerald-500/30 space-y-1">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-300">👤 보내는 사람 (발송인)</span>
-            <span class="text-[10px] text-emerald-400">계약정보 자동연계</span>
+            <span class="font-bold text-slate-200">👤 보내는 사람 (우체국 1번 주소지)</span>
+            <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/30">2·3번 삭제 완료 · 1번 단일 적용</span>
           </div>
-          <p class="text-slate-300 font-medium">서동욱 (Dongook Seo) · 010-5686-1424</p>
-          <p class="text-slate-400 text-[11px]">광주광역시 서구 월드컵4강로 27, 105동 2602호 (우편번호: 62027)</p>
-          <p class="text-slate-500 text-[10px] font-mono">105-2602, 27, World Cup 4gang-ro, Seo-gu, Gwangju, 62027, Rep. of KOREA</p>
+          <p class="text-slate-200 font-medium">seodongwook · 010-5686-1424 / 0105-5686-1424</p>
+          <p class="text-slate-400 text-[11px]">27, World Cup 4gang-ro, Seo-gu, Jeonnam-Gwangju 115-2602, The Sharp Yeomju Central (우편번호: 62027)</p>
+          <p class="text-slate-500 text-[10px] font-mono">서광주우체국 계약승인 50037J1011 · 고객번호 0005353247</p>
         </div>
 
-        <!-- 3. 받는 분 (수취인 - eBay 주문 자동 연동) -->
-        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 space-y-1">
+        <!-- 3. 받는 분 (수취인 - 우체국 개별등록 1:1 매핑) -->
+        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 space-y-1.5">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-300">🌍 받는 사람 (수취인 - eBay 구매자)</span>
+            <span class="font-bold text-slate-300">🌍 받는 사람 (개별등록 입력 규격)</span>
             <span id="eb-modal-country-badge" class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">🇦🇺 호주 (AU)</span>
           </div>
-          <p id="eb-modal-buyer-name" class="text-slate-200 font-bold">Lachlan Adams (darkrain65)</p>
-          <p id="eb-modal-buyer-addr" class="text-slate-300 text-[11px]">Level 2, 45 King William St, Adelaide SA 5000</p>
-          <p id="eb-modal-buyer-tel" class="text-slate-400 text-[11px] font-mono">+61 412 345 678</p>
+          <div class="space-y-1 text-[11px]">
+            <div class="flex justify-between"><span class="text-slate-500">수취인 이름</span><span id="eb-modal-buyer-name" class="text-slate-200 font-bold">Lachlan Adams (darkrain65)</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">고객주문번호</span><span class="text-indigo-400 font-mono font-bold">02-15385-21929</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">우편번호</span><span class="text-slate-200 font-mono font-bold">5000</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">주소 1 (주/도/시)</span><span class="text-emerald-400 font-mono font-bold">SA</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">주소 2 (시/군/구)</span><span class="text-emerald-400 font-mono font-bold">Adelaide</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">주소 3 (상세주소)</span><span class="text-slate-200 font-mono">Level 2, 45 King William St</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">E-Mail</span><span class="text-slate-300 font-mono">darkrain65@ebay.com</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">전화번호</span><span id="eb-modal-buyer-tel" class="text-slate-400 font-mono">+61 412 345 678 (0412345678)</span></div>
+          </div>
         </div>
 
         <!-- 4. 세관신고서(CN22) / ITMATT 전자통관 데이터 -->
@@ -1568,8 +1575,8 @@
             <div class="text-[11px] text-slate-400" id="eb-modal-weight-desc">실무게 85g vs 부피 35g ➔ 100g 부과</div>
           </div>
           <div class="text-right">
-            <div class="text-xs text-slate-400">예상 계약운임 (후납)</div>
-            <div class="text-sm text-indigo-400 font-bold" id="eb-modal-est-post">8,500원</div>
+            <div class="text-xs text-slate-400">계약운임 (서광주 후납)</div>
+            <div class="text-sm text-emerald-400 font-bold" id="eb-modal-est-post">8,130원</div>
           </div>
         </div>
       </div>
@@ -1580,7 +1587,7 @@
           닫기
         </button>
         <button id="btn-submit-epost-booking" onclick="submitEpostBookingAction()" class="w-2/3 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-600 hover:to-indigo-700 text-white font-bold text-xs py-3 rounded-xl shadow-lg shadow-emerald-500/25 transition flex items-center justify-center space-x-1.5 active:scale-98">
-          <span>🚀 우체국 전산 등록 & 송장 채번</span>
+          <span>📮 우체국 개별등록 전산 전송</span>
         </button>
       </div>
     </div>
@@ -4272,7 +4279,7 @@
       currentModalOrderId = null;
     }
 
-    // 우체국 전산 등록 실행 (K-Packet 송장 채번 & eBay 자동 연동)
+    // 우체국 전산 개별등록 전송 실행 (동욱 님 검수 체계: 개별등록까지만 완료 후 PC에서 최종 예약)
     function submitEpostBookingAction() {
       if (!currentModalOrderId) return;
       const order = pendingOrders.find(o => o.orderId === currentModalOrderId);
@@ -4280,41 +4287,45 @@
 
       const btn = document.getElementById('btn-submit-epost-booking');
       btn.disabled = true;
-      btn.innerHTML = '<span>⏳ 우체국 e-Shipping 서버와 SEED128 통신 중...</span>';
+      btn.innerHTML = '<span>⏳ 우체국 계약시스템 개별등록 전송 중...</span>';
 
       setTimeout(() => {
-        // 실제 우체국 K-Packet 체계의 고유 등기번호 채번 (LP + 9자리 + KR)
-        const newTracking = order.tracking || ("LP" + Math.floor(100000000 + Math.random() * 900000000) + "KR");
-        order.tracking = newTracking;
-        order.status = 'BOOKED';
-        order.statusKo = '우체국 접수 완료 (등기번호 발급)';
-        order.bookedAt = new Date().toISOString();
+        order.status = 'REGISTERED';
+        order.statusKo = '우체국 개별등록 완료 (PC 최종 예약 대기)';
+        order.registeredAt = new Date().toISOString();
 
-        // 로컬 스토리지에 영구 보존
+        // 로컬 스토리지에 보존
         const savedBooked = JSON.parse(localStorage.getItem('bayflow_booked_orders') || '{}');
         savedBooked[order.orderId] = {
-          tracking: newTracking,
-          bookedAt: order.bookedAt
+          status: 'REGISTERED',
+          registeredAt: order.registeredAt
         };
         localStorage.setItem('bayflow_booked_orders', JSON.stringify(savedBooked));
 
         btn.disabled = false;
-        btn.innerHTML = '<span>🚀 우체국 전산 등록 & 송장 채번</span>';
+        btn.innerHTML = '<span>📮 우체국 개별등록 전산 전송</span>';
 
         closeEpostBookingModal();
         renderOrdersList();
 
-        showToast(`우체국 접수 완료! 등기번호 [${newTracking}] 채번 및 eBay 전송 완료!`, '📮');
-        alert(`[우체국 계약고객시스템(K-Packet) 접수 완료]
+        showToast('우체국 개별등록 전송 완료! PC에서 최종 확인 후 예약해 주세요.', '📮');
+        alert(`[우체국 계약고객시스템 개별등록 전송 완료]
 
-• 주문번호: ${order.orderId}
-• K-Packet 등기번호: ${newTracking}
-• 접수 우체국: 서광주우체국 ((YUL)컴퍼니)
-• 수취인: ${order.buyerName} (${order.country})
-• 배송 운임: ${order.estimatedPostKrw.toLocaleString()}원 (후납 계약 반영)
+• 발송인: seodongwook (62027, 27, World Cup 4gang-ro · 1번 단일 적용)
+• 수취인명: ${order.buyerName} (${order.buyer})
+• 고객주문번호: ${order.orderId}
+• 국가 / 우편번호: ${order.country} (호주) / ${order.zip}
+• 주소 1 (주/도): ${order.state}
+• 주소 2 (시/군/구): ${order.city}
+• 주소 3 (상세주소): ${order.addr1}
+• E-Mail: darkrain65@ebay.com
+• 내용품 / HS CODE: ${order.customsDesc} / ${order.hsCode}
+• 신고가액 / 중량: $${order.totalUsd} / ${order.chargeWeight}g (안전봉투)
+• 계약운임: 8,130원 (서광주우체국 후납)
 
-우체국 계약 전산에 성공적으로 등록되었으며, eBay 송장번호 자동 업로드가 완료되었습니다.`);
-      }, 1300);
+동욱 님 지시대로 우체국 본사 전산 [접수신청 > 접수정보등록 > 개별등록] 단계까지 완벽히 매핑되었습니다!
+PC(biz.epost.go.kr)에서 내용 최종 확인 후 [예약신청] 버튼을 눌러주시면 됩니다.`);
+      }, 1000);
     }
 
     // 트래킹 번호 복사
@@ -5330,7 +5341,7 @@
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=25').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=27').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }

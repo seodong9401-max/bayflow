@@ -1,5 +1,5 @@
-// BayFlow Service Worker v26 (Live Korea Post OpenAPI Connected & Registered)
-const CACHE_NAME = 'bayflow-v26';
+// BayFlow Service Worker v27 (Sender #1 Single Address & E-post Custom Registration Mapping)
+const CACHE_NAME = 'bayflow-v27';
 const ASSETS = [
   './',
   './index.html',
