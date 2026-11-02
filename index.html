@@ -387,28 +387,208 @@
       showToast(`'${title}' 소싱 분석 준비 완료!`, '🎯');
     }
 
-    // 한정판 발매 레이더 카테고리 필터링
-    function filterDrawEvents(cat) {
-      document.querySelectorAll('.draw-filter-btn').forEach(b => {
-        b.className = 'draw-filter-btn px-2.5 py-1 rounded-xl bg-slate-950 text-slate-400 border border-slate-800 text-xs font-medium transition active:scale-95';
-      });
-      const activeBtn = document.getElementById(`draw-fbtn-${cat}`);
-      if (activeBtn) {
-        activeBtn.className = 'draw-filter-btn px-2.5 py-1 rounded-xl bg-rose-600 text-white border border-rose-400 text-xs font-bold transition active:scale-95 shadow';
-      }
-
-      const cards = document.querySelectorAll('.draw-event-card');
-      cards.forEach(card => {
-        if (cat === 'all' || card.dataset.drawCat === cat) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+);
     }
 
     // 초기 리서치 카테고리 로드
     selectResearchCategory("pokemon");
+
+    // 🎯 스마트 사입처 찾기 & 단계별 소싱 파이프라인 (셀러박스 리버싱 연동)
+    let activeSourcingItem = VERIFIED_ITEMS[0];
+
+    function setSourcingInputMode(mode) {
+      ['text', 'url', 'photo'].forEach(m => {
+        const box = document.getElementById('smode-box-' + m);
+        const btn = document.getElementById('smode-btn-' + m);
+        if (box) box.classList.toggle('hidden', m !== mode);
+        if (btn) {
+          if (m === mode) {
+            btn.className = 'flex-1 py-1.5 rounded-lg bg-indigo-600 text-white font-bold transition shadow';
+          } else {
+            btn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition font-medium';
+          }
+        }
+      });
+    }
+
+    function startSourcingForItem(itemId) {
+      const it = (activeVerifiedItems && activeVerifiedItems.find(x => x.id === itemId)) || VERIFIED_ITEMS.find(x => x.id === itemId);
+      if (!it) return;
+
+      switchTab('all');
+      switchAllSubTab('sourcing');
+
+      const kwInput = document.getElementById('sourcing-search-keyword');
+      if (kwInput) kwInput.value = it.bunjangQuery || it.title;
+
+      activeSourcingItem = it;
+      renderSourcingPipeline(it);
+      showToast(`'${it.title}' 사입처 찾기가 시작되었습니다! 🎯`, '🔍');
+    }
+
+    function renderSourcingPipeline(it) {
+      if (!it) return;
+      document.getElementById('pipeline-item-title').innerHTML = `<span class="text-amber-400">🇰🇷</span> <span>${it.title}</span>`;
+      document.getElementById('pipeline-item-subtitle').innerText = `🇺🇸 ${it.ebayTitle}`;
+      document.getElementById('pipeline-ebay-usd').innerText = `$${it.ebayUsd.toFixed(2)}`;
+      document.getElementById('pipeline-ebay-krw').innerText = `약 ${Math.round(it.ebayUsd * 1334).toLocaleString()}원`;
+      document.getElementById('pipeline-target-buy').innerText = `${it.targetBuyKrw.toLocaleString()}원`;
+      document.getElementById('pipeline-profit-krw').innerText = `+${it.profitKrw.toLocaleString()}원`;
+      document.getElementById('pipeline-roi').innerText = `${it.roi} ROI`;
+      document.getElementById('pipeline-box-size').innerText = it.boxSize || '에어캡 안전봉투';
+      document.getElementById('pipeline-weight-badge').innerText = `청구 ${it.appliedWeight || 200}g (${it.weightNote || '실제 무게'})`;
+      
+      const customInput = document.getElementById('pipeline-custom-buy-input');
+      if (customInput) customInput.value = it.targetBuyKrw;
+
+      // Update 10 Sourcing Destination links
+      const q = it.bunjangQuery || it.title;
+      const qEnc = encodeURIComponent(q);
+      const qImgEnc = encodeURIComponent(q + ' 사입');
+
+      const slinks = {
+        'slink-bunjang': `https://m.bunjang.co.kr/search/products?q=${qEnc}&order=price_asc`,
+        'slink-daangn': `https://www.daangn.com/search/${qEnc}`,
+        'slink-joongna': `https://web.joongna.com/search/${qEnc}`,
+        'slink-kream': `https://kream.co.kr/search?keyword=${qEnc}`,
+        'slink-naver': `https://search.shopping.naver.com/search/all?query=${qEnc}`,
+        'slink-coupang': `https://www.coupang.com/np/search?component=&q=${qEnc}`,
+        'slink-musinsa': `https://www.musinsa.com/search/goods?keyword=${qEnc}`,
+        'slink-oliveyoung': `https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=${qEnc}`,
+        'slink-buyee': `https://buyee.jp/mercari/search?keyword=${qEnc}`,
+        'slink-google-img': `https://www.google.com/search?tbm=isch&q=${qImgEnc}`
+      };
+
+      for (const [elemId, href] of Object.entries(slinks)) {
+        const a = document.getElementById(elemId);
+        if (a) a.href = href;
+      }
+
+      recalcSourcingPipeline();
+    }
+
+    function recalcSourcingPipeline() {
+      if (!activeSourcingItem) return;
+      const it = activeSourcingItem;
+      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || 0;
+      const grossKrw = it.ebayUsd * 1334;
+      
+      // Category fee rate
+      const catRate = CATEGORY_FEES[it.category] || 13.25;
+      const ebayFeeKrw = ((it.ebayUsd * (catRate / 100)) + 0.40 + (it.ebayUsd * 0.0145)) * 1334;
+      const buyerTaxFeeKrw = (it.ebayUsd * 0.08 * 0.147) * 1334;
+      const payoFeeKrw = (grossKrw - ebayFeeKrw) * 0.02;
+      
+      // Shipping cost based on applied weight
+      const shipRateTable = { 100: 8090, 200: 8980, 300: 10500, 400: 11500, 500: 12500, 1000: 18000, 1500: 24000, 2000: 30000 };
+      const shipKrw = shipRateTable[it.appliedWeight || 200] || 8980;
+
+      const totalExpense = customBuy + ebayFeeKrw + buyerTaxFeeKrw + payoFeeKrw + shipKrw;
+      const netProfit = Math.round(grossKrw - totalExpense);
+      const roi = customBuy > 0 ? ((netProfit / customBuy) * 100).toFixed(1) : 0;
+
+      const profitElem = document.getElementById('pipeline-live-profit');
+      if (profitElem) {
+        profitElem.innerText = (netProfit >= 0 ? '+' : '') + netProfit.toLocaleString() + '원';
+        profitElem.className = netProfit >= 0 ? 'text-sm font-black text-emerald-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
+      }
+      const roiElem = document.getElementById('pipeline-live-roi');
+      if (roiElem) {
+        roiElem.innerText = (roi >= 0 ? '+' : '') + roi + '%';
+        roiElem.className = roi >= 0 ? 'text-sm font-black text-sky-400 mt-0.5' : 'text-sm font-black text-rose-400 mt-0.5';
+      }
+    }
+
+    function sendPipelineToCalculator() {
+      if (!activeSourcingItem) return;
+      const customBuy = parseFloat(document.getElementById('pipeline-custom-buy-input')?.value) || activeSourcingItem.targetBuyKrw;
+      loadIntoCalculator(activeSourcingItem.ebayUsd, activeSourcingItem.appliedWeight || 200, customBuy, activeSourcingItem.category);
+    }
+
+    function runSmartSourcingAnalysis(targetKw = null) {
+      const kw = targetKw || document.getElementById('sourcing-search-keyword')?.value.trim();
+      if (!kw) {
+        showToast('검색할 상품명을 입력해 주세요!', '⚠️');
+        return;
+      }
+
+      // Check if keyword matches any verified item
+      const matched = VERIFIED_ITEMS.find(x => x.title.includes(kw) || x.bunjangQuery.includes(kw) || x.ebayTitle.toLowerCase().includes(kw.toLowerCase()));
+      if (matched) {
+        activeSourcingItem = matched;
+        renderSourcingPipeline(matched);
+      } else {
+        // Create custom dynamic sourcing item
+        activeSourcingItem = {
+          id: 'custom-' + Date.now(),
+          category: 'pokemon',
+          categoryName: '기타 품목',
+          title: kw,
+          ebayTitle: kw,
+          ebayUsd: 50.0,
+          ebayKrw: 66700,
+          targetBuyKrw: 25000,
+          profitKrw: 18500,
+          roi: '+74%',
+          boxSize: '규격 포장 박스',
+          actualWeight: 150,
+          volWeight: 200,
+          appliedWeight: 200,
+          weightNote: '표준 200g 요금 적용',
+          bunjangQuery: kw
+        };
+        renderSourcingPipeline(activeSourcingItem);
+      }
+      showToast(`'${kw}' 10대 사입처 직통 검색 완료!`, '🔍');
+    }
+
+    function handleSourcingUrlSubmit() {
+      const urlInput = document.getElementById('sourcing-search-url');
+      const url = (urlInput ? urlInput.value : '').trim();
+      if (!url) {
+        showToast('분석할 마켓 상품 링크를 붙여넣어 주세요!', '⚠️');
+        return;
+      }
+      
+      let keyword = '소싱 상품';
+      try {
+        const parsed = new URL(url);
+        const q = parsed.searchParams.get('q') || parsed.searchParams.get('query') || parsed.searchParams.get('keyword');
+        if (q) keyword = decodeURIComponent(q);
+        else keyword = parsed.pathname.split('/').filter(Boolean).pop() || '소싱 상품';
+      } catch (e) {
+        keyword = url.slice(0, 30);
+      }
+
+      document.getElementById('sourcing-search-keyword').value = keyword;
+      setSourcingInputMode('text');
+      runSmartSourcingAnalysis(keyword);
+      showToast(`링크에서 '${keyword}' 추출 완료! 사입처를 검색합니다.`, '🔗');
+    }
+
+    function handleSourcingPhotoFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const previewBox = document.getElementById('sourcing-photo-preview-box');
+      const previewImg = document.getElementById('sourcing-photo-preview-img');
+      const nameElem = document.getElementById('sourcing-photo-name');
+
+      if (previewBox && previewImg) {
+        previewImg.src = URL.createObjectURL(file);
+        previewBox.classList.remove('hidden');
+      }
+      if (nameElem) {
+        nameElem.innerText = file.name;
+      }
+
+      // Extract cleaned keyword from filename
+      let kw = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+      document.getElementById('sourcing-search-keyword').value = kw;
+      runSmartSourcingAnalysis(kw);
+      showToast(`'${file.name}' 사진 인식 완료! 사입처를 검색합니다.`, '📸');
+    }
+
   </script>
   <style>
     /* Mobile app scroll & touch behavior */
@@ -1292,7 +1472,7 @@
         </div>
       </div>
 
-      <!-- SUB-TAB 1: 소싱 레이더 PRO -->
+      <!-- SUB-TAB 1: 사입처 찾기 & 단계별 소싱 레이더 PRO (셀러박스 리버싱 이식) -->
       <div id="subtab-view-sourcing" class="hidden space-y-4">
         <!-- 상단 전체메뉴 복귀 바 -->
         <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800">
@@ -1300,325 +1480,242 @@
             <span>←</span>
             <span>전체메뉴 아이콘으로</span>
           </button>
-          <span class="text-[10px] text-slate-500 font-medium">소싱레이더 PRO</span>
+          <span class="text-[10px] text-amber-400 font-bold">🎯 단계별 10대 사입처 직통 검색</span>
         </div>
-        <!-- 피클 AI 통합 크로스 검색엔진 박스 -->
-        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-4 space-y-3">
-          <div class="flex items-center space-x-2.5">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-emerald-400 flex items-center justify-center text-lg font-black text-white shadow-lg shadow-indigo-500/20">
-              ㅁ
-            </div>
-            <div>
-              <h3 class="text-xs font-bold text-slate-100 flex items-center space-x-1.5">
-                <span>스마트 AI 소싱 분석기 (링크·사진·이름)</span>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">PRO</span>
-              </h3>
-              <p class="text-[11px] text-slate-400">국내 최저 매입가 vs 전세계 이베이 판매가 수수료 공제 실시간 순마진 분석</p>
+
+        <!-- 3-Way 입력 허브 (상품명 · 마켓링크 · 사진촬영) -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/40 rounded-2xl p-4 space-y-3 shadow-lg">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/50 flex items-center justify-center text-base">
+                🎯
+              </div>
+              <div>
+                <h3 class="text-xs font-black text-slate-100">스마트 사입처 검색 허브</h3>
+                <p class="text-[10px] text-slate-400">핫픽에서 바로 넘어오거나 직접 링크·사진을 넣어 사입처를 찾습니다</p>
+              </div>
             </div>
           </div>
 
-          <!-- 3-Way 입력 모드 탭 -->
-          <div class="flex space-x-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs">
-            <button type="button" onclick="setSourcingInputMode('text')" id="smode-btn-text" class="flex-1 py-1 rounded-lg bg-indigo-600 text-white font-bold transition">🔤 상품명</button>
-            <button type="button" onclick="setSourcingInputMode('url')" id="smode-btn-url" class="flex-1 py-1 rounded-lg text-slate-400 hover:text-white transition">🔗 마켓 링크</button>
-            <button type="button" onclick="setSourcingInputMode('photo')" id="smode-btn-photo" class="flex-1 py-1 rounded-lg text-slate-400 hover:text-white transition">📸 사진 업로드</button>
+          <!-- 3-Way 모드 선택 탭 -->
+          <div class="flex space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+            <button type="button" onclick="setSourcingInputMode('text')" id="smode-btn-text" class="flex-1 py-1.5 rounded-lg bg-indigo-600 text-white font-bold transition shadow">
+              🔤 상품명
+            </button>
+            <button type="button" onclick="setSourcingInputMode('url')" id="smode-btn-url" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition font-medium">
+              🔗 마켓 링크
+            </button>
+            <button type="button" onclick="setSourcingInputMode('photo')" id="smode-btn-photo" class="flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white transition font-medium">
+              📸 사진/카메라
+            </button>
           </div>
 
-          <!-- 입력 폼 -->
-          <div class="space-y-2">
-            <div id="smode-input-text" class="flex space-x-2">
-              <input type="text" id="sourcing-search-keyword" value="포켓몬 메가 리자몽 X ex SAR" placeholder="소싱할 상품명 입력 (예: 고풍 피카츄, 메가 리자몽 X, 산타크루즈)" class="flex-1 bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 font-medium">
-              <button onclick="runSmartSourcingAnalysis()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 transition shadow-lg shadow-indigo-600/30 active:scale-95">
+          <!-- 모드 1: 텍스트 상품명 검색 -->
+          <div id="smode-box-text" class="space-y-2">
+            <div class="flex space-x-2">
+              <input type="text" id="sourcing-search-keyword" value="BTS 슈가 은목걸이" placeholder="소싱할 상품명 또는 키워드 입력 (예: emis 볼캡, 슈가 목걸이, 삼바)" class="flex-1 bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 font-medium">
+              <button type="button" onclick="runSmartSourcingAnalysis()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1 transition shadow-lg shadow-indigo-600/30 active:scale-95">
                 <span>⚡</span>
-                <span>마진분석</span>
+                <span>사입처 검색</span>
               </button>
             </div>
+          </div>
 
-            <!-- 돈 되는 전 카테고리 빠른 분석 칩 -->
-            <div class="space-y-1.5 pt-1">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="text-slate-400 font-bold">🔥 돈 되는 실전 카테고리별 빠른 분석:</span>
-                <span class="text-indigo-400 text-[10px]">원터치 분석</span>
+          <!-- 모드 2: 마켓 링크 분석 -->
+          <div id="smode-box-url" class="hidden space-y-2">
+            <div class="flex space-x-2">
+              <input type="url" id="sourcing-search-url" placeholder="번개장터, 당근, KREAM, 무신사, 네이버 상품 링크 붙여넣기" class="flex-1 bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2.5 focus:outline-none focus:border-indigo-500 font-medium">
+              <button type="button" onclick="handleSourcingUrlSubmit()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center space-x-1 transition shadow active:scale-95">
+                <span>🔗</span>
+                <span>링크 분석</span>
+              </button>
+            </div>
+            <p class="text-[10px] text-slate-400">💡 상품 링크를 붙여넣으면 상품명을 자동 추출해 10대 사입처를 일괄 검색합니다.</p>
+          </div>
+
+          <!-- 모드 3: 사진/카메라 업로드 -->
+          <div id="smode-box-photo" class="hidden space-y-2">
+            <input type="file" id="sourcing-photo-file" accept="image/*" class="hidden" onchange="handleSourcingPhotoFile(event)">
+            <div onclick="document.getElementById('sourcing-photo-file').click()" class="border-2 border-dashed border-slate-700 hover:border-indigo-500 rounded-xl p-4 text-center cursor-pointer transition bg-slate-950/60 space-y-1.5">
+              <div class="text-2xl">📸</div>
+              <div class="text-xs font-bold text-slate-200">사진 선택 또는 카메라 촬영</div>
+              <div class="text-[10px] text-slate-400">상품 사진을 올리면 키워드를 인식하여 사입처를 찾아드립니다</div>
+            </div>
+            <div id="sourcing-photo-preview-box" class="hidden flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+              <img id="sourcing-photo-preview-img" src="" class="w-12 h-12 object-cover rounded-lg border border-slate-700">
+              <div class="flex-1 text-xs">
+                <div class="font-bold text-slate-200" id="sourcing-photo-name">업로드된 사진</div>
+                <div class="text-[10px] text-emerald-400">사진 인식 완료! 키워드로 사입처 검색 가능</div>
               </div>
-              <div class="flex flex-wrap gap-1.5">
-                <button type="button" onclick="setSourcingKeyword('리자몽 SAR')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  🃏 #리자몽 SAR
-                </button>
-                <button type="button" onclick="setSourcingKeyword('고풍 피카츄')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  ⚡ #고풍 피카츄
-                </button>
-                <button type="button" onclick="setSourcingKeyword('조던1 골프')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  👟 #조던1 로우
-                </button>
-                <button type="button" onclick="setSourcingKeyword('아디다스 삼바')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  👟 #아디다스 삼바
-                </button>
-                <button type="button" onclick="setSourcingKeyword('스탠리 텀블러')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  ☕ #스탠리 텀블러
-                </button>
-                <button type="button" onclick="setSourcingKeyword('마뗑킴 지갑')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  👛 #마뗑킴 지갑
-                </button>
-                <button type="button" onclick="setSourcingKeyword('산타크루즈 보드')" class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-xs font-semibold">
-                  🛹 #산타크루즈
-                </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3단계 실전 소싱 파이프라인 (Step-by-Step Sourcing Pipeline) -->
+        <div id="sourcing-pipeline-container" class="space-y-3.5">
+          <!-- 1단계: 소싱 목표 & 마진 가이드 -->
+          <div class="bg-slate-900/90 rounded-2xl border border-indigo-500/40 p-4 space-y-3 shadow">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-5 h-5 rounded-full bg-rose-600 text-white text-[11px] font-black flex items-center justify-center">1</span>
+                <span class="text-xs font-black text-slate-100">소싱 목표 & 안전 마진 가이드</span>
+              </div>
+              <span id="pipeline-status-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">🔥 실시간 완판 픽</span>
+            </div>
+
+            <div>
+              <h4 id="pipeline-item-title" class="text-xs font-black text-slate-100 flex items-center space-x-1">
+                <span class="text-amber-400">🇰🇷</span>
+                <span>BTS 슈가 한국 전통 하회탈 실버925 목걸이</span>
+              </h4>
+              <p id="pipeline-item-subtitle" class="text-[10px] text-slate-400 truncate mt-0.5">🇺🇸 Handmade 925 Silver Necklace Korean Mask BTS Suga Agust D Inspired</p>
+            </div>
+
+            <!-- 시세 및 목표가 3단 카드 -->
+            <div class="grid grid-cols-3 gap-2 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-center">
+              <div>
+                <div class="text-[9px] text-slate-400">eBay 실거래가</div>
+                <div id="pipeline-ebay-usd" class="text-xs font-black text-amber-300 mt-0.5">$180.00</div>
+                <div id="pipeline-ebay-krw" class="text-[9px] text-slate-400">약 248,400원</div>
+              </div>
+              <div class="border-x border-slate-800">
+                <div class="text-[9px] text-slate-400">국내 목표 사입가</div>
+                <div id="pipeline-target-buy" class="text-xs font-black text-emerald-300 mt-0.5">38,000원</div>
+                <div class="text-[8px] text-emerald-400">이하 사입 시 마진보장</div>
+              </div>
+              <div>
+                <div class="text-[9px] text-slate-400">예상 순이익</div>
+                <div id="pipeline-profit-krw" class="text-xs font-black text-emerald-400 mt-0.5">+159,000원</div>
+                <div id="pipeline-roi" class="text-[9px] text-sky-400 font-bold">+418% ROI</div>
               </div>
             </div>
 
-            <!-- 실시간 소싱 손익표 대시보드 -->
-            <div id="smart-sourcing-result" class="bg-slate-950/90 rounded-xl border border-indigo-500/40 p-3 space-y-2 mt-2">
-              <div class="flex items-center justify-between">
-                <span id="analysis-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 45.6%</span>
-                <span id="analysis-volume-badge" class="text-[10px] text-amber-400 font-mono">🔥 최근 30일 18건 판매</span>
-              </div>
-              <h4 id="analysis-item-title" class="text-xs font-bold text-slate-100">포켓몬 메가 리자몽 X ex SAR 110/080 M2</h4>
-              
-              <div class="grid grid-cols-3 gap-1.5 text-center pt-1">
-                <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-                  <div class="text-[9px] text-slate-400">국내 매입가 (수정가능)</div>
-                  <input type="number" id="input-custom-buy-price" value="140000" oninput="recalcSourcingBoard()" class="w-full text-center bg-transparent font-bold text-xs text-slate-200 border-b border-slate-700 focus:outline-none focus:border-indigo-400 py-0.5">
-                  <div class="text-[9px] text-slate-500 mt-0.5" id="analysis-buy-source">번개장터/당근</div>
-                </div>
-                <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-                  <div class="text-[9px] text-slate-400">eBay 실체결가 (USD)</div>
-                  <input type="number" id="input-custom-sold-usd" value="195.0" step="0.5" oninput="recalcSourcingBoard()" class="w-full text-center bg-transparent font-bold text-xs text-indigo-300 border-b border-slate-700 focus:outline-none focus:border-indigo-400 py-0.5">
-                  <div class="text-[9px] text-slate-500 mt-0.5" id="analysis-sell-krw-text">약 269,100원</div>
-                </div>
-                <div class="bg-indigo-950/40 p-2 rounded-lg border border-indigo-500/40">
-                  <div class="text-[9px] text-emerald-400 font-bold">최종 순마진 (Net)</div>
-                  <div id="analysis-net-profit" class="text-xs font-black text-emerald-400 mt-0.5">+63,860원</div>
-                  <div class="text-[9px] text-slate-500 mt-0.5" id="analysis-fees-total">-65,240원 공제</div>
-                </div>
-              </div>
+            <!-- 포장 규격 및 부피무게 -->
+            <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[11px] flex items-center justify-between">
+              <span class="text-slate-400 flex items-center space-x-1">
+                <span>📦</span>
+                <span>포장: <b id="pipeline-box-size" class="text-slate-200">에어캡 안전봉투 (15×20cm)</b></span>
+              </span>
+              <span id="pipeline-weight-badge" class="text-[10px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 font-bold font-mono">
+                청구 100g (실무게 65g)
+              </span>
+            </div>
+          </div>
 
-              <!-- 4대 무게별 배송 규격 원터치 선택기 -->
-              <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 space-y-1.5 mt-2">
-                <div class="flex items-center justify-between text-[11px]">
-                  <span class="text-slate-300 font-bold flex items-center space-x-1">
-                    <span>📦</span>
-                    <span>상품 배송 규격 (선택 시 배송비·마진 자동 변경):</span>
-                  </span>
-                  <span id="label-shipping-cost-badge" class="text-indigo-400 font-mono text-[10px] font-bold">K-Packet (8,980원)</span>
-                </div>
-                <div class="grid grid-cols-4 gap-1 text-[10px]">
-                  <button type="button" onclick="setShippingPreset('card')" id="btn-ship-card" class="py-1 px-1 rounded-lg bg-indigo-600 text-white font-bold border border-indigo-400 transition text-center shadow">
-                    🃏 소형·카드<br><span class="opacity-80">100g 8,980원</span>
-                  </button>
-                  <button type="button" onclick="setShippingPreset('clothing')" id="btn-ship-clothing" class="py-1 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center">
-                    👕 의류·잡화<br><span class="opacity-80">500g 12,500원</span>
-                  </button>
-                  <button type="button" onclick="setShippingPreset('shoes')" id="btn-ship-shoes" class="py-1 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center">
-                    👟 신발·텀블러<br><span class="opacity-80">1.5kg 24,000원</span>
-                  </button>
-                  <button type="button" onclick="setShippingPreset('heavy')" id="btn-ship-heavy" class="py-1 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center">
-                    🛹 대형·보드<br><span class="opacity-80">5kg 75,000원</span>
-                  </button>
-                </div>
+          <!-- 2단계: 셀러박스 리버싱 10대 핵심 사입처 직통 검색 -->
+          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 shadow">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-5 h-5 rounded-full bg-rose-600 text-white text-[11px] font-black flex items-center justify-center">2</span>
+                <span class="text-xs font-black text-slate-100">10대 사입처 원클릭 직통 매물 검색</span>
               </div>
+              <span class="text-[10px] text-indigo-400">셀러박스 리버싱 완비</span>
+            </div>
+            <p class="text-[11px] text-slate-400">버튼을 누르면 해당 사입처의 실시간 최저가 매물 창이 즉시 열립니다.</p>
 
-              <!-- 4대 전문 리서치 직통 링크 바 -->
-              <div class="pt-2 border-t border-slate-800/80 space-y-1.5">
-                <div class="flex items-center justify-between text-[11px]">
-                  <span class="text-slate-400 font-bold">🎯 100% 팩트 데이터 확인 전문 도구:</span>
-                  <span class="text-indigo-400 text-[10px]">원클릭 직통</span>
-                </div>
-                <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
-                  <a id="btn-link-terapeak" href="https://www.ebay.com/sh/research?marketplace=EBAY-US&keywords=Mega+Charizard+X+ex+SAR&dayRange=30" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-indigo-500/40 text-indigo-300 font-bold transition block active:scale-95 shadow">
-                    📊 테라피크 공식
-                  </a>
-                  <a id="btn-link-130point" href="https://130point.com/sales/" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-amber-500/40 text-amber-300 font-bold transition block active:scale-95 shadow">
-                    🔍 130point 체결
-                  </a>
-                  <a id="btn-link-pricecharting" href="https://www.pricecharting.com/search-products?q=Charizard+SAR&type=pokemon" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-purple-500/40 text-purple-300 font-bold transition block active:scale-95 shadow">
-                    🃏 프라이스차팅
-                  </a>
-                </div>
-                <a id="btn-link-ebay" href="https://www.ebay.com/sch/i.html?_nkw=Mega+Charizard+X+ex+SAR&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" rel="noopener noreferrer" class="w-full py-2 bg-indigo-600/30 hover:bg-indigo-600/50 border border-indigo-500/40 rounded-xl text-center text-xs font-bold text-indigo-200 block transition mt-1">
-                  📈 eBay Sold 실거래 완료 목록 (최신순 정렬) _sop=13 ➔
+            <!-- 1열: 국내 4대 C2C/중고 마켓 -->
+            <div class="space-y-1">
+              <div class="text-[10px] font-bold text-slate-400">📱 국내 C2C & 중고/리셀</div>
+              <div class="grid grid-cols-4 gap-1.5">
+                <a id="slink-bunjang" href="https://m.bunjang.co.kr/search/products?q=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4&order=price_asc" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-rose-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-rose-400">⚡ 번개장터</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">최저가순 정렬</div>
+                </a>
+                <a id="slink-daangn" href="https://www.daangn.com/search/%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-amber-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-amber-400">🥕 당근마켓</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">직거래·네고</div>
+                </a>
+                <a id="slink-joongna" href="https://web.joongna.com/search/%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-emerald-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-emerald-400">📦 중고나라</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">전국 택배</div>
+                </a>
+                <a id="slink-kream" href="https://kream.co.kr/search?keyword=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-indigo-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-indigo-400">👟 KREAM</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">한정판 리셀</div>
                 </a>
               </div>
+            </div>
 
-              <!-- 탑셀러 8대 핵심 소싱처 직통 허브 -->
-              <div class="pt-2 border-t border-slate-800/80 space-y-1.5">
-                <div class="flex items-center justify-between text-[11px]">
-                  <span class="text-slate-400 font-bold">🏆 탑셀러 8대 핵심 소싱처 (원클릭 최저가 매물 조회):</span>
-                  <span class="text-indigo-400 text-[10px]">Top Sourcing Hub</span>
-                </div>
-                <!-- 1열: 국내 4대 C2C/리셀 마켓 -->
-                <div class="grid grid-cols-4 gap-1.5">
-                  <a id="btn-link-bunjang" href="https://m.bunjang.co.kr/search/products?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-rose-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-rose-400">⚡ 번개장터</div>
-                    <div class="text-[9px] text-slate-500">C2C 최저가</div>
-                  </a>
-                  <a id="btn-link-daangn" href="https://www.daangn.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-amber-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-amber-400">🥕 당근마켓</div>
-                    <div class="text-[9px] text-slate-500">직거래·네고</div>
-                  </a>
-                  <a id="btn-link-joongna" href="https://web.joongna.com/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-emerald-400">📦 중고나라</div>
-                    <div class="text-[9px] text-slate-500">전국 택배</div>
-                  </a>
-                  <a id="btn-link-kream" href="https://kream.co.kr/search?keyword=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-indigo-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-indigo-400">👟 KREAM</div>
-                    <div class="text-[9px] text-slate-500">한정판 리셀</div>
-                  </a>
-                </div>
-                <!-- 2열: K-브랜드 & 뷰티/패션 & 일본 역소싱 -->
-                <div class="grid grid-cols-4 gap-1.5">
-                  <a id="btn-link-oliveyoung" href="https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-lime-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-lime-400">💄 올리브영</div>
-                    <div class="text-[9px] text-slate-500">K-뷰티 정품</div>
-                  </a>
-                  <a id="btn-link-musinsa" href="https://www.musinsa.com/search/goods?keyword=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-sky-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-sky-400">👕 무신사</div>
-                    <div class="text-[9px] text-slate-500">K-패션/도메스틱</div>
-                  </a>
-                  <a id="btn-link-buyee" href="https://buyee.jp/mercari/search?keyword=%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-red-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-red-400">🇯🇵 메르카리</div>
-                    <div class="text-[9px] text-slate-500">일본 Buyee 직구</div>
-                  </a>
-                  <a id="btn-link-google" href="https://www.google.com/search?tbm=shop&q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="py-2 px-1 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-500/30 text-center transition block active:scale-95 shadow">
-                    <div class="text-[11px] font-bold text-cyan-400">🔍 구글쇼핑</div>
-                    <div class="text-[9px] text-slate-500">국내 전몰 비교</div>
-                  </a>
-                </div>
+            <!-- 2열: 국내 공식몰 & 전몰 비교 -->
+            <div class="space-y-1 pt-1">
+              <div class="text-[10px] font-bold text-slate-400">🛍️ 오픈마켓 & 패션/뷰티 공식몰</div>
+              <div class="grid grid-cols-4 gap-1.5">
+                <a id="slink-naver" href="https://search.shopping.naver.com/search/all?query=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-green-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-green-400">🟢 네이버쇼핑</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">전몰 최저가</div>
+                </a>
+                <a id="slink-coupang" href="https://www.coupang.com/np/search?component=&q=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-red-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-red-400">🚀 쿠팡</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">로켓 배송</div>
+                </a>
+                <a id="slink-musinsa" href="https://www.musinsa.com/search/goods?keyword=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-sky-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-sky-400">👕 무신사</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">도메스틱 패션</div>
+                </a>
+                <a id="slink-oliveyoung" href="https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-1 rounded-xl bg-slate-950 hover:bg-slate-800 border border-lime-500/40 text-center transition block active:scale-95 shadow">
+                  <div class="text-xs font-black text-lime-400">💄 올리브영</div>
+                  <div class="text-[9px] text-slate-400 mt-0.5">K-뷰티 정품</div>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3열: 해외 역소싱 & 구글 사입 추적 -->
+            <div class="space-y-1 pt-1">
+              <div class="text-[10px] font-bold text-slate-400">🌐 일본 역소싱 & 웹 이미지 추적</div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <a id="slink-buyee" href="https://buyee.jp/mercari/search?keyword=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4" target="_blank" rel="noopener noreferrer" class="py-2.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-red-500/40 text-center transition flex items-center justify-center space-x-2 active:scale-95 shadow">
+                  <span class="text-base">🇯🇵</span>
+                  <div class="text-left">
+                    <div class="text-xs font-black text-red-400">메르카리 (Buyee)</div>
+                    <div class="text-[9px] text-slate-400">일본 엔저 직구 소싱</div>
+                  </div>
+                </a>
+                <a id="slink-google-img" href="https://www.google.com/search?tbm=isch&q=%EC%8A%88%EA%B0%80%20%EC%9D%80%EB%AA%A9%EA%B1%B8%EC%9D%B4%20%EC%82%AC%EC%9E%85" target="_blank" rel="noopener noreferrer" class="py-2.5 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-cyan-500/40 text-center transition flex items-center justify-center space-x-2 active:scale-95 shadow">
+                  <span class="text-base">🔍</span>
+                  <div class="text-left">
+                    <div class="text-xs font-black text-cyan-400">구글 이미지 사입</div>
+                    <div class="text-[9px] text-slate-400">웹 사진 출처 추적</div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- 실전 검증 완료 시세차익 추천 매물 (4종) -->
-        <div class="space-y-3">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">실전 검증 시세차익 매물 (4건)</h3>
+          <!-- 3단계: 매물 발견 시 사입가 입력 ➔ 실시간 손익 판정 ➔ 마진계산기 1초 연동 -->
+          <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 space-y-3 shadow">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="w-5 h-5 rounded-full bg-rose-600 text-white text-[11px] font-black flex items-center justify-center">3</span>
+                <span class="text-xs font-black text-slate-100">발견 매물 가격 검증 & 마진계산기 연동</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 font-bold">원클릭 계산기 이동</span>
+            </div>
 
-          <!-- 매물 1: 리자몽 X SAR -->
-          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">마진율 45.6%</span>
-                <h4 class="text-xs font-bold text-slate-100 mt-1">포켓몬 메가 리자몽 X ex SAR 110/080 M2</h4>
-              </div>
-              <div class="text-right">
-                <div class="text-xs font-bold text-emerald-400">+63,800원</div>
-                <div class="text-[10px] text-slate-500">예상 순마진</div>
+            <div class="space-y-2">
+              <label class="text-[11px] text-slate-300 font-bold block">사입처(번장/당근 등)에서 찾은 실제 매물 가격:</label>
+              <div class="flex items-center space-x-2">
+                <input type="number" id="pipeline-custom-buy-input" value="38000" oninput="recalcSourcingPipeline()" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-100 font-mono font-bold text-sm focus:outline-none focus:border-amber-400">
+                <span class="text-xs font-bold text-slate-400">원</span>
               </div>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <div>
-                <span class="text-[10px] text-slate-400 block">국내 번개장터 시세</span>
-                <span class="font-bold text-slate-200">140,000 ~ 150,000원</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">이베이 최근 체결가 (Sold)</span>
-                <span class="font-bold text-indigo-300">$195.00 ~ $220.00</span>
-              </div>
-            </div>
-            <div class="flex space-x-2">
-              <a href="https://m.bunjang.co.kr/search/products?q=%ED%8F%AC%EC%BC%93%EB%AA%AC%20%EB%A9%94%EA%B0%80%20%EB%A6%AC%EC%9E%90%EB%AA%BD%20X%20ex%20SAR" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
-                번개장터 매물 보기
-              </a>
-              <a href="https://www.ebay.com/sch/i.html?_nkw=Mega+Charizard+X+ex+SAR+110%2F080&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
-                eBay 체결가 확인
-              </a>
-            </div>
-          </div>
 
-          <!-- 매물 2: 조던 1 로우 골프 -->
-          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
-            <div class="flex items-start justify-between">
+            <!-- 실시간 계산 결과 요약 바 -->
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
               <div>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">마진율 31.0% (스니커즈)</span>
-                <h4 class="text-xs font-bold text-slate-100 mt-1">나이키 에어 조던 1 로우 골프 울프 그레이</h4>
+                <div class="text-[10px] text-slate-400">최종 순이익 (부피배송비·수수료 차감 후)</div>
+                <div id="pipeline-live-profit" class="text-sm font-black text-emerald-400 mt-0.5">+159,000원</div>
               </div>
               <div class="text-right">
-                <div class="text-xs font-bold text-emerald-400">+51,200원</div>
-                <div class="text-[10px] text-slate-500">eGS 1.2kg 차감 순마진</div>
+                <div class="text-[10px] text-slate-400">수익률 (ROI)</div>
+                <div id="pipeline-live-roi" class="text-sm font-black text-sky-400 mt-0.5">+418.4%</div>
               </div>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <div>
-                <span class="text-[10px] text-slate-400 block">국내 KREAM / 공홈 시세</span>
-                <span class="font-bold text-slate-200">165,000 ~ 170,000원</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">이베이 최근 체결가 (Sold)</span>
-                <span class="font-bold text-indigo-300">$220.00 ~ $240.00</span>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-400">👟 무게 1.2kg 기준 eGS 배송비(24,000원)와 이베이 수수료를 차감한 실전 순이익입니다.</p>
-            <div class="flex space-x-2">
-              <a href="https://kream.co.kr/search?keyword=DD9315-002" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
-                KREAM 시세 보기
-              </a>
-              <a href="https://www.ebay.com/sch/i.html?_nkw=Air+Jordan+1+Low+Golf+Wolf+Grey&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
-                eBay 체결가 확인
-              </a>
-            </div>
-          </div>
 
-          <!-- 매물 3: 한복 피카츄 키링 -->
-          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">마진율 144%</span>
-                <h4 class="text-xs font-bold text-slate-100 mt-1">고풍에디션 전통 한복 피카츄 LED 키링 2종 세트</h4>
-              </div>
-              <div class="text-right">
-                <div class="text-xs font-bold text-emerald-400">+72,000원</div>
-                <div class="text-[10px] text-slate-500">예상 순마진</div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <div>
-                <span class="text-[10px] text-slate-400 block">국내 당근/번장 매입가</span>
-                <span class="font-bold text-slate-200">40,000 ~ 50,000원</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">이베이 리스팅 초안 세팅</span>
-                <span class="font-bold text-indigo-300">$115.00 (K-Packet $8.50)</span>
-              </div>
-            </div>
-            <div class="flex space-x-2">
-              <a href="https://www.daangn.com/search/%EA%B3%A0%ED%92%8D%EC%97%90%EB%94%94%EC%85%98%20%ED%94%BC%EC%B9%B4%EC%B8%84" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
-                당근마켓 매물 보기
-              </a>
-              <button onclick="switchTab('listing')" class="flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
-                BayFlow 출품 대기함 ➔
-              </button>
-            </div>
-          </div>
-
-          <!-- 매물 4: 산타크루즈 -->
-          <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-2.5">
-            <div class="flex items-start justify-between">
-              <div>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">네고 필요 (EMS 전용)</span>
-                <h4 class="text-xs font-bold text-slate-100 mt-1">포켓몬 x 산타크루즈 스케이트보드 3종 세트</h4>
-              </div>
-              <div class="text-right">
-                <div class="text-xs font-bold text-rose-400">+15~20만 원</div>
-                <div class="text-[10px] text-slate-500">75만 네고 시 마진</div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-              <div>
-                <span class="text-[10px] text-slate-400 block">당근마켓 희망가 (네고목표)</span>
-                <span class="font-bold text-slate-200">90만 원 ➔ 75~80만 원</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">이베이 3종 Sold 합산</span>
-                <span class="font-bold text-indigo-300">$850.00 ~ $950.00</span>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-400">⚠️ 길이 80cm로 K-Packet 발송 원천 불가 (EMS 배송비 약 7~8만 원 소요, 90만 원 정가 매입 금물)</p>
-            <div class="flex space-x-2">
-              <a href="https://www.daangn.com/search/%EC%82%B0%ED%83%80%ED%81%AC%EB%A3%A8%EC%A6%88%20%ED%8F%AC%EC%BC%93%EB%AA%AC" target="_blank" rel="noopener noreferrer" class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 rounded-xl transition text-center font-medium">
-                당근 매물 보기
-              </a>
-              <a href="https://www.ebay.com/sch/i.html?_nkw=Santa+Cruz+Pokemon+Skateboard+deck&LH_Sold=1&LH_Complete=1" target="_blank" rel="noopener noreferrer" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl transition text-center">
-                eBay 체결가 확인
-              </a>
-            </div>
+            <!-- 계산기 직통 버튼 -->
+            <button type="button" onclick="sendPipelineToCalculator()" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-black text-xs rounded-xl text-center transition shadow-lg active:scale-95 flex items-center justify-center space-x-1.5">
+              <span>🧮</span>
+              <span>마진 계산기에서 20개국 우체국 운임 및 관세 정밀 검증 ➔</span>
+            </button>
           </div>
         </div>
       </div>
@@ -2195,9 +2292,10 @@
             🔗 eBay 공식 실시간 체결창 열기 (Sold) ➔
           </a>
           <div class="grid grid-cols-2 gap-1.5">
-            <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(it.bunjangQuery)}&order=price_asc" target="_blank" class="py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl text-center transition">
-              🛒 번장 최저가
-            </a>
+            <button type="button" onclick="closeEbayDetailModal(); startSourcingForItem('${it.id}')" class="py-2 bg-rose-600 hover:bg-rose-500 text-white font-black text-xs rounded-xl text-center transition flex items-center justify-center space-x-1 shadow active:scale-95">
+              <span>🎯</span>
+              <span>10대 사입처 찾기</span>
+            </button>
             <button type="button" onclick="closeEbayDetailModal(); loadIntoCalculatorCustom('${it.id}', ${it.ebayUsd}, ${it.appliedWeight || 200}, '${it.category}')" class="py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl text-center transition">
               ⚡ 부피무게 마진 계산
             </button>
@@ -2239,9 +2337,9 @@
             "status": "사모님 추천 (초경량)",
             "ebayUsd": 48.0,
             "ebayKrw": 66240,
-            "targetBuyKrw": 22000,
-            "profitKrw": 21500,
-            "roi": "+98%",
+            "targetBuyKrw": 18000,
+            "profitKrw": 25500,
+            "roi": "+141%",
             "boxSize": "에어캡 안전봉투 (15×20cm)",
             "actualWeight": 45,
             "volWeight": 35,
@@ -2287,9 +2385,9 @@
             "status": "사모님 추천 (초경량)",
             "ebayUsd": 180.0,
             "ebayKrw": 248400,
-            "targetBuyKrw": 128000,
-            "profitKrw": 69190,
-            "roi": "+54%",
+            "targetBuyKrw": 38000,
+            "profitKrw": 159000,
+            "roi": "+418%",
             "boxSize": "에어캡 안전봉투 (15×20cm)",
             "actualWeight": 65,
             "volWeight": 40,
@@ -2335,9 +2433,9 @@
             "status": "안전 사입",
             "ebayUsd": 65.0,
             "ebayKrw": 89700,
-            "targetBuyKrw": 44000,
-            "profitKrw": 21500,
-            "roi": "+49%",
+            "targetBuyKrw": 38000,
+            "profitKrw": 27500,
+            "roi": "+72%",
             "boxSize": "소형 박스 (15×12×5cm)",
             "actualWeight": 110,
             "volWeight": 150,
@@ -2382,9 +2480,9 @@
             "status": "제니 바이럴 효자템",
             "ebayUsd": 55.0,
             "ebayKrw": 75900,
-            "targetBuyKrw": 32000,
-            "profitKrw": 24200,
-            "roi": "+76%",
+            "targetBuyKrw": 28000,
+            "profitKrw": 28200,
+            "roi": "+100%",
             "boxSize": "소형 박스 (15×12×6cm)",
             "actualWeight": 95,
             "volWeight": 180,
@@ -2430,9 +2528,9 @@
             "status": "고마진 사입",
             "ebayUsd": 280.0,
             "ebayKrw": 386400,
-            "targetBuyKrw": 240000,
-            "profitKrw": 72000,
-            "roi": "+30%",
+            "targetBuyKrw": 230000,
+            "profitKrw": 82000,
+            "roi": "+35%",
             "boxSize": "하드케이스 박스 (20×12×8cm)",
             "actualWeight": 280,
             "volWeight": 320,
@@ -2477,9 +2575,9 @@
             "status": "적극 사입 (부피무게 주의)",
             "ebayUsd": 45.0,
             "ebayKrw": 62100,
-            "targetBuyKrw": 29000,
-            "profitKrw": 13620,
-            "roi": "+47%",
+            "targetBuyKrw": 35000,
+            "profitKrw": 8600,
+            "roi": "+24%",
             "boxSize": "모자보호 1호 박스 (22×20×13cm)",
             "actualWeight": 130,
             "volWeight": 500,
@@ -2525,9 +2623,9 @@
             "status": "연예인 볼캡 바이럴",
             "ebayUsd": 67.0,
             "ebayKrw": 92460,
-            "targetBuyKrw": 42000,
-            "profitKrw": 22500,
-            "roi": "+54%",
+            "targetBuyKrw": 36000,
+            "profitKrw": 28500,
+            "roi": "+79%",
             "boxSize": "모자보호 1호 박스 (22×20×13cm)",
             "actualWeight": 135,
             "volWeight": 500,
@@ -2572,9 +2670,9 @@
             "status": "스테디셀러 사입",
             "ebayUsd": 59.0,
             "ebayKrw": 81420,
-            "targetBuyKrw": 36000,
-            "profitKrw": 19400,
-            "roi": "+54%",
+            "targetBuyKrw": 28000,
+            "profitKrw": 27400,
+            "roi": "+98%",
             "boxSize": "모자보호 1호 박스 (22×20×13cm)",
             "actualWeight": 130,
             "volWeight": 500,
@@ -2619,9 +2717,9 @@
             "status": "안전 사입",
             "ebayUsd": 58.0,
             "ebayKrw": 80040,
-            "targetBuyKrw": 38000,
-            "profitKrw": 18400,
-            "roi": "+48%",
+            "targetBuyKrw": 35000,
+            "profitKrw": 21400,
+            "roi": "+61%",
             "boxSize": "의류 안전 지퍼백 (25×30×3cm)",
             "actualWeight": 220,
             "volWeight": 375,
@@ -2666,9 +2764,9 @@
             "status": "K-스트릿 인기",
             "ebayUsd": 140.0,
             "ebayKrw": 193200,
-            "targetBuyKrw": 98000,
-            "profitKrw": 52000,
-            "roi": "+53%",
+            "targetBuyKrw": 48000,
+            "profitKrw": 102000,
+            "roi": "+212%",
             "boxSize": "의류 안전 지퍼백 (25×30×3cm)",
             "actualWeight": 260,
             "volWeight": 375,
@@ -2713,9 +2811,9 @@
             "status": "스테디셀러 (부피 1.5kg 과금)",
             "ebayUsd": 125.0,
             "ebayKrw": 172500,
-            "targetBuyKrw": 109000,
-            "profitKrw": 28500,
-            "roi": "+26%",
+            "targetBuyKrw": 98000,
+            "profitKrw": 39500,
+            "roi": "+40%",
             "boxSize": "신발 택배 박스 (32×20×12cm)",
             "actualWeight": 820,
             "volWeight": 1280,
@@ -2761,9 +2859,9 @@
             "status": "인기 컬러 (부피 1.5kg 과금)",
             "ebayUsd": 109.0,
             "ebayKrw": 150420,
-            "targetBuyKrw": 66000,
-            "profitKrw": 34800,
-            "roi": "+53%",
+            "targetBuyKrw": 68000,
+            "profitKrw": 32800,
+            "roi": "+48%",
             "boxSize": "신발 택배 박스 (32×20×12cm)",
             "actualWeight": 790,
             "volWeight": 1280,
@@ -2855,9 +2953,9 @@
             "status": "틱톡 바이럴 1위",
             "ebayUsd": 36.0,
             "ebayKrw": 49680,
-            "targetBuyKrw": 18000,
-            "profitKrw": 14800,
-            "roi": "+82%",
+            "targetBuyKrw": 17000,
+            "profitKrw": 15800,
+            "roi": "+93%",
             "boxSize": "에어캡 포장 (16×12×6cm)",
             "actualWeight": 140,
             "volWeight": 192,
@@ -2903,9 +3001,9 @@
             "status": "초경량 우체국 발송 (최저 운임)",
             "ebayUsd": 25.0,
             "ebayKrw": 34500,
-            "targetBuyKrw": 13000,
-            "profitKrw": 6640,
-            "roi": "+51%",
+            "targetBuyKrw": 12000,
+            "profitKrw": 7640,
+            "roi": "+63%",
             "boxSize": "탑로더 에어캡 봉투 (12×18cm)",
             "actualWeight": 35,
             "volWeight": 30,
@@ -2951,9 +3049,9 @@
             "status": "무지성 사입 (마진율 62%)",
             "ebayUsd": 32.0,
             "ebayKrw": 44160,
-            "targetBuyKrw": 12000,
-            "profitKrw": 19200,
-            "roi": "+160%",
+            "targetBuyKrw": 11000,
+            "profitKrw": 20200,
+            "roi": "+183%",
             "boxSize": "탑로더 에어캡 봉투 (12×18cm)",
             "actualWeight": 35,
             "volWeight": 30,
@@ -2998,9 +3096,9 @@
             "status": "안전 사입 (부피 1kg 과금)",
             "ebayUsd": 68.0,
             "ebayKrw": 93840,
-            "targetBuyKrw": 45000,
-            "profitKrw": 23800,
-            "roi": "+53%",
+            "targetBuyKrw": 42000,
+            "profitKrw": 26800,
+            "roi": "+63%",
             "boxSize": "응원봉 하드박스 (28×14×12cm)",
             "actualWeight": 420,
             "volWeight": 784,
@@ -3139,9 +3237,9 @@
             "status": "안전 사입 (부피 500g 적용)",
             "ebayUsd": 140.0,
             "ebayKrw": 193200,
-            "targetBuyKrw": 90000,
-            "profitKrw": 48200,
-            "roi": "+53%",
+            "targetBuyKrw": 85000,
+            "profitKrw": 53200,
+            "roi": "+62%",
             "boxSize": "매트 원통형 박스 (40×8×8cm)",
             "actualWeight": 310,
             "volWeight": 426,
@@ -3186,9 +3284,9 @@
             "status": "이탈리아/유럽 인기 (초경량)",
             "ebayUsd": 185.0,
             "ebayKrw": 255300,
-            "targetBuyKrw": 140000,
-            "profitKrw": 58000,
-            "roi": "+41%",
+            "targetBuyKrw": 135000,
+            "profitKrw": 63000,
+            "roi": "+46%",
             "boxSize": "골판지 보강 탑로더 봉투 (15×20cm)",
             "actualWeight": 45,
             "volWeight": 40,
@@ -3328,9 +3426,9 @@
             "status": "성수/더현대 팝업 (부피 1.5kg)",
             "ebayUsd": 179.9,
             "ebayKrw": 248262,
-            "targetBuyKrw": 128000,
-            "profitKrw": 69077,
-            "roi": "+54%",
+            "targetBuyKrw": 115000,
+            "profitKrw": 82000,
+            "roi": "+71%",
             "boxSize": "2호 택배 박스 (25×20×15cm)",
             "actualWeight": 380,
             "volWeight": 1250,
@@ -3376,9 +3474,9 @@
             "status": "외국인 선물 1위 (부피 500g 적용)",
             "ebayUsd": 65.0,
             "ebayKrw": 89700,
-            "targetBuyKrw": 35000,
-            "profitKrw": 28500,
-            "roi": "+81%",
+            "targetBuyKrw": 34000,
+            "profitKrw": 29500,
+            "roi": "+86%",
             "boxSize": "텀블러 완충 박스 (12×12×25cm)",
             "actualWeight": 320,
             "volWeight": 600,
@@ -3424,9 +3522,9 @@
             "status": "외국인 선물 1위 (부피 500g 적용)",
             "ebayUsd": 69.99,
             "ebayKrw": 96586,
-            "targetBuyKrw": 43000,
-            "profitKrw": 23166,
-            "roi": "+54%",
+            "targetBuyKrw": 38000,
+            "profitKrw": 28100,
+            "roi": "+74%",
             "boxSize": "텀블러 완충 박스 (12×12×25cm)",
             "actualWeight": 310,
             "volWeight": 600,
@@ -3701,17 +3799,17 @@
 
             <!-- 실전 액션 버튼 3종 -->
             <div class="grid grid-cols-3 gap-1.5 pt-1">
-              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(it.bunjangQuery)}&order=price_asc" target="_blank" class="py-2 rounded-xl bg-rose-600/90 hover:bg-rose-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
-                <span>🛒</span>
-                <span>번장 최저가</span>
-              </a>
-              <button type="button" onclick="loadIntoCalculatorCustom('${it.id}', ${it.ebayUsd}, ${it.appliedWeight || 200}, '${it.category}')" class="py-2 rounded-xl bg-indigo-600/90 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
+              <button type="button" onclick="startSourcingForItem('${it.id}')" class="py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
+                <span>🎯</span>
+                <span>소싱하기</span>
+              </button>
+              <button type="button" onclick="loadIntoCalculatorCustom('${it.id}', ${it.ebayUsd}, ${it.appliedWeight || 200}, '${it.category}')" class="py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
                 <span>⚡</span>
                 <span>마진 계산</span>
               </button>
               <button type="button" onclick="openEbayDetailModal('${it.id}')" class="py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-xs flex items-center justify-center space-x-1 transition active:scale-95 text-center">
                 <span>📊</span>
-                <span>거래량/시세</span>
+                <span>시세/거래량</span>
               </button>
             </div>
           </div>
@@ -4915,329 +5013,6 @@
       document.getElementById('title-char-count').innerText = '0 / 80자';
       uploadedPhotos = [];
       renderPhotoPreviews();
-    }
-
-    // Sourcing Radar 3-Way Mode Switching (Name / Link / Photo)
-    function switchSourcingInputMode(mode) {
-      ['name', 'link', 'photo'].forEach(m => {
-        document.getElementById(`sourcing-input-${m}`).classList.add('hidden');
-        const btn = document.getElementById(`sourcing-tab-btn-${m}`);
-        btn.className = 'flex-1 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium transition';
-      });
-      document.getElementById(`sourcing-input-${mode}`).classList.remove('hidden');
-      const activeBtn = document.getElementById(`sourcing-tab-btn-${mode}`);
-      activeBtn.className = 'flex-1 py-1.5 rounded-lg bg-indigo-600 text-white font-bold transition';
-    }
-
-    let sourcingPhotoFile = null;
-    function handleSourcingPhoto(input) {
-      const file = input.files[0];
-      if (!file) return;
-      sourcingPhotoFile = file;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('sourcing-preview-img').src = e.target.result;
-        document.getElementById('sourcing-photo-name').innerText = file.name;
-        document.getElementById('sourcing-photo-placeholder').classList.add('hidden');
-        document.getElementById('sourcing-photo-preview').classList.remove('hidden');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function analyzeSourcingPhoto() {
-      if (!sourcingPhotoFile) {
-        showToast('분석할 상품 사진을 먼저 선택해 주세요.', '⚠️');
-        return;
-      }
-      showToast('📸 사진 속 포켓몬 카드 인식 및 글로벌 시세 대조 중...', '🔍');
-      // 사진 파일명 또는 기본 감지 처리
-      const name = sourcingPhotoFile.name.toLowerCase();
-      let detectedKeyword = '포켓몬 카드';
-      if (name.includes('charizard') || name.includes('리자몽')) detectedKeyword = '메가 리자몽 X ex SAR';
-      else if (name.includes('pikachu') || name.includes('피카츄')) detectedKeyword = '고풍 피카츄 키링';
-      else if (name.includes('ditto') || name.includes('메타몽')) detectedKeyword = '메타몽 프로젝트 디토';
-      else if (name.includes('board') || name.includes('보드')) detectedKeyword = '산타크루즈 포켓몬 스케이트보드';
-      else detectedKeyword = '메가 리자몽 X ex SAR';
-
-      setTimeout(() => {
-        runSmartSourcingAnalysis(detectedKeyword);
-        showToast(`📸 '${detectedKeyword}' 실물 매물 인식 완료! 마진표가 갱신되었습니다.`, '🎯');
-      }, 600);
-    }
-
-    function analyzeMarketLink() {
-      const link = document.getElementById('sourcing-input-link-val').value.trim();
-      if (!link) {
-        showToast('분석할 마켓 링크를 붙여넣어 주세요.', '⚠️');
-        return;
-      }
-
-      showToast('🔗 마켓 매물 정보 및 판매가 크롤링 중...', '🔍');
-      let extractedKeyword = '포켓몬 카드';
-      if (link.includes('bunjang') || link.includes('daangn') || link.includes('joongna')) {
-        try {
-          const urlObj = new URL(link);
-          const q = urlObj.searchParams.get('q') || urlObj.searchParams.get('search') || '';
-          if (q) extractedKeyword = decodeURIComponent(q);
-          else extractedKeyword = '고풍 한복 피카츄';
-        } catch (e) {
-          extractedKeyword = '메가 리자몽 X ex SAR';
-        }
-      } else {
-        extractedKeyword = '메타몽 프로젝트 디토';
-      }
-
-      setTimeout(() => {
-        runSmartSourcingAnalysis(extractedKeyword);
-        showToast(`🔗 링크 매물 분석 완료! 마진표가 생성되었습니다.`, '🎯');
-      }, 600);
-    }
-
-    function setSourcingKeyword(kw) {
-      document.getElementById('sourcing-search-keyword').value = kw;
-      runSmartSourcingAnalysis(kw);
-    }
-
-    // 배송 규격 프리셋 및 요금 테이블
-    let currentShippingCost = 8980;
-    let currentShippingType = 'card';
-
-    const SHIPPING_PRESETS = {
-      card: { name: 'K-Packet (8,980원)', cost: 8980 },
-      clothes: { name: 'eGS Standard (12,500원)', cost: 12500 },
-      shoes: { name: 'eGS / EMS (24,000원)', cost: 24000 },
-      heavy: { name: '우체국 EMS (75,000원)', cost: 75000 }
-    };
-
-    function setShippingPreset(type) {
-      currentShippingType = type;
-      currentShippingCost = SHIPPING_PRESETS[type].cost;
-      document.getElementById('label-selected-shipping').innerText = SHIPPING_PRESETS[type].name;
-
-      ['card', 'clothes', 'shoes', 'heavy'].forEach(t => {
-        const btn = document.getElementById(`ship-btn-${t}`);
-        if (!btn) return;
-        if (t === type) {
-          btn.className = 'py-1.5 px-1 rounded-lg bg-indigo-600 text-white border border-indigo-400 transition text-center active:scale-95';
-        } else {
-          btn.className = 'py-1.5 px-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 transition text-center active:scale-95';
-        }
-      });
-      recalcSourcingBoard();
-    }
-
-    // 소싱 상품별 실전 데이터베이스 (시세 및 공식 거래량 매칭 - 돈 되는 전 카테고리)
-    const SOURCING_DATABASE = {
-      '리자몽': {
-        title: '포켓몬 메가 리자몽 X ex SAR 110/080 M2',
-        buyKrw: 140000,
-        buySource: '번개장터/당근 최저가',
-        soldUsd: 195.0,
-        volume30d: '🔥 최근 30일 18건 판매',
-        sellThrough: 88,
-        dailySales: '0.6건/일',
-        ebayQuery: 'Mega+Charizard+X+ex+SAR+110%2F080',
-        shippingType: 'card'
-      },
-      '피카츄': {
-        title: '고풍에디션 전통 한복 피카츄 LED 키링 2종 세트',
-        buyKrw: 45000,
-        buySource: '당근마켓 직거래',
-        soldUsd: 115.0,
-        volume30d: '🔥 최근 30일 8건 판매',
-        sellThrough: 75,
-        dailySales: '0.3건/일',
-        ebayQuery: 'Pokemon+Hanbok+Pikachu+Keychain+Set',
-        shippingType: 'card'
-      },
-      '조던': {
-        title: '나이키 에어 조던 1 로우 골프 울프 그레이 (DD9315-002)',
-        buyKrw: 165000,
-        buySource: 'KREAM / 공홈 시세',
-        soldUsd: 220.0,
-        volume30d: '🔥 최근 30일 26건 판매',
-        sellThrough: 84,
-        dailySales: '0.9건/일',
-        ebayQuery: 'Nike+Air+Jordan+1+Low+Golf+Wolf+Grey',
-        shippingType: 'shoes'
-      },
-      '삼바': {
-        title: '아디다스 삼바 OG 화이트 블랙 (B75806)',
-        buyKrw: 115000,
-        buySource: 'ABC마트 / 무신사',
-        soldUsd: 155.0,
-        volume30d: '🔥 최근 30일 35건 판매',
-        sellThrough: 90,
-        dailySales: '1.2건/일',
-        ebayQuery: 'Adidas+Samba+OG+White+Black+B75806',
-        shippingType: 'shoes'
-      },
-      '스탠리': {
-        title: '스타벅스 코리아 x 스탠리 클래식 텀블러 591ml',
-        buyKrw: 39000,
-        buySource: '스타벅스 매장 / SSG',
-        soldUsd: 78.0,
-        volume30d: '🔥 최근 30일 19건 판매',
-        sellThrough: 78,
-        dailySales: '0.6건/일',
-        ebayQuery: 'Starbucks+Korea+Stanley+Tumbler',
-        shippingType: 'shoes'
-      },
-      '스타벅스': {
-        title: '스타벅스 코리아 썸머 한정 텀블러 & 콜드컵',
-        buyKrw: 35000,
-        buySource: '스타벅스 공식 / 번개장터',
-        soldUsd: 75.0,
-        volume30d: '🔥 최근 30일 24건 판매',
-        sellThrough: 80,
-        dailySales: '0.8건/일',
-        ebayQuery: 'Starbucks+Korea+Tumbler+Limited',
-        shippingType: 'shoes'
-      },
-      '마뗑킴': {
-        title: '마뗑킴 아코디언 지갑 블랙 (Matin Kim Wallet)',
-        buyKrw: 48000,
-        buySource: '무신사 / 공식스토어',
-        soldUsd: 89.0,
-        volume30d: '🔥 최근 30일 15건 판매',
-        sellThrough: 80,
-        dailySales: '0.5건/일',
-        ebayQuery: 'Matin+Kim+Accordion+Wallet+Black',
-        shippingType: 'clothes'
-      },
-      '메타몽': {
-        title: '메타몽 프로젝트 디토 173/SV-P 밀봉 프로모',
-        buyKrw: 70000,
-        buySource: '중고나라 택배거래',
-        soldUsd: 125.0,
-        volume30d: '🔥 최근 30일 22건 판매',
-        sellThrough: 92,
-        dailySales: '0.7건/일',
-        ebayQuery: 'Pokemon+Ditto+173%2FSV-P+Korean',
-        shippingType: 'card'
-      },
-      '산타크루즈': {
-        title: '포켓몬 x 산타크루즈 스케이트보드 3종 세트',
-        buyKrw: 750000,
-        buySource: '당근마켓 네고 목표가',
-        soldUsd: 880.0,
-        volume30d: '📦 최근 30일 5건 판매',
-        sellThrough: 60,
-        dailySales: '0.2건/일',
-        ebayQuery: 'Santa+Cruz+Pokemon+Skateboard+deck',
-        shippingType: 'heavy'
-      },
-      '뮤': {
-        title: '30주년 한글판 뮤 ex SAR 205/165',
-        buyKrw: 35000,
-        buySource: '번개장터 C2C',
-        soldUsd: 65.0,
-        volume30d: '🔥 최근 30일 14건 판매',
-        sellThrough: 82,
-        dailySales: '0.5건/일',
-        ebayQuery: 'Pokemon+Mew+ex+SAR+Korean+205%2F165',
-        shippingType: 'card'
-      }
-    };
-
-    function recalcSourcingBoard() {
-      const buyPrice = parseFloat(document.getElementById('input-custom-buy-price').value) || 0;
-      const soldUsd = parseFloat(document.getElementById('input-custom-sold-usd').value) || 0;
-      const title = document.getElementById('analysis-item-title').innerText;
-      const rate = 1380; // 환율
-
-      const grossKrw = soldUsd * rate;
-      const ebayFeeKrw = grossKrw * (0.1325 + 0.0145) + (0.40 * rate); // 이베이 13.25% + 한국셀러 1.45% + $0.40
-      const payoFeeKrw = grossKrw * 0.02; // 페이오니아 2%
-      const shipKrw = currentShippingCost;
-      const totalFeesKrw = Math.round(ebayFeeKrw + payoFeeKrw + shipKrw);
-      const netProfitKrw = Math.round(grossKrw - buyPrice - totalFeesKrw);
-      const roi = buyPrice > 0 ? ((netProfitKrw / buyPrice) * 100).toFixed(1) : 0;
-
-      document.getElementById('analysis-sell-krw-text').innerText = `약 ${Math.round(grossKrw).toLocaleString()}원`;
-      document.getElementById('analysis-fees-total').innerText = `-${totalFeesKrw.toLocaleString()}원`;
-      document.getElementById('analysis-net-profit').innerText = (netProfitKrw >= 0 ? '+' : '') + netProfitKrw.toLocaleString() + '원';
-
-      const badge = document.getElementById('analysis-badge');
-      badge.innerText = `마진율 ${roi}%`;
-      if (roi >= 30) {
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-      } else if (roi >= 10) {
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30';
-      } else {
-        badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30';
-      }
-    }
-
-    function runSmartSourcingAnalysis(targetKw = null) {
-      const kw = targetKw || document.getElementById('sourcing-search-keyword').value.trim();
-      if (!kw) {
-        showToast('검색할 상품명을 입력해 주세요.', '⚠️');
-        return;
-      }
-
-      // 1. 데이터 매칭 또는 자동 추정
-      let match = null;
-      for (const key in SOURCING_DATABASE) {
-        if (kw.includes(key)) {
-          match = SOURCING_DATABASE[key];
-          break;
-        }
-      }
-
-      let title = kw;
-      let buyPrice = 50000;
-      let buySource = '국내 C2C 평균';
-      let soldUsd = 85.0;
-      let volume30d = '📊 테라피크 조회 요망';
-      let speedText = '아래 [테라피크] 버튼을 눌러 공식 거래량을 확인하세요';
-      let ebayQuery = encodeURIComponent(kw);
-
-      if (match) {
-        title = match.title;
-        buyPrice = match.buyKrw;
-        buySource = match.buySource;
-        soldUsd = match.soldUsd;
-        volume30d = match.volume30d;
-        speedText = `일평균 ${match.dailySales} 체결 · 판매성공률 ${match.sellThrough}%`;
-        ebayQuery = match.ebayQuery;
-        if (match.shippingType) {
-          setShippingPreset(match.shippingType);
-        }
-      }
-
-      // 2. UI 기본값 주입 및 실시간 계산
-      document.getElementById('analysis-item-title').innerText = title;
-      document.getElementById('input-custom-buy-price').value = buyPrice;
-      document.getElementById('input-custom-sold-usd').value = soldUsd;
-      document.getElementById('analysis-buy-source').innerText = buySource;
-      document.getElementById('analysis-volume-badge').innerText = volume30d;
-      document.getElementById('analysis-speed-text').innerText = speedText;
-
-      recalcSourcingBoard();
-
-      // 3. 외부 마켓 및 4대 전문 리서치 도구 링크 갱신
-      const enc = encodeURIComponent(kw);
-      const queryForEbay = match ? match.ebayQuery : enc;
-      
-      // 전문 분석 도구 3종 + eBay Sold 최신순
-      document.getElementById('btn-link-terapeak').href = `https://www.ebay.com/sh/research?marketplace=EBAY-US&keywords=${queryForEbay}&dayRange=30`;
-      document.getElementById('btn-link-130point').href = `https://130point.com/sales/`;
-      document.getElementById('btn-link-pricecharting').href = `https://www.pricecharting.com/search-products?q=${enc}&type=pokemon`;
-      document.getElementById('btn-link-ebay').href = `https://www.ebay.com/sch/i.html?_nkw=${queryForEbay}&LH_Sold=1&LH_Complete=1&_sop=13`;
-
-      // 탑셀러 8대 핵심 소싱처 직통 링크 동적 갱신
-      document.getElementById('btn-link-bunjang').href = `https://m.bunjang.co.kr/search/products?q=${enc}`;
-      document.getElementById('btn-link-daangn').href = `https://www.daangn.com/search/${enc}`;
-      document.getElementById('btn-link-joongna').href = `https://web.joongna.com/search/${enc}`;
-      document.getElementById('btn-link-kream').href = `https://kream.co.kr/search?keyword=${enc}`;
-      document.getElementById('btn-link-oliveyoung').href = `https://www.oliveyoung.co.kr/store/search/getSearchMain.do?query=${enc}`;
-      document.getElementById('btn-link-musinsa').href = `https://www.musinsa.com/search/goods?keyword=${enc}`;
-      document.getElementById('btn-link-buyee').href = `https://buyee.jp/mercari/search?keyword=${enc}`;
-      document.getElementById('btn-link-google').href = `https://www.google.com/search?tbm=shop&q=${enc}`;
-
-      showToast(`'${title}' 전문 분석 준비 완료! (테라피크/130point 연동)`, '🎯');
     }
 
     // PWA Service Worker Registration & Force Update

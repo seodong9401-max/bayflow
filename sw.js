@@ -1,5 +1,5 @@
-// BayFlow Service Worker v19 (Korean Sourcing Titles, Volumetric Weight & Full Category Fee Sync)
-const CACHE_NAME = 'bayflow-v19';
+// BayFlow Service Worker v20 (Sourcing Pipeline & 10 Major Sourcing Channels)
+const CACHE_NAME = 'bayflow-v20';
 const ASSETS = [
   './',
   './index.html',
