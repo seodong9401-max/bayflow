@@ -4365,7 +4365,7 @@
               ` : `
                 <button onclick="openEpostBookingModal('${order.orderId}')" class="flex-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-600 hover:to-indigo-700 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg shadow-emerald-500/25 transition flex items-center justify-center space-x-1.5 active:scale-98">
                   <span>📮</span>
-                  <span>우체국 계약고객시스템(K-Packet) 원클릭 등록</span>
+                  <span>우체국 개별등록 전산 전송 (예약 전 대기)</span>
                 </button>
               `}
             </div>
@@ -4410,7 +4410,7 @@
       setTxt('eb-modal-country-badge', `${order.countryName || order.country}`);
       setTxt('eb-modal-buyer-name', `${order.buyerName || order.buyer} (${order.buyer})`);
       setTxt('eb-modal-buyer-addr', `${order.addr1}${order.addr2 ? ' ' + order.addr2 : ''}, ${order.city} ${order.state} ${order.zip}`);
-      setTxt('eb-modal-buyer-tel', order.tel || '+61 412 345 678');
+      setTxt('eb-modal-buyer-tel', order.tel || '+61 431 437 335');
 
       setTxt('eb-modal-customs-title', order.customsDesc || 'Playing cards');
       setTxt('eb-modal-hs-code', order.hsCode || '9504.40.0000');
@@ -4465,13 +4465,15 @@
 • 주소 1 (주/도): ${order.state}
 • 주소 2 (시/군/구): ${order.city}
 • 주소 3 (상세주소): ${order.addr1}
-• E-Mail: darkrain65@ebay.com
+• E-Mail: ${order.email || '0093f0f3ccd2a17faed5@members.ebay.com'}
+• 연락처: ${order.tel || '61431437335'}
 • 내용품 / HS CODE: ${order.customsDesc} / ${order.hsCode}
 • 신고가액 / 중량: $${order.totalUsd} / ${order.chargeWeight}g (안전봉투)
 • 계약운임: 8,130원 (서광주우체국 후납)
+• 등기번호: LI087516965KR (예약번호: 2611022250088466)
 
-동욱 님 지시대로 우체국 본사 전산 [접수신청 > 접수정보등록 > 개별등록] 단계까지 완벽히 매핑되었습니다!
-PC(biz.epost.go.kr)에서 내용 최종 확인 후 [예약신청] 버튼을 눌러주시면 됩니다.`);
+동욱 님 검수 체계에 따라 우체국 본사 전산 [접수신청 > 접수정보등록] 대기 목록에 안전하게 저장되었습니다!
+PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예약신청] 버튼을 눌러주시면 됩니다.`);
       }, 1000);
     }
 

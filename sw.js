@@ -1,5 +1,5 @@
-// BayFlow Service Worker v33 (Ebay Real Order & Korea Post Official 70-Col Excel Sync)
-const CACHE_NAME = 'bayflow-v33';
+// BayFlow Service Worker v34 (Korea Post Individual Registration Standby Workflow & Cleaned Buyer Data)
+const CACHE_NAME = 'bayflow-v34';
 const ASSETS = [
   './',
   './index.html',
