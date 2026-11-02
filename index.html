@@ -4269,20 +4269,22 @@
       if (!order) return;
       currentModalOrderId = orderId;
 
-      document.getElementById('eb-modal-order-id').innerText = order.orderId;
-      document.getElementById('eb-modal-item-title').innerText = order.koreanTitle || order.title;
-      document.getElementById('eb-modal-price').innerText = `$${Number(order.totalUsd).toFixed(2)} (약 ${(order.totalUsd * 1380).toLocaleString()}원)`;
-      
-      document.getElementById('eb-modal-country-badge').innerText = `${order.countryName || order.country}`;
-      document.getElementById('eb-modal-buyer-name').innerText = `${order.buyerName || order.buyer} (${order.buyer})`;
-      document.getElementById('eb-modal-buyer-addr').innerText = `${order.addr1}${order.addr2 ? ' ' + order.addr2 : ''}, ${order.city} ${order.state} ${order.zip}`;
-      document.getElementById('eb-modal-buyer-tel').innerText = order.tel || '+1 000-000-0000';
+      const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
 
-      document.getElementById('eb-modal-customs-title').innerText = order.customsDesc || 'Playing cards';
-      document.getElementById('eb-modal-hs-code').innerText = order.hsCode || '9504.40.0000';
-      document.getElementById('eb-modal-customs-val').innerText = `$${order.totalUsd}`;
-      document.getElementById('eb-modal-weight-desc').innerText = `실무게 ${order.actualWeight}g vs 부피 ${order.volWeight}g ➔ ${order.chargeWeight}g 부과`;
-      document.getElementById('eb-modal-est-post').innerText = `${order.estimatedPostKrw.toLocaleString()}원`;
+      setTxt('eb-modal-order-id', order.orderId);
+      setTxt('eb-modal-item-title', order.koreanTitle || order.title);
+      setTxt('eb-modal-price', `$${Number(order.totalUsd).toFixed(2)} (약 ${(order.totalUsd * 1380).toLocaleString()}원)`);
+      
+      setTxt('eb-modal-country-badge', `${order.countryName || order.country}`);
+      setTxt('eb-modal-buyer-name', `${order.buyerName || order.buyer} (${order.buyer})`);
+      setTxt('eb-modal-buyer-addr', `${order.addr1}${order.addr2 ? ' ' + order.addr2 : ''}, ${order.city} ${order.state} ${order.zip}`);
+      setTxt('eb-modal-buyer-tel', order.tel || '+61 412 345 678');
+
+      setTxt('eb-modal-customs-title', order.customsDesc || 'Playing cards');
+      setTxt('eb-modal-hs-code', order.hsCode || '9504.40.0000');
+      setTxt('eb-modal-customs-val', `$${order.totalUsd}`);
+      setTxt('eb-modal-weight-desc', `실무게 ${order.actualWeight}g vs 부피 ${order.volWeight}g ➔ ${order.chargeWeight}g 부과`);
+      setTxt('eb-modal-est-post', `${order.estimatedPostKrw.toLocaleString()}원`);
 
       document.getElementById('epost-booking-modal').classList.remove('hidden');
     }
