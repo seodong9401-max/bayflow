@@ -1617,21 +1617,98 @@
           <span class="text-[10px] text-slate-500 font-medium">발매·드로우 레이더</span>
         </div>
         <!-- 드로우 헤더 & 검색 바 -->
-        <div class="bg-slate-900/90 rounded-2xl border border-rose-500/30 p-3.5 space-y-2.5">
+        <!-- 드로우 헤더 & 글로벌 소식통 & 검색 바 -->
+        <div class="bg-slate-900/90 rounded-2xl border border-rose-500/30 p-3.5 space-y-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
               <span class="text-base">🎯</span>
               <div>
-                <h3 class="text-xs font-bold text-slate-100">실시간 발매·드로우·팝업·영화관 MD 레이더</h3>
-                <p class="text-[10px] text-slate-400">나이키 SNKRS · 성수 팝업 · KREAM 래플 · 메가박스/CGV 특전 실시간 트래커</p>
+                <h3 class="text-xs font-bold text-slate-100">글로벌 & 국내 실시간 발매·드로우·팝업 레이더</h3>
+                <p class="text-[10px] text-slate-400">미국 Sole Retriever · 중국 得物(Poizon) · 일본 SNKRDUNK · 한국 KREAM·성수팝업</p>
               </div>
             </div>
-            <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">28건</span>
+            <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">23건</span>
+          </div>
+
+          <!-- 🌐 글로벌 상위셀러 직통 뉴스 채널 4대 허브 -->
+          <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-amber-300 flex items-center space-x-1">
+                <span>🌐</span>
+                <span>상위셀러가 매일 확인하는 4대 권역 직통 소식통</span>
+              </span>
+              <span class="text-[9px] text-slate-400">클릭 시 공식 이동</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px]">
+              <!-- 미국/글로벌 -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800 space-y-1">
+                <div class="text-[10px] font-bold text-sky-400">🇺🇸 미국·글로벌</div>
+                <div class="flex flex-col space-y-0.5 text-[10px]">
+                  <a href="https://www.soleretriever.com/raffles" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>Sole Retriever</span><span class="text-slate-500">래플1위</span>
+                  </a>
+                  <a href="https://sneakernews.com/release-dates/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>Sneaker News</span><span class="text-slate-500">달력</span>
+                  </a>
+                  <a href="https://www.pokebeach.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>PokeBeach</span><span class="text-slate-500">TCG</span>
+                  </a>
+                  <a href="https://hypebeast.com/drops" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>Hypebeast</span><span class="text-slate-500">드랍</span>
+                  </a>
+                </div>
+              </div>
+              <!-- 중국/중화권 -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800 space-y-1">
+                <div class="text-[10px] font-bold text-rose-400">🇨🇳 중국·중화권</div>
+                <div class="flex flex-col space-y-0.5 text-[10px]">
+                  <a href="https://www.poizon.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>得物 (Poizon)</span><span class="text-slate-500">리셀1위</span>
+                  </a>
+                  <a href="https://www.xiaohongshu.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>小红书 (RED)</span><span class="text-slate-500">바이럴</span>
+                  </a>
+                  <a href="https://www.popmart.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>팝마트 공식</span><span class="text-slate-500">라부부</span>
+                  </a>
+                </div>
+              </div>
+              <!-- 일본/엔저 -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800 space-y-1">
+                <div class="text-[10px] font-bold text-amber-400">🇯🇵 일본·엔저</div>
+                <div class="flex flex-col space-y-0.5 text-[10px]">
+                  <a href="https://snkrdunk.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>SNKRDUNK</span><span class="text-slate-500">시세1위</span>
+                  </a>
+                  <a href="https://www.pokemoncenter-online.com/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>포켓몬센터 재팬</span><span class="text-slate-500">추첨</span>
+                  </a>
+                  <a href="https://p-bandai.jp/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>프리미엄 반다이</span><span class="text-slate-500">피규어</span>
+                  </a>
+                </div>
+              </div>
+              <!-- 한국/현장특전 -->
+              <div class="bg-slate-900/90 p-2 rounded-lg border border-slate-800 space-y-1">
+                <div class="text-[10px] font-bold text-emerald-400">🇰🇷 한국·한정판</div>
+                <div class="flex flex-col space-y-0.5 text-[10px]">
+                  <a href="https://kream.co.kr/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>KREAM 드로우</span><span class="text-slate-500">래플</span>
+                  </a>
+                  <a href="https://popply.co.kr/" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>팝플리 (Popply)</span><span class="text-slate-500">성수팝업</span>
+                  </a>
+                  <a href="https://www.megabox.co.kr/event" target="_blank" class="text-slate-300 hover:text-white flex justify-between py-0.5">
+                    <span>메가박스 / CGV</span><span class="text-slate-500">오티/TTT</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- 실시간 검색 입력 -->
           <div class="relative">
-            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (포켓몬, 나이키, 삼바, 성수, 티켓, 스타벅스...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
+            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (미국, 중국, 일본, 조던, 라부부, 성수, 포켓몬, 티켓...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
           </div>
 
           <!-- 카테고리 필터 바 (텍스트 줄바꿈 완전 차단) -->
@@ -1640,22 +1717,37 @@
               전체
             </button>
             <button type="button" onclick="filterDrawEvents('fav')" id="draw-fbtn-fav" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              ⭐ 내 관심사
+              ⭐ 탑셀러 픽
+            </button>
+            <button type="button" onclick="filterDrawEvents('us')" id="draw-fbtn-us" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🇺🇸 미국·글로벌
+            </button>
+            <button type="button" onclick="filterDrawEvents('cn')" id="draw-fbtn-cn" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🇨🇳 중국 바이럴
+            </button>
+            <button type="button" onclick="filterDrawEvents('jp')" id="draw-fbtn-jp" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🇯🇵 일본 한정
             </button>
             <button type="button" onclick="filterDrawEvents('draw')" id="draw-fbtn-draw" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              🔥 드로우·응모
+              🔥 스니커즈·래플
+            </button>
+            <button type="button" onclick="filterDrawEvents('tcg')" id="draw-fbtn-tcg" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🃏 TCG·포켓몬
             </button>
             <button type="button" onclick="filterDrawEvents('popup')" id="draw-fbtn-popup" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              📍 팝업스토어
+              📍 성수·더현대 팝업
             </button>
             <button type="button" onclick="filterDrawEvents('goods')" id="draw-fbtn-goods" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
               🎬 영화관 MD
             </button>
-            <button type="button" onclick="filterDrawEvents('reserve')" id="draw-fbtn-reserve" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              사전예약
+            <button type="button" onclick="filterDrawEvents('fashion')" id="draw-fbtn-fashion" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              👗 스트릿·패션
             </button>
-            <button type="button" onclick="filterDrawEvents('release')" id="draw-fbtn-release" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
-              발매·출시
+            <button type="button" onclick="filterDrawEvents('toy')" id="draw-fbtn-toy" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              🧸 아트토이·팝마트
+            </button>
+            <button type="button" onclick="filterDrawEvents('starbucks')" id="draw-fbtn-starbucks" class="draw-filter-btn flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 text-slate-300 border border-slate-800 text-xs font-medium transition active:scale-95">
+              ☕ 스타벅스·MD
             </button>
           </div>
         </div>
@@ -2237,17 +2329,26 @@
               ${(it.tags || []).map(t => `<span class="bg-slate-950 px-1.5 py-0.2 rounded border border-slate-800 text-slate-400">${t}</span>`).join('')}
             </div>
 
+            <!-- 실시간 사입가 직접 입력창 -->
+            <div class="flex items-center justify-between bg-slate-950 p-2 rounded-xl border border-slate-800 text-[11px]">
+              <span class="text-slate-400 font-medium">실시간 사입가 (번장 발견가):</span>
+              <div class="flex items-center space-x-1">
+                <input type="number" id="custom-buy-${it.id}" value="${it.targetBuyKrw}" class="w-24 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-slate-100 font-mono text-xs font-bold text-right focus:border-amber-400 focus:outline-none">
+                <span class="text-slate-400 font-semibold">원</span>
+              </div>
+            </div>
+
             <!-- 실전 액션 버튼 3종 -->
             <div class="grid grid-cols-3 gap-1.5 pt-1">
-              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(it.bunjangQuery)}" target="_blank" class="py-2 rounded-xl bg-rose-600/90 hover:bg-rose-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
+              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(it.bunjangQuery)}&order=price_asc" target="_blank" class="py-2 rounded-xl bg-rose-600/90 hover:bg-rose-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
                 <span>🛒</span>
                 <span>번장 최저가</span>
               </a>
-              <button type="button" onclick="loadIntoCalculator(${it.ebayUsd}, '${it.weightCat}', ${it.targetBuyKrw})" class="py-2 rounded-xl bg-indigo-600/90 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
+              <button type="button" onclick="loadIntoCalculatorCustom('${it.id}', ${it.ebayUsd}, '${it.weightCat}')" class="py-2 rounded-xl bg-indigo-600/90 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center space-x-1 transition shadow active:scale-95 text-center">
                 <span>⚡</span>
                 <span>마진 계산</span>
               </button>
-              <a href="https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(it.ebayQuery)}&LH_Sold=1&LH_Complete=1" target="_blank" class="py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium text-xs flex items-center justify-center space-x-1 transition active:scale-95 text-center">
+              <a href="https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(it.ebayQuery)}&LH_Sold=1&LH_Complete=1&_sop=13" target="_blank" class="py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 font-medium text-xs flex items-center justify-center space-x-1 transition active:scale-95 text-center">
                 <span>🔍</span>
                 <span>eBay 실거래</span>
               </a>
@@ -2255,6 +2356,12 @@
           </div>
         `;
       }).join('');
+    }
+
+    function loadIntoCalculatorCustom(itemId, priceUsd, weightCat) {
+      const buyInput = document.getElementById('custom-buy-' + itemId);
+      const buyKrw = buyInput ? parseInt(buyInput.value, 10) || 0 : 0;
+      loadIntoCalculator(priceUsd, weightCat, buyKrw);
     }
 
     function loadIntoCalculator(priceUsd, weightCat, buyKrw) {
@@ -2269,8 +2376,476 @@
       showToast('계산기에 ' + priceUsd + '달러가 자동 입력되었습니다!', '🧮');
     }
 
-    // 🎯 드로우 레이더 실전 엔진 (셀러박스 리버싱 데이터 & D-Day 알고리즘)
-    const DRAW_RADAR_ITEMS = [{"id": "snkrs-travis-jordan", "source": "nike", "sourceLabel": "나이키 SNKRS", "kind": "draw", "title": "트래비스 스캇 x 에어 조던 1 로우 OG 'Velvet Brown'", "summary": "나이키 코리아 공식 SNKRS 드로우 · 국내 정가 179,000원 ➔ eBay 체결가 $480.00 (~66.2만 원) · 예상 순마진 +45만 원 (프리미엄 268%)", "url": "https://www.nike.com/kr/launch", "startAt": "2026-11-04T10:00:00+09:00", "endAt": "2026-11-04T10:30:00+09:00", "brand": "Nike x Travis Scott", "place": "나이키 코리아 공식 공홈", "score": 10, "matched": ["나이키", "조던", "드로우", "한정판"], "buyKrw": 179000, "soldUsd": 480.0, "ship": "shoes"}, {"id": "popup-pokemon-seoul", "source": "popply", "sourceLabel": "포켓몬 코리아", "kind": "popup", "title": "2026 포켓몬 팝업스토어 인 서울 (성수동)", "summary": "서울 성동구 성수동 팝업 · 한복 피카츄 LED 라이트 키링 (2.5만 ➔ eBay $115) & 봉제인형 2종 ($450) · 현장 대기 및 카카오 예약제", "url": "https://pokemonkorea.co.kr/", "startAt": "2026-11-01T10:00:00+09:00", "endAt": "2026-11-20T21:00:00+09:00", "brand": "Pokemon Korea", "place": "서울 성동구 성수동", "score": 10, "matched": ["포켓몬", "피카츄", "팝업", "한정판", "키링"], "buyKrw": 45000, "soldUsd": 115.0, "ship": "card"}, {"id": "kream-samba-pharrell", "source": "kream", "sourceLabel": "KREAM 래플", "kind": "draw", "title": "아디다스 삼바 OG x 퍼렐 윌리엄스 휴먼레이스 한정", "summary": "KREAM 앱 단독 서프라이즈 드로우 · 발매가 159,000원 ➔ eBay 체결가 $260.00 (~35.8만 원) · eGS 배송비 차감 순마진 +18만 원", "url": "https://kream.co.kr/", "startAt": "2026-11-03T12:00:00+09:00", "endAt": "2026-11-03T14:00:00+09:00", "brand": "Adidas x Pharrell", "place": "KREAM 앱 래플", "score": 9, "matched": ["아디다스", "삼바", "래플", "드로우"], "buyKrw": 159000, "soldUsd": 260.0, "ship": "shoes"}, {"id": "starbucks-stanley-tumbler", "source": "gnews", "sourceLabel": "스타벅스 코리아", "kind": "release", "title": "스타벅스 코리아 x 스탠리 한정 보온 스트로 텀블러 591ml", "summary": "전국 스타벅스 매장 및 SSG 공식몰 런칭 · 정가 39,000원 ➔ eBay 체결 $78.00 · K-Packet 발송 순마진 +35,200원", "url": "https://www.starbucks.co.kr/", "startAt": "2026-11-01T00:00:00+09:00", "endAt": "2026-11-30T23:59:00+09:00", "brand": "Starbucks x Stanley", "place": "스타벅스 매장 / SSG", "score": 9, "matched": ["스타벅스", "MD", "텀블러", "한정판"], "buyKrw": 39000, "soldUsd": 78.0, "ship": "shoes"}, {"id": "cinema-megabox-original-ticket", "source": "cinema", "sourceLabel": "메가박스 MD", "kind": "goods", "title": "메가박스 애니메이션 극장판 오리지널 티켓 세트 한정 증정", "summary": "메가박스 전국 지점 선착순 증정 · 영화 관람 소싱가 15,000원 ➔ eBay 글로벌 오타쿠 체결 $52.00 · 초경량 K-Packet 8,980원 발송 순마진 +36,400원", "url": "https://www.megabox.co.kr/event", "startAt": "2026-10-30T00:00:00+09:00", "endAt": "2026-11-15T23:59:00+09:00", "brand": "Megabox", "place": "메가박스 전국 극장", "score": 9, "matched": ["메가박스", "오리지널티켓", "굿즈", "특전"], "buyKrw": 15000, "soldUsd": 52.0, "ship": "card"}, {"id": "cinema-cgv-ttt-collection", "source": "cinema", "sourceLabel": "CGV 영화관 MD", "kind": "goods", "title": "CGV That's The Ticket (TTT) 넘버링 컬렉션 특전 런칭", "summary": "CGV 단독 한정 TTT 티켓 굿즈 · 소싱가 16,000원 ➔ eBay $55.00 · 두꺼운 하드보드 티켓북 케이스 포함 인기 수출품", "url": "https://m.cgv.co.kr/WebApp/Event/EventList.aspx", "startAt": "2026-10-28T00:00:00+09:00", "endAt": "2026-11-10T23:59:00+09:00", "brand": "CGV", "place": "CGV 직영점", "score": 9, "matched": ["CGV", "TTT", "티켓", "굿즈", "특전"], "buyKrw": 16000, "soldUsd": 55.0, "ship": "card"}, {"id": "musinsa-asics-andersson", "source": "kream", "sourceLabel": "무신사 드로우", "kind": "draw", "title": "아식스 젤 카야노 14 x 앤더슨벨 한정판 래플", "summary": "무신사 단독 회원 래플 · 발매가 219,000원 ➔ eBay $340.00 · 프리미엄 +16.5만 원 기대 스니커즈", "url": "https://www.musinsa.com/raffle", "startAt": "2026-11-05T11:00:00+09:00", "endAt": "2026-11-05T13:00:00+09:00", "brand": "Asics x Andersson Bell", "place": "무신사 래플창", "score": 9, "matched": ["무신사", "아식스", "래플", "드로우"], "buyKrw": 219000, "soldUsd": 340.0, "ship": "shoes"}, {"id": "starbucks-winter-frequency", "source": "gnews", "sourceLabel": "스타벅스 코리아", "kind": "news", "title": "2026 스타벅스 윈터 e-프리퀀시 증정품 캘린더 & 램프 MD", "summary": "스타벅스 코리아 겨울 프리퀀시 시작 · 매년 연말 해외 역직구 및 당근 미개봉 매물 프리미엄 거래 활발", "url": "https://www.starbucks.co.kr/", "startAt": "2026-11-01T00:00:00+09:00", "endAt": "2026-12-31T23:59:00+09:00", "brand": "Starbucks Korea", "place": "스타벅스 앱 / 전국 매장", "score": 8, "matched": ["스타벅스", "프리퀀시", "MD", "굿즈"], "buyKrw": 30000, "soldUsd": 70.0, "ship": "clothing"}, {"id": "1dd49de1a31a6a70", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "픽스피자 팝업", "summary": "픽스피자 · 서울 성동구 · 서울 성동구 연무장길 5-9 · #픽스피자 #성수팝업 #한끼피자 #디저트 #음식팝업 #피자팝업", "url": "https://popply.co.kr/popup/6276", "startAt": "2026-10-22T00:00:00+09:00", "endAt": "2026-11-22T23:59:00+09:00", "brand": "픽스피자", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "d38e645515239957", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "온그리디언츠 플래그십 스토어", "summary": "온그리디언츠 · 서울 성동구 · 서울 성동구 연무장17길 2 · #온그리디언츠 #성수팝업 #뷰티 #성수 #팝업 #뷰티팝업", "url": "https://popply.co.kr/popup/5077", "startAt": "2026-06-05T00:00:00+09:00", "endAt": "2027-05-31T23:59:00+09:00", "brand": "온그리디언츠", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "d20effdfe5bbc83c", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "2026 시크릿 도서전", "summary": "큐엔에이룸(QnA room) · 서울 마포구 · 서울 마포구 희우정로 82-1 · #2026 시크릿 도서전 #secret book fair #북페어 #도서전 #서울도서전 #홍대 #홍대도서전 #홍대큐엔에이룸", "url": "https://popply.co.kr/popup/5880", "startAt": "2026-09-11T00:00:00+09:00", "endAt": "2026-11-08T23:59:00+09:00", "brand": "큐엔에이룸(QnA room)", "place": "서울 마포구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "d0edfc3a47cd8d61", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "메이드바이 X 맘마 햄스토어 팝업 @ 성수", "summary": "메이드바이 · 서울 성동구 · 서울 성동구 서울숲길 38 · #메이드바이 X 맘마 햄스토어 팝업 #메이드바이 #맘마 #madeby #mamma #성수 #성수팝업 #캐릭터", "url": "https://popply.co.kr/popup/5984", "startAt": "2026-09-08T00:00:00+09:00", "endAt": "2026-11-05T23:59:00+09:00", "brand": "메이드바이", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "9d82dc600623e760", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "빈느 팝업", "summary": "빈느(VINNE) · 서울 서대문구 · 서울 서대문구 연세로 13 · #VINNE #빈느 #현대백화점 #현대백화점신촌점 #현대백화점팝업 #뷰티 #뷰티팝업 #신촌", "url": "https://popply.co.kr/popup/6367", "startAt": "2026-10-16T00:00:00+09:00", "endAt": "2026-11-15T23:59:00+09:00", "brand": "빈느(VINNE)", "place": "서울 서대문구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "b70622eb17b8516c", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "마비스 팝업", "summary": "마비스(marvis) · 서울 성동구 · 서울 성동구 아차산로 120 · #RefreshYourSenses #MarvelYourRoutine #마비스치약 #마비스팝업 #성수팝업 #Marvis #성수 #마비스", "url": "https://popply.co.kr/popup/6384", "startAt": "2026-10-28T00:00:00+09:00", "endAt": "2026-11-01T23:59:00+09:00", "brand": "마비스(marvis)", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "da829f2a70bae12f", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "예쁘다 팝업", "summary": "예쁘다 · 서울 성동구 · 서울 성동구 아차산로 116 · #성수팝업 #뷰티팝업 #뷰티 #예쁘다팝업 #Yepoda", "url": "https://popply.co.kr/popup/5048", "startAt": "2026-05-30T00:00:00+09:00", "endAt": "2026-12-31T23:59:00+09:00", "brand": "예쁘다", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "0389bc86331f3c7b", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "탄산마그네슘 팝업", "summary": "탄산마그네슘 · 서울 영등포구 · 서울 영등포구 영중로 15 · #탄산마그네슘 #tansanmagnesium #패션 #패션팝업 #영등포타임스퀘어 #영등포타임스퀘어팝업 #영등포팝업 #영등포", "url": "https://popply.co.kr/popup/6047", "startAt": "2026-09-17T00:00:00+09:00", "endAt": "2026-11-25T23:59:00+09:00", "brand": "탄산마그네슘", "place": "서울 영등포구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "b9666ad146ac38fa", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "퀴진케이 팝업 : 빌롱", "summary": "퀴진케이 · 서울 강남구 · 서울 강남구 삼성로85길 34 · #퀴진케이 #Belong #푸드 #푸드팝업 #셰프신용우 #선릉역 #선릉역팝업", "url": "https://popply.co.kr/popup/6296", "startAt": "2026-10-07T00:00:00+09:00", "endAt": "2027-04-10T23:59:00+09:00", "brand": "퀴진케이", "place": "서울 강남구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "7432e4270a4ef426", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "더셀랩 팝업", "summary": "더셀랩(THE CELL LAB) · 서울 서대문구 · 서울 서대문구 신촌로 83 · #더셀랩 #THECELLLAB #현대백화점신촌점 #신촌팝업 #유플렉스 #팝업스토어 #스킨케어 #뷰티", "url": "https://popply.co.kr/popup/6428", "startAt": "2026-10-16T00:00:00+09:00", "endAt": "2026-11-15T23:59:00+09:00", "brand": "더셀랩(THE CELL LAB)", "place": "서울 서대문구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "a1fe25174752dbbf", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "메디큐브X조앤프렌즈 팝업", "summary": "메디큐브 · 서울 성동구 · 서울 성동구 성수이로7길 40 · #조앤프렌즈 #메디큐브 #조앤프렌즈X메디큐브 #medicube #zonfriends #medicubeXzonfriends #성수팝업 #성수역", "url": "https://popply.co.kr/popup/5172", "startAt": "2026-06-08T00:00:00+09:00", "endAt": "2026-12-31T23:59:00+09:00", "brand": "메디큐브", "place": "서울 성동구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "f18d8e4b1051790b", "source": "popply", "sourceLabel": "팝업스토어", "kind": "popup", "title": "메디큐브 X 포에버체리 팝업", "summary": "메디큐브 · 서울 중구 · 서울 중구 퇴계로 77 · #medicube #메디큐브X포에버체리 #메디큐브 #포에버체리 #forevercherry #medicubebrush #장원영 #jangwonyoung", "url": "https://popply.co.kr/popup/5522", "startAt": "2026-07-24T00:00:00+09:00", "endAt": "2026-11-30T23:59:00+09:00", "brand": "메디큐브", "place": "서울 중구", "score": 8, "matched": ["팝업스토어", "팝업"]}, {"id": "24e033bc5eab764f", "source": "gnews", "sourceLabel": "뉴스·파이낸스투데이", "kind": "popup", "title": "LG전자 베스트샵 현대충청점, 팝업스토어 오픈 기념 특별행사 진행", "summary": "LG전자 베스트샵 현대충청점, 팝업스토어 오픈 기념 특별행사 진행 파이낸스투데이", "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1vMGxBQmhtNmkzZ3ROeUxVX1hhejJ4cWYwTHhxTEtaTXVDWm14d1NfdVRSSE5kYlpfX21YdUdPVk1lRlVFSHBMU1Z1cFY1N3FwUXFTQm94MklfTk5NNEZMU3phcjNNN3JNQkU5Uw?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 6, "matched": ["팝업스토어", "팝업"]}, {"id": "f8b3f716ad08e1ef", "source": "gnews", "sourceLabel": "뉴스·스포츠경향", "kind": "popup", "title": "에버에이유, 갤러리아 명품관 WEST 팝업스토어 오픈", "summary": "에버에이유, 갤러리아 명품관 WEST 팝업스토어 오픈 스포츠경향", "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFA0VW1tOUpjN19tZnQ3OWNCNkliQ0NsQWNWbFhIMjV1S0c5WUZ4STV6NF90QVNUZ2hpYVZITlNaalNkNkVnMGFFdlc0cE1QWHJ4dE02ZV9XNTVQMU5RamfSAWNBVV95cUxPM0psZmFCeWZDWlVxMlMtVTV1NFdoazBqOUNWNWoteG9kRWhGeHNOcVEzR2hwemhWR1FreU9yNW9hOFh2TlZJQ0RtcGNmc0RTVGFLb0t5dkZMb1dyclU3dk9SMnc?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 6, "matched": ["팝업스토어", "팝업"]}, {"id": "36daf21483d2bbfe", "source": "gnews", "sourceLabel": "뉴스·서울신문", "kind": "popup", "title": "부산 지역 특화쌀 활용 미식 팝업스토어 ‘황금예찬 정미소’ 오픈", "summary": "부산 지역 특화쌀 활용 미식 팝업스토어 ‘황금예찬 정미소’ 오픈 서울신문", "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBNMTlNSU9HNFJ1eTRkWlhuQ1FJcHdDazN3RjhGQlVEYjhabno3LUhsV3RxLS1hdTllSjJTajdDWkI3UFcteEszU0N1eDIyc3lDWDJPM0xEZFBTazBOVEVycmRjWU5kR0wxdlh3RU1uZw?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 6, "matched": ["팝업스토어", "팝업"]}, {"id": "66b976cff2b77b78", "source": "gnews", "sourceLabel": "뉴스·대전시티저널", "kind": "popup", "title": "대전 신세계 '스턴건 김동현' 공식 굿즈 판매 팝업 스토어 오픈", "summary": "대전 신세계 '스턴건 김동현' 공식 굿즈 판매 팝업 스토어 오픈 대전시티저널", "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFAydkpuOUR1OXhYNFhaNloxZmJNUTcwU2N5WFJsTGZ2dnByOGhtTjZ6c3E1bnprNmtLM0ZMTWdHVHp3WXdkbDRKUEZCSkRLY2Z3QjVtd3pXdUtFbEt3d0d5Q3VfRjE4Zw?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 5, "matched": ["굿즈", "팝업"]}, {"id": "be6ebe95f10a924e", "source": "gnews", "sourceLabel": "뉴스·일간스포츠", "kind": "popup", "title": "터치드, 패션 브랜드 협업도 통했다…팝업스토어 오픈 하루만에 ‘품절’", "summary": "터치드, 패션 브랜드 협업도 통했다…팝업스토어 오픈 하루만에 ‘품절’ 일간스포츠", "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5lVUI4OTlGblhIQ3Y2SWNGbnNfVmU4WjI3MHlubGlrSHd5RGxPd0N1RjZnVkRBbjh3SEV3MjMyNGlYX3VueklaT1ZtNXlUSXVDYTQ0UklON0hpRGc?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 8, "matched": ["협업", "팝업스토어", "팝업"]}, {"id": "d6ed8b8a9eed4671", "source": "gnews", "sourceLabel": "뉴스·OSEN", "kind": "popup", "title": "보이넥스트도어, 단잠 즐기는 쁘넥도..팝업스토어 오픈", "summary": "보이넥스트도어, 단잠 즐기는 쁘넥도..팝업스토어 오픈 OSEN", "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5Jb0g0ZHlnX0kwSXdCektqaTc2X09NdmpOU1JVYWlUUDFxeHQ5SlhQZG9GQ05WWkUtS1MtUWR2eDk2aU9LRVhDOEVhbmU4VEFZWU5HMA?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 6, "matched": ["팝업스토어", "팝업"]}, {"id": "1af1dddd8d522c2f", "source": "gnews", "sourceLabel": "뉴스·비즈엔터", "kind": "popup", "title": "강예원, 뷰티 브랜드 공동 개발자 변신…팝업스토어 오픈", "summary": "강예원, 뷰티 브랜드 공동 개발자 변신…팝업스토어 오픈 비즈엔터", "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9BNk03OUowT0VMZEttUGhzcXdxbjQ5cmdlUkpMYUpURVZ2T2VQeFBvYWk0aWtYcW52aWdJLWQ3b0VnbnVnZGRHZDc0QzFpZFp5a0V2TDJB?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 6, "matched": ["팝업스토어", "팝업"]}, {"id": "02fd196e5135f8aa", "source": "gnews", "sourceLabel": "뉴스·ER 이코노믹리뷰", "kind": "draw", "title": "[포토] 미션 4개 완료하면 ‘전원 당첨’…크런치롤 럭키드로우", "summary": "[포토] 미션 4개 완료하면 ‘전원 당첨’…크런치롤 럭키드로우 ER 이코노믹리뷰", "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9Bd0xVcTdJUHdLU0wzZFRPbGw3bW9ualRKblREMlhXSEhCR0haejA4TFZ0X2pSS0hTNndwOXdkcFQ4WTBCNDFYZG5VT003RjJ5cWR3TWFlQm90RGNETWktZVdMREFwMEF5ZGF6ZA?oc=5", "startAt": null, "endAt": null, "brand": "", "place": "", "score": 10, "matched": ["롤", "드로우"]}];
+    // 🎯 글로벌 & 국내 실전 발매·드로우 레이더 (미국·중국·일본·한국 탑셀러 채널 엄선)
+    const DRAW_RADAR_ITEMS = [
+      // 🇺🇸 미국 / 글로벌
+      {
+        id: "us-snkrs-travis-jordan",
+        region: "us",
+        regionBadge: "🇺🇸 미국",
+        source: "nike-us",
+        sourceLabel: "나이키 SNKRS US",
+        kind: "draw",
+        title: "트래비스 스캇 x 에어 조던 1 로우 OG 'Velvet Brown'",
+        summary: "미국 SNKRS 글로벌 래플 1위 · 정가 $150 (~20.7만 원) ➔ eBay 실거래 체결 $480.00 (~66.2만 원) · 예상 순마진 +40만 원 이상",
+        url: "https://www.soleretriever.com/raffles",
+        startAt: "2026-11-04T10:00:00+09:00",
+        endAt: "2026-11-04T10:30:00+09:00",
+        brand: "Nike x Travis Scott",
+        place: "글로벌 나이키 래플 / Sole Retriever",
+        score: 10,
+        matched: ["나이키", "조던", "트래비스스캇", "드로우", "미국"],
+        buyKrw: 207000,
+        soldUsd: 480.0,
+        ship: "shoes"
+      },
+      {
+        id: "us-pokemon-prismatic",
+        region: "us",
+        regionBadge: "🇺🇸 미국",
+        source: "pokebeach",
+        sourceLabel: "PokeBeach / 포켓몬센터 US",
+        kind: "tcg",
+        title: "포켓몬 TCG 전세계 화제작 'Prismatic Evolutions' ETB 사전예약",
+        summary: "이브이 진화체 전원 SAR 수록 영문판 대작 · 미국 정가 $54.99 ➔ 이베이 사전 예약 체결 $140.00 (~19.3만 원) · 글로벌 오더 집중",
+        url: "https://www.pokebeach.com/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-11-25T23:59:00+09:00",
+        brand: "Pokemon TCG English",
+        place: "미국 공식 포켓몬센터",
+        score: 10,
+        matched: ["포켓몬", "TCG", "이브이", "미국", "한정판"],
+        buyKrw: 76000,
+        soldUsd: 140.0,
+        ship: "shoes"
+      },
+      {
+        id: "us-supreme-boxlogo",
+        region: "us",
+        regionBadge: "🇺🇸 미국",
+        source: "hypebeast",
+        sourceLabel: "Hypebeast / Supreme",
+        kind: "fashion",
+        title: "슈프림 (Supreme) 2026 F/W 박스로고 후디 리미티드 드랍",
+        summary: "미국 슈프림 공홈 매주 목요일 드랍 · 발매 정가 $168 (~23.1만 원) ➔ eBay $320.00 체결 · 당일 완판 보장 효자템",
+        url: "https://hypebeast.com/drops",
+        startAt: "2026-11-06T00:00:00+09:00",
+        endAt: "2026-11-06T01:00:00+09:00",
+        brand: "Supreme New York",
+        place: "슈프림 공홈 (미국/글로벌)",
+        score: 9,
+        matched: ["슈프림", "스트릿", "박스로고", "미국"],
+        buyKrw: 231000,
+        soldUsd: 320.0,
+        ship: "clothing"
+      },
+      {
+        id: "us-kith-samba",
+        region: "us",
+        regionBadge: "🇺🇸 미국",
+        source: "soleretriever",
+        sourceLabel: "Sole Retriever",
+        kind: "draw",
+        title: "KITH x 아디다스 삼바 오리지널 클래식 글로벌 래플",
+        summary: "KITH 공식 앱 글로벌 추첨 · 정가 $140 ➔ StockX / eBay $265.00 체결 · 클래식 컬러웨이 인기",
+        url: "https://www.soleretriever.com/raffles",
+        startAt: "2026-11-03T11:00:00+09:00",
+        endAt: "2026-11-04T12:00:00+09:00",
+        brand: "KITH x Adidas",
+        place: "KITH 공식 앱",
+        score: 9,
+        matched: ["KITH", "아디다스", "삼바", "래플"],
+        buyKrw: 193000,
+        soldUsd: 265.0,
+        ship: "shoes"
+      },
+
+      // 🇨🇳 중국 / 중화권
+      {
+        id: "cn-popmart-labubu-v2",
+        region: "cn",
+        regionBadge: "🇨🇳 중국",
+        source: "poizon",
+        sourceLabel: "得物 (Poizon) / 팝마트",
+        kind: "toy",
+        title: "팝마트 x 라부부 (LABUBU) 테이스티 마카롱 V2 블라인드박스 셋",
+        summary: "중국·동남아·유럽 전량 품절 대란템 · 중국 정가 약 9.9만 원(6개입) ➔ eBay 세트 $420.00 (~58만 원) · 단품 $85 체결",
+        url: "https://www.poizon.com/",
+        startAt: "2026-11-02T10:00:00+09:00",
+        endAt: "2026-11-15T23:59:00+09:00",
+        brand: "POPMART x LABUBU",
+        place: "팝마트 공식 / 得物",
+        score: 10,
+        matched: ["라부부", "LABUBU", "팝마트", "블라인드박스", "중국"],
+        buyKrw: 99000,
+        soldUsd: 420.0,
+        ship: "clothing"
+      },
+      {
+        id: "cn-tamburins-popup",
+        region: "cn",
+        regionBadge: "🇨🇳 중국",
+        source: "red",
+        sourceLabel: "小红书 (샤오홍슈) 바이럴 1위",
+        kind: "popup",
+        title: "탬버린즈 성수 플래그십 에그 향수 & 립밤 홀리데이 기프트",
+        summary: "샤오홍슈 중국인 오픈런 필수 코스 · 국내 정가 45,000원 ➔ eBay 역수출 $92.00 · 파손방지 에어캡 포장 K-Packet 고수익품",
+        url: "https://www.xiaohongshu.com/",
+        startAt: "2026-11-01T11:00:00+09:00",
+        endAt: "2026-11-30T21:00:00+09:00",
+        brand: "Tamburins Seongsu",
+        place: "서울 성동구 탬버린즈 성수",
+        score: 9,
+        matched: ["탬버린즈", "성수", "향수", "샤오홍슈", "중국"],
+        buyKrw: 45000,
+        soldUsd: 92.0,
+        ship: "card"
+      },
+      {
+        id: "cn-gentlemonster-margiela",
+        region: "cn",
+        regionBadge: "🇨🇳 중국",
+        source: "poizon",
+        sourceLabel: "得物 (Poizon) 리셀 랭킹",
+        kind: "fashion",
+        title: "젠틀몬스터 x 메종 마르지엘라 콜라보 선글라스 리스탁",
+        summary: "중국 포이즌(Poizon) 리셀가 2,800위안 (~54만 원) 급등 · 국내 정가 36.8만 원 ➔ eBay $380.00 (~52.4만 원) 즉시 수출",
+        url: "https://www.poizon.com/",
+        startAt: "2026-11-05T12:00:00+09:00",
+        endAt: "2026-11-05T20:00:00+09:00",
+        brand: "Gentle Monster x Margiela",
+        place: "젠틀몬스터 공식몰 / 백화점",
+        score: 9,
+        matched: ["젠틀몬스터", "마르지엘라", "선글라스", "중국"],
+        buyKrw: 368000,
+        soldUsd: 380.0,
+        ship: "clothing"
+      },
+
+      // 🇯🇵 일본 / 엔저 역소싱
+      {
+        id: "jp-pokemon-terastal",
+        region: "jp",
+        regionBadge: "🇯🇵 일본",
+        source: "snkrdunk",
+        sourceLabel: "SNKRDUNK / 포켓몬센터 JP",
+        kind: "tcg",
+        title: "포켓몬 카드 일본 하이클래스팩 '테라스탈 페스티벌 ex' 추첨 발매",
+        summary: "일본 1위 스니커덩크 거래량 폭발 · 일본 정가 5,500엔 (~5.1만 원) ➔ eBay 북미 셀러 $125.00 (~17.2만 원) 거래 체결",
+        url: "https://snkrdunk.com/",
+        startAt: "2026-11-03T14:00:00+09:00",
+        endAt: "2026-11-10T23:59:00+09:00",
+        brand: "Pokemon Center Japan",
+        place: "일본 포켓몬센터 온라인 추첨",
+        score: 10,
+        matched: ["포켓몬", "테라스탈", "일본", "TCG", "스니커덩크"],
+        buyKrw: 51000,
+        soldUsd: 125.0,
+        ship: "card"
+      },
+      {
+        id: "jp-verdy-dunk",
+        region: "jp",
+        regionBadge: "🇯🇵 일본",
+        source: "snkrdunk",
+        sourceLabel: "SNKRDUNK 리셀 1위",
+        kind: "draw",
+        title: "나이키 SB 덩크 로우 x 베르디 (Wasted Youth / Verdy) 한정판",
+        summary: "일본 스니커덩크 최고 프리미엄 신발 · 발매가 16,500엔 (~15.2만 원) ➔ eBay $290.00 (~40만 원) 안착",
+        url: "https://snkrdunk.com/",
+        startAt: "2026-11-04T09:00:00+09:00",
+        endAt: "2026-11-04T12:00:00+09:00",
+        brand: "Nike SB x Verdy",
+        place: "일본 SNKRS / Verdy 공식",
+        score: 9,
+        matched: ["나이키", "SB덩크", "베르디", "일본", "스니커덩크"],
+        buyKrw: 152000,
+        soldUsd: 290.0,
+        ship: "shoes"
+      },
+      {
+        id: "jp-bandai-metalbuild",
+        region: "jp",
+        regionBadge: "🇯🇵 일본",
+        source: "pbandai",
+        sourceLabel: "프리미엄 반다이 JP",
+        kind: "toy",
+        title: "메탈빌드 스트라이크 프리덤 건담 빛의 날개 소울블루 한정 추첨",
+        summary: "글로벌 키덜트 수집 1순위 · 정가 33,000엔 (~30.5만 원) ➔ eBay 완제품 $480.00 (~66.2만 원) 초고마진",
+        url: "https://p-bandai.jp/",
+        startAt: "2026-11-02T16:00:00+09:00",
+        endAt: "2026-11-08T23:59:00+09:00",
+        brand: "Bandai Metal Build",
+        place: "프리미엄 반다이 재팬",
+        score: 9,
+        matched: ["반다이", "건담", "메탈빌드", "피규어", "일본"],
+        buyKrw: 305000,
+        soldUsd: 480.0,
+        ship: "shoes"
+      },
+
+      // 🇰🇷 한국 한정판 / 팝업 / 영화관 / K-패션
+      {
+        id: "kr-popup-pokemon-seoul",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "popply",
+        sourceLabel: "포켓몬 코리아",
+        kind: "popup",
+        title: "2026 포켓몬 팝업스토어 인 서울 성수 (한복 피카츄 한정판)",
+        summary: "성수동 팝업 단독 · 한복 피카츄 LED 라이트 키링 (2.5만 ➔ eBay $115.00) & 대형 봉제인형 ($450.00) · 해외 주문 폭주",
+        url: "https://pokemonkorea.co.kr/",
+        startAt: "2026-11-01T10:00:00+09:00",
+        endAt: "2026-11-20T21:00:00+09:00",
+        brand: "Pokemon Korea",
+        place: "서울 성동구 성수동 팝업",
+        score: 10,
+        matched: ["포켓몬", "피카츄", "팝업", "성수", "키링", "한정판"],
+        buyKrw: 45000,
+        soldUsd: 115.0,
+        ship: "card"
+      },
+      {
+        id: "kr-kream-samba-pharrell",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "kream",
+        sourceLabel: "KREAM 래플",
+        kind: "draw",
+        title: "아디다스 삼바 OG x 퍼렐 윌리엄스 휴먼레이스 한정 래플",
+        summary: "KREAM 단독 서프라이즈 드로우 · 발매가 159,000원 ➔ eBay 체결가 $260.00 (~35.8만 원) · eGS 배송 순마진 +18만 원",
+        url: "https://kream.co.kr/",
+        startAt: "2026-11-03T12:00:00+09:00",
+        endAt: "2026-11-03T14:00:00+09:00",
+        brand: "Adidas x Pharrell",
+        place: "KREAM 앱 래플",
+        score: 9,
+        matched: ["아디다스", "삼바", "KREAM", "래플", "드로우"],
+        buyKrw: 159000,
+        soldUsd: 260.0,
+        ship: "shoes"
+      },
+      {
+        id: "kr-musinsa-asics-andersson",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "musinsa",
+        sourceLabel: "무신사 드로우",
+        kind: "draw",
+        title: "아식스 젤 카야노 14 x 앤더슨벨 한정판 회원 래플",
+        summary: "무신사 단독 래플 · 발매가 219,000원 ➔ eBay 체결 $340.00 (~46.9만 원) · 글로벌 프리미엄 스니커즈",
+        url: "https://www.musinsa.com/raffle",
+        startAt: "2026-11-05T11:00:00+09:00",
+        endAt: "2026-11-05T13:00:00+09:00",
+        brand: "Asics x Andersson Bell",
+        place: "무신사 래플창",
+        score: 9,
+        matched: ["무신사", "아식스", "앤더슨벨", "래플"],
+        buyKrw: 219000,
+        soldUsd: 340.0,
+        ship: "shoes"
+      },
+      {
+        id: "kr-cinema-megabox-ticket",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "cinema",
+        sourceLabel: "메가박스 MD",
+        kind: "goods",
+        title: "메가박스 애니메이션 극장판 오리지널 티켓 세트 한정 증정",
+        summary: "메가박스 전국 선착순 증정 · 영화 관람 15,000원 ➔ eBay 양덕 체결 $52.00 · K-Packet 8,980원 발송 순마진 +36,400원",
+        url: "https://www.megabox.co.kr/event",
+        startAt: "2026-10-30T00:00:00+09:00",
+        endAt: "2026-11-15T23:59:00+09:00",
+        brand: "Megabox",
+        place: "메가박스 전국 극장",
+        score: 9,
+        matched: ["메가박스", "오리지널티켓", "굿즈", "특전"],
+        buyKrw: 15000,
+        soldUsd: 52.0,
+        ship: "card"
+      },
+      {
+        id: "kr-cinema-cgv-ttt",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "cinema",
+        sourceLabel: "CGV 영화관 MD",
+        kind: "goods",
+        title: "CGV That's The Ticket (TTT) 넘버링 컬렉션 특전 런칭",
+        summary: "CGV 단독 한정 TTT 티켓 굿즈 · 소싱가 16,000원 ➔ eBay $55.00 · 하드보드 티켓북 케이스 포함 인기 수출품",
+        url: "https://m.cgv.co.kr/WebApp/Event/EventList.aspx",
+        startAt: "2026-10-28T00:00:00+09:00",
+        endAt: "2026-11-10T23:59:00+09:00",
+        brand: "CGV",
+        place: "CGV 직영점",
+        score: 9,
+        matched: ["CGV", "TTT", "티켓", "굿즈", "특전"],
+        buyKrw: 16000,
+        soldUsd: 55.0,
+        ship: "card"
+      },
+      {
+        id: "kr-cinema-lotte-artcard",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "cinema",
+        sourceLabel: "롯데시네마 MD",
+        kind: "goods",
+        title: "롯데시네마 시그니처 아트카드 No.150 한정 넘버링 배포",
+        summary: "롯데시네마 관람객 한정 아트카드 · 소싱가 15,000원 ➔ eBay 체결 $48.00 · 탑로더 안전 포장 K-Packet 즉시 발송",
+        url: "https://www.lottecinema.co.kr/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-11-14T23:59:00+09:00",
+        brand: "Lotte Cinema",
+        place: "롯데시네마 전국",
+        score: 8,
+        matched: ["롯데시네마", "아트카드", "특전", "굿즈"],
+        buyKrw: 15000,
+        soldUsd: 48.0,
+        ship: "card"
+      },
+      {
+        id: "kr-starbucks-stanley",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "starbucks",
+        sourceLabel: "스타벅스 코리아",
+        kind: "starbucks",
+        title: "스타벅스 코리아 x 스탠리 한정 보온 스트로 텀블러 591ml",
+        summary: "전국 스타벅스 매장 및 SSG 공식몰 · 정가 39,000원 ➔ eBay 체결 $78.00 · K-Packet 발송 순마진 +35,200원",
+        url: "https://www.starbucks.co.kr/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-11-30T23:59:00+09:00",
+        brand: "Starbucks Korea",
+        place: "스타벅스 전국 매장 / SSG",
+        score: 9,
+        matched: ["스타벅스", "스탠리", "텀블러", "한정판"],
+        buyKrw: 39000,
+        soldUsd: 78.0,
+        ship: "shoes"
+      },
+      {
+        id: "kr-starbucks-frequency",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "starbucks",
+        sourceLabel: "스타벅스 코리아",
+        kind: "starbucks",
+        title: "2026 스타벅스 윈터 e-프리퀀시 증정품 캘린더 & 램프 MD",
+        summary: "스타벅스 코리아 겨울 프리퀀시 시작 · 매년 연말 해외 역직구 및 당근 미개봉 매물 프리미엄 거래 활발 ($70 체결)",
+        url: "https://www.starbucks.co.kr/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-12-31T23:59:00+09:00",
+        brand: "Starbucks Korea",
+        place: "스타벅스 앱 / 전국 매장",
+        score: 8,
+        matched: ["스타벅스", "프리퀀시", "MD", "굿즈"],
+        buyKrw: 30000,
+        soldUsd: 70.0,
+        ship: "clothing"
+      },
+      {
+        id: "kr-oliveyoung-awards",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "oliveyoung",
+        sourceLabel: "올리브영 단독",
+        kind: "fashion",
+        title: "2026 올리브영 어워즈 1위 에디션 한정 기획세트 (K-뷰티)",
+        summary: "조선미녀/아누아 한정 기획세트 · 정가 28,000원 ➔ eBay 북미/유럽 직배송 $55.00 체결 · 사모님 추천 K-뷰티",
+        url: "https://www.oliveyoung.co.kr/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-11-30T23:59:00+09:00",
+        brand: "Olive Young",
+        place: "올리브영 공식몰 / 매장",
+        score: 9,
+        matched: ["올리브영", "K뷰티", "화장품", "어워즈"],
+        buyKrw: 28000,
+        soldUsd: 55.0,
+        ship: "clothing"
+      },
+      {
+        id: "kr-popup-thehyundai-newjeans",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "popply",
+        sourceLabel: "더현대 서울 팝업",
+        kind: "popup",
+        title: "더현대 서울 뉴진스 팝업스토어 한정 파워퍼프걸 키링 MD",
+        summary: "더현대 지하 2층 아이코닉존 · 현장 정가 22,000원 ➔ eBay 체결 $58.00 · K-POP 글로벌 팬덤 고정 수요",
+        url: "https://popply.co.kr/",
+        startAt: "2026-11-02T10:30:00+09:00",
+        endAt: "2026-11-18T20:00:00+09:00",
+        brand: "NewJeans x The Hyundai",
+        place: "서울 여의도 더현대 서울",
+        score: 9,
+        matched: ["뉴진스", "더현대", "팝업", "키링", "KPOP"],
+        buyKrw: 22000,
+        soldUsd: 58.0,
+        ship: "card"
+      },
+      {
+        id: "kr-kpop-ive-lightstick",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "starship",
+        sourceLabel: "스타쉽 공식 / 콘서트 현장",
+        kind: "goods",
+        title: "아이브 (IVE) 공식 응원봉 Ver.2 스페셜 콘서트 에디션",
+        summary: "공식 사입가 45,000원 ➔ eBay $68.00 체결 · 상자 포장 eGS Standard 7,900원 발송 순마진 +2.1만 원",
+        url: "https://www.starship-square.com/",
+        startAt: "2026-11-01T00:00:00+09:00",
+        endAt: "2026-11-20T23:59:00+09:00",
+        brand: "IVE Official",
+        place: "스타쉽스퀘어 / 콘서트장",
+        score: 8,
+        matched: ["아이브", "응원봉", "KPOP", "굿즈"],
+        buyKrw: 45000,
+        soldUsd: 68.0,
+        ship: "clothing"
+      },
+      {
+        id: "kr-popup-seongsu-marithe",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "popply",
+        sourceLabel: "성수동 플래그십",
+        kind: "popup",
+        title: "마리떼 프랑소와 저버 성수 플래그십 한정 베레모 & 클래식 볼캡",
+        summary: "고윤정 착장 바이럴 · 성수 한정 패키지 정가 39,000원 ➔ eBay $75.00 체결 · K-패션 해외 바이어 선호",
+        url: "https://popply.co.kr/",
+        startAt: "2026-11-01T11:00:00+09:00",
+        endAt: "2026-11-30T21:00:00+09:00",
+        brand: "Marithe Francois Girbaud",
+        place: "서울 성동구 성수동 매장",
+        score: 8,
+        matched: ["마리떼", "성수", "볼캡", "패션", "K패션"],
+        buyKrw: 39000,
+        soldUsd: 75.0,
+        ship: "clothing"
+      },
+      {
+        id: "kr-lol-t1-worlds",
+        region: "kr",
+        regionBadge: "🇰🇷 한국",
+        source: "t1",
+        sourceLabel: "T1 공식 스토어",
+        kind: "goods",
+        title: "T1 롤드컵 우승 기념 4스타 리미티드 공식 유니폼 저지",
+        summary: "T1 공홈 사전예약 · 정가 129,000원 ➔ eBay 글로벌 e스포츠 팬덤 체결 $240.00 (~33.1만 원) · 초고회전율",
+        url: "https://shop-t1.gg/",
+        startAt: "2026-11-01T12:00:00+09:00",
+        endAt: "2026-11-15T23:59:00+09:00",
+        brand: "T1 Esports",
+        place: "T1 공식 온라인 스토어",
+        score: 10,
+        matched: ["T1", "페이커", "롤", "유니폼", "굿즈"],
+        buyKrw: 129000,
+        soldUsd: 240.0,
+        ship: "clothing"
+      }
+    ];
 
     function dday(iso) {
       if (!iso) return null;
@@ -2301,6 +2876,12 @@
         if (filter === 'fav') {
           const text = (item.title + ' ' + (item.summary || '') + ' ' + (item.matched || []).join(' ')).toLowerCase();
           if (!favKeys.some(k => text.includes(k))) return false;
+        } else if (filter === 'us') {
+          if (item.region !== 'us') return false;
+        } else if (filter === 'cn') {
+          if (item.region !== 'cn') return false;
+        } else if (filter === 'jp') {
+          if (item.region !== 'jp') return false;
         } else if (filter !== 'all') {
           if (item.kind !== filter) return false;
         }
@@ -2332,16 +2913,26 @@
 
         let kindBadge = '';
         if (item.kind === 'draw') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold">🔥 드로우</span>';
-        else if (item.kind === 'popup') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">📍 팝업</span>';
+        else if (item.kind === 'tcg') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">🃏 TCG</span>';
+        else if (item.kind === 'popup') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">📍 팝업</span>';
         else if (item.kind === 'goods') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-bold">🎬 영화관MD</span>';
-        else if (item.kind === 'reserve') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-bold">사전예약</span>';
-        else kindBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">발매</span>';
+        else if (item.kind === 'fashion') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 text-[10px] font-bold">👗 패션</span>';
+        else if (item.kind === 'toy') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-[10px] font-bold">🧸 토이</span>';
+        else if (item.kind === 'starbucks') kindBadge = '<span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">☕ 스타벅스</span>';
+        else kindBadge = '<span class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] font-bold">발매</span>';
+
+        let regionBadge = '';
+        if (item.region === 'us') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[10px] font-bold">🇺🇸 미국</span>';
+        else if (item.region === 'cn') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 text-[10px] font-bold">🇨🇳 중국</span>';
+        else if (item.region === 'jp') regionBadge = '<span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">🇯🇵 일본</span>';
+        else regionBadge = '<span class="px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 text-[10px] font-bold">🇰🇷 한국</span>';
 
         return `
           <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-3.5 space-y-2 hover:border-rose-500/40 transition">
             <div class="flex items-start justify-between gap-2">
               <div class="space-y-1 flex-1">
                 <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
+                  ${regionBadge}
                   ${kindBadge}
                   <span class="text-[10px] text-slate-400 font-medium">${item.sourceLabel || item.brand || '소싱처'}</span>
                   ${badgeHtml}

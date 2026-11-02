@@ -1,5 +1,5 @@
-// BayFlow Service Worker v14 (Verified Bestsellers Feed & 1-Click Margin Linker)
-const CACHE_NAME = 'bayflow-v14';
+// BayFlow Service Worker v15 (Global Radar Hub & Live Custom Price Sourcing)
+const CACHE_NAME = 'bayflow-v15';
 const ASSETS = [
   './',
   './index.html',
