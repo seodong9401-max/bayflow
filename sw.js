@@ -1,5 +1,5 @@
-// BayFlow Service Worker v13 (Center Icon Grid Launcher & Top Seller Spy Hub)
-const CACHE_NAME = 'bayflow-v13';
+// BayFlow Service Worker v14 (Verified Bestsellers Feed & 1-Click Margin Linker)
+const CACHE_NAME = 'bayflow-v14';
 const ASSETS = [
   './',
   './index.html',
