@@ -1,5 +1,5 @@
-// BayFlow Service Worker v12 (Original 5-Grid Navigation & Full All-Categories Hub with Draw Radar Engine)
-const CACHE_NAME = 'bayflow-v12';
+// BayFlow Service Worker v13 (Center Icon Grid Launcher & Top Seller Spy Hub)
+const CACHE_NAME = 'bayflow-v13';
 const ASSETS = [
   './',
   './index.html',

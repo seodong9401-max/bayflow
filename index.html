@@ -1004,22 +1004,151 @@
 
       <!-- 상단 서브 카테고리 전환 바 (원터치 전환) -->
       <div class="bg-slate-900 p-1.5 rounded-2xl border border-slate-800 flex space-x-1 overflow-x-auto no-scrollbar">
-        <button type="button" onclick="switchAllSubTab('sourcing')" id="subtab-btn-sourcing" class="flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-indigo-600 text-white font-bold text-xs transition text-center whitespace-nowrap shadow">
-          🎯 소싱레이더
+        <button type="button" onclick="switchAllSubTab('menu')" id="subtab-btn-menu" class="flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs transition text-center whitespace-nowrap shadow">
+          📱 전체
         </button>
-        <button type="button" onclick="switchAllSubTab('research')" id="subtab-btn-research" class="flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
+        <button type="button" onclick="switchAllSubTab('sourcing')" id="subtab-btn-sourcing" class="flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
+          🎯 소싱
+        </button>
+        <button type="button" onclick="switchAllSubTab('research')" id="subtab-btn-research" class="flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
           📈 리서치
         </button>
-        <button type="button" onclick="switchAllSubTab('draw')" id="subtab-btn-draw" class="flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
-          🚨 발매레이더
+        <button type="button" onclick="switchAllSubTab('draw')" id="subtab-btn-draw" class="flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
+          🚨 발매
         </button>
-        <button type="button" onclick="switchAllSubTab('tools')" id="subtab-btn-tools" class="flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
-          📑 세무/연동
+        <button type="button" onclick="switchAllSubTab('tools')" id="subtab-btn-tools" class="flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap">
+          📑 세무
         </button>
       </div>
 
+      <!-- SUB-TAB 0: 전체 메뉴 아이콘 중앙 선택 허브 (Center Icon Grid Launcher) -->
+      <div id="subtab-view-menu" class="space-y-4 py-2">
+        <div class="text-center space-y-1">
+          <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold">
+            <span>✨</span>
+            <span>BayFlow 전체 메뉴 & 퀵 런처</span>
+          </div>
+          <h3 class="text-base font-black text-slate-100 tracking-tight">원하는 작업을 터치하세요</h3>
+          <p class="text-[11px] text-slate-400">화면 가운데 아이콘을 누르면 해당 기능으로 즉시 이동합니다</p>
+        </div>
+
+        <!-- 중앙 2열 대형 아이콘 그리드 -->
+        <div class="grid grid-cols-2 gap-3">
+          <!-- 1. 소싱레이더 PRO -->
+          <button type="button" onclick="switchAllSubTab('sourcing')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-indigo-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              🎯
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">소싱레이더 PRO</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">8대 사입처 · 마진분석</div>
+            </div>
+          </button>
+
+          <!-- 2. 글로벌 리서치 -->
+          <button type="button" onclick="switchAllSubTab('research')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-sky-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-sky-600/20 border border-sky-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              📈
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">글로벌 리서치</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">12대 테마 베스트셀러</div>
+            </div>
+          </button>
+
+          <!-- 3. 발매·드로우 레이더 -->
+          <button type="button" onclick="switchAllSubTab('draw')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-rose-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-rose-600/20 border border-rose-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              🚨
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">발매·드로우 레이더</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">D-Day 드로우 · 팝업</div>
+            </div>
+          </button>
+
+          <!-- 4. 탑셀러 훔쳐보기 (신규!) -->
+          <button type="button" onclick="openTopSellerModal()" class="p-4 rounded-2xl bg-gradient-to-b from-amber-950/30 via-slate-900 to-slate-950 border border-amber-500/40 hover:border-amber-400 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group relative overflow-hidden">
+            <div class="absolute -right-2 -top-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-black px-2 py-0.5 rounded-bl-lg tracking-tight">HOT</div>
+            <div class="w-12 h-12 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              👑
+            </div>
+            <div>
+              <div class="text-xs font-bold text-amber-300">탑셀러 훔쳐보기</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">한국 톱셀러 판매목록</div>
+            </div>
+          </button>
+
+          <!-- 5. 마진 계산기 -->
+          <button type="button" onclick="switchTab('calculator')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-emerald-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              🧮
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">수익률 마진 계산기</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">20개국 K-Packet 운임</div>
+            </div>
+          </button>
+
+          <!-- 6. 원클릭 리스팅 -->
+          <button type="button" onclick="switchTab('listing')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-indigo-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              ⚡
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">원클릭 리스팅</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">사진 24장 · 80자 SEO</div>
+            </div>
+          </button>
+
+          <!-- 7. 오퍼 & CS -->
+          <button type="button" onclick="switchTab('offers')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-indigo-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              🏷️
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">오퍼 & CS 관리</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">실시간 오퍼 & 카운터</div>
+            </div>
+          </button>
+
+          <!-- 8. 주문 및 송장 -->
+          <button type="button" onclick="switchTab('orders')" class="p-4 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-teal-500/50 flex flex-col items-center text-center space-y-2.5 transition active:scale-95 shadow-lg group">
+            <div class="w-12 h-12 rounded-2xl bg-teal-600/20 border border-teal-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition shadow-inner">
+              📦
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-100">주문 및 송장 발권</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">우체국 API 송장 등록</div>
+            </div>
+          </button>
+
+          <!-- 9. 세무 & 연동 센터 (하단 풀 와이드 배너) -->
+          <button type="button" onclick="switchAllSubTab('tools')" class="col-span-2 p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border border-slate-800 hover:border-indigo-500/50 flex items-center justify-between transition active:scale-95 shadow-lg">
+            <div class="flex items-center space-x-3 text-left">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl">
+                📑
+              </div>
+              <div>
+                <div class="text-xs font-bold text-slate-200">세무 엑셀 & 이베이 API 연동 센터</div>
+                <div class="text-[10px] text-slate-400">국세청 영세율 엑셀 다운로드 · 공식 키셋</div>
+              </div>
+            </div>
+            <span class="text-slate-500 text-sm">➔</span>
+          </button>
+        </div>
+      </div>
+
       <!-- SUB-TAB 1: 소싱 레이더 PRO -->
-      <div id="subtab-view-sourcing" class="space-y-4">
+      <div id="subtab-view-sourcing" class="hidden space-y-4">
+        <!-- 상단 전체메뉴 복귀 바 -->
+        <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800">
+          <button type="button" onclick="switchAllSubTab('menu')" class="flex items-center space-x-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-bold transition active:scale-95">
+            <span>←</span>
+            <span>전체메뉴 아이콘으로</span>
+          </button>
+          <span class="text-[10px] text-slate-500 font-medium">소싱레이더 PRO</span>
+        </div>
         <!-- 피클 AI 통합 크로스 검색엔진 박스 -->
         <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-4 space-y-3">
           <div class="flex items-center space-x-2.5">
@@ -1343,6 +1472,14 @@
 
       <!-- SUB-TAB 2: 글로벌 리서치 허브 (12대 테마) -->
       <div id="subtab-view-research" class="hidden space-y-4">
+        <!-- 상단 전체메뉴 복귀 바 -->
+        <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800">
+          <button type="button" onclick="switchAllSubTab('menu')" class="flex items-center space-x-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-bold transition active:scale-95">
+            <span>←</span>
+            <span>전체메뉴 아이콘으로</span>
+          </button>
+          <span class="text-[10px] text-slate-500 font-medium">글로벌 리서치</span>
+        </div>
         <div class="bg-slate-900/90 rounded-2xl border border-indigo-500/30 p-4 space-y-3">
           <div class="flex items-center space-x-2">
             <div class="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center text-sm font-bold text-indigo-300">
@@ -1423,6 +1560,14 @@
 
       <!-- SUB-TAB 3: 실시간 한정판 발매 레이더 (Draw Radar LIVE) -->
       <div id="subtab-view-draw" class="hidden space-y-3">
+        <!-- 상단 전체메뉴 복귀 바 -->
+        <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800">
+          <button type="button" onclick="switchAllSubTab('menu')" class="flex items-center space-x-1.5 text-xs text-rose-400 hover:text-rose-300 font-bold transition active:scale-95">
+            <span>←</span>
+            <span>전체메뉴 아이콘으로</span>
+          </button>
+          <span class="text-[10px] text-slate-500 font-medium">발매·드로우 레이더</span>
+        </div>
         <!-- 드로우 헤더 & 검색 바 -->
         <div class="bg-slate-900/90 rounded-2xl border border-rose-500/30 p-3.5 space-y-2.5">
           <div class="flex items-center justify-between">
@@ -1488,6 +1633,14 @@
 
       <!-- SUB-TAB 4: 세무 & API 연동 센터 -->
       <div id="subtab-view-tools" class="hidden space-y-3">
+        <!-- 상단 전체메뉴 복귀 바 -->
+        <div class="flex items-center justify-between bg-slate-900/80 px-3 py-2 rounded-xl border border-slate-800">
+          <button type="button" onclick="switchAllSubTab('menu')" class="flex items-center space-x-1.5 text-xs text-slate-400 hover:text-slate-300 font-bold transition active:scale-95">
+            <span>←</span>
+            <span>전체메뉴 아이콘으로</span>
+          </button>
+          <span class="text-[10px] text-slate-500 font-medium">세무 & API 연동</span>
+        </div>
         <!-- 국세청 영세율 엑셀 다운로드 카드 -->
         <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-3">
           <div class="flex items-center space-x-2.5">
@@ -1561,6 +1714,68 @@
   </div>
 
 
+  <!-- 탑셀러 훔쳐보기 모달 (한국 톱셀러 실시간 판매완료 직통 허브) -->
+  <div id="top-seller-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">👑</span>
+          <h3 class="text-sm font-bold text-slate-100">한국 탑셀러 실시간 훔쳐보기</h3>
+        </div>
+        <button onclick="closeTopSellerModal()" class="text-slate-400 hover:text-white text-lg font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-slate-400">한국 우수 탑셀러들이 최근 실제로 판매 완료(Sold)한 실시간 목록으로 직통 연결됩니다.</p>
+      <div class="space-y-2">
+        <a href="https://www.ebay.com/sch/i.html?_nkw=korea+(cap%2C+hat%2C+tshirt%2C+jewelry%2C+keyring)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1" target="_blank" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-pink-500/50 flex items-center justify-between text-xs text-slate-200 transition group">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-lg">👗</span>
+            <div>
+              <div class="font-bold text-pink-400 group-hover:text-pink-300">K-패션 & 연예인 악세사리</div>
+              <div class="text-[10px] text-slate-500">모자, 티셔츠, 키링, 실버 쥬얼리 실거래</div>
+            </div>
+          </div>
+          <span class="text-slate-500 text-xs">➔</span>
+        </a>
+
+        <a href="https://www.ebay.com/sch/i.html?_nkw=kpop+(photocard%2C+md%2C+album%2C+lightstick)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1" target="_blank" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-purple-500/50 flex items-center justify-between text-xs text-slate-200 transition group">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-lg">🎤</span>
+            <div>
+              <div class="font-bold text-purple-400 group-hover:text-purple-300">K-POP 아이돌 굿즈 & 포카</div>
+              <div class="text-[10px] text-slate-500">응원봉, 포토카드, 콘서트 MD 실거래</div>
+            </div>
+          </div>
+          <span class="text-slate-500 text-xs">➔</span>
+        </a>
+
+        <a href="https://www.ebay.com/sch/i.html?_nkw=pokemon+korean+promo&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1" target="_blank" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-amber-500/50 flex items-center justify-between text-xs text-slate-200 transition group">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-lg">🃏</span>
+            <div>
+              <div class="font-bold text-amber-400 group-hover:text-amber-300">포켓몬 카드 & 한국 한정판</div>
+              <div class="text-[10px] text-slate-500">미개봉 프로모, SAR, 한국 배포판 실거래</div>
+            </div>
+          </div>
+          <span class="text-slate-500 text-xs">➔</span>
+        </a>
+
+        <a href="https://www.watchcount.com/" target="_blank" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-sky-500/50 flex items-center justify-between text-xs text-slate-200 transition group">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-lg">🔥</span>
+            <div>
+              <div class="font-bold text-sky-400 group-hover:text-sky-300">WatchCount 실시간 찜 1위</div>
+              <div class="text-[10px] text-slate-500">전세계 바이어 장바구니 1위 실시간 랭킹</div>
+            </div>
+          </div>
+          <span class="text-slate-500 text-xs">➔</span>
+        </a>
+      </div>
+      <button onclick="closeTopSellerModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+        닫기
+      </button>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed top-16 inset-x-4 max-w-sm mx-auto bg-slate-800/95 border border-indigo-500/40 text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-2 transition transform -translate-y-12 opacity-0 pointer-events-none z-50">
     <span class="text-base" id="toast-icon">⚡</span>
@@ -1570,13 +1785,15 @@
   <script>
     // Tab Switching & Navigation Engine (Original 5-Grid & All Hub)
     const MAIN_TABS = ['orders', 'listing', 'offers', 'calculator', 'all'];
-    const ALL_SUB_TABS = ['sourcing', 'research', 'draw', 'tools'];
+    const ALL_SUB_TABS = ['menu', 'sourcing', 'research', 'draw', 'tools'];
     let currentResearchCat = 'pokemon';
     let currentDrawFilter = 'all';
 
     function switchTab(tabId) {
-      // 소싱레이더, 리서치, 발매레이더 호출 시 전체메뉴 탭 내의 서브뷰로 자동 라우팅
-      if (tabId === 'sourcing' || tabId === 'research' || tabId === 'draw' || tabId === 'tools') {
+      if (tabId === 'all') {
+        // 전체메뉴 누르면 기본으로 중앙 아이콘 허브('menu')로 열림
+        switchAllSubTab('menu');
+      } else if (tabId === 'sourcing' || tabId === 'research' || tabId === 'draw' || tabId === 'tools') {
         switchAllSubTab(tabId);
         tabId = 'all';
       }
@@ -1607,7 +1824,7 @@
         if (view) view.classList.add('hidden');
         const btn = document.getElementById('subtab-btn-' + st);
         if (btn) {
-          btn.className = 'flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap';
+          btn.className = 'flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-medium text-xs transition text-center whitespace-nowrap';
         }
       });
 
@@ -1616,7 +1833,7 @@
 
       const activeBtn = document.getElementById('subtab-btn-' + subTabId);
       if (activeBtn) {
-        activeBtn.className = 'flex-1 min-w-[76px] py-2 px-2 rounded-xl bg-indigo-600 text-white font-bold text-xs transition text-center whitespace-nowrap shadow';
+        activeBtn.className = 'flex-1 min-w-[66px] py-2 px-1.5 rounded-xl bg-indigo-600 text-white font-bold text-xs transition text-center whitespace-nowrap shadow';
       }
 
       if (subTabId === 'draw') {
@@ -1624,6 +1841,17 @@
       } else if (subTabId === 'research') {
         selectResearchCategory(currentResearchCat);
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openTopSellerModal() {
+      const m = document.getElementById('top-seller-modal');
+      if (m) m.classList.remove('hidden');
+    }
+    function closeTopSellerModal() {
+      const m = document.getElementById('top-seller-modal');
+      if (m) m.classList.add('hidden');
+    }
     }
 
     // 🎯 드로우 레이더 실전 엔진 (셀러박스 리버싱 데이터 & D-Day 알고리즘)
@@ -2603,7 +2831,7 @@
 
     // PWA Service Worker Registration & Force Update
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=7').then(reg => {
+      navigator.serviceWorker.register('sw.js?v=8').then(reg => {
         reg.update();
       }).catch(err => console.log('SW failed', err));
     }
