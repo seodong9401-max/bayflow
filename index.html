@@ -4017,11 +4017,22 @@
 
       // 로컬 스토리지에 저장된 발급 내역 복원
       const savedBooked = JSON.parse(localStorage.getItem('bayflow_booked_orders') || '{}');
+      // 동욱 님 재테스트 요청 반영: 호주 리자몽 주문은 전산 대기 상태로 초기화
+      if (savedBooked['02-15385-21929'] && savedBooked['02-15385-21929'].tracking) {
+        delete savedBooked['02-15385-21929'];
+        localStorage.setItem('bayflow_booked_orders', JSON.stringify(savedBooked));
+      }
+
       pendingOrders.forEach(o => {
         if (savedBooked[o.orderId]) {
           o.tracking = savedBooked[o.orderId].tracking;
-          o.status = 'BOOKED';
-          o.statusKo = '우체국 접수 완료 (등기번호 발급)';
+          if (savedBooked[o.orderId].status === 'REGISTERED') {
+            o.status = 'REGISTERED';
+            o.statusKo = '우체국 개별등록 완료 (PC 최종 예약 대기)';
+          } else if (o.tracking) {
+            o.status = 'BOOKED';
+            o.statusKo = '우체국 접수 완료 (등기번호 발급)';
+          }
           o.bookedAt = savedBooked[o.orderId].bookedAt;
         }
       });
@@ -4152,9 +4163,11 @@
           const isBooked = !!order.tracking;
           const statusBadge = isBooked
             ? `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center space-x-1"><span>✅</span><span>우체국 접수완료 (등기번호 발급)</span></span>`
-            : (order.status === 'LABEL_PRINTED'
-              ? `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 flex items-center space-x-1"><span>🖨️</span><span>송장 출력 완료 · 발송 준비</span></span>`
-              : `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center space-x-1"><span>⏳</span><span>결제완료 · 배송대기</span></span>`);
+            : (order.status === 'REGISTERED'
+              ? `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 flex items-center space-x-1"><span>📮</span><span>우체국 개별등록 완료 (PC 최종 예약 대기)</span></span>`
+              : (order.status === 'LABEL_PRINTED'
+                ? `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 flex items-center space-x-1"><span>🖨️</span><span>송장 출력 완료 · 발송 준비</span></span>`
+                : `<span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center space-x-1"><span>⏳</span><span>결제완료 · 배송대기</span></span>`));
 
           const card = document.createElement('div');
           card.className = "bg-slate-900 rounded-2xl border border-slate-800 p-4 shadow-xl space-y-3";
