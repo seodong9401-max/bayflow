@@ -1,5 +1,5 @@
-// BayFlow Service Worker v41 (30m Auto Updater & Super Margin Live Radar)
-const CACHE_NAME = 'bayflow-v41';
+// BayFlow Service Worker v42 (Instant One-Click Refresh Buttons Everywhere)
+const CACHE_NAME = 'bayflow-v42';
 const ASSETS = [
   './',
   './index.html',

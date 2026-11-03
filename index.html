@@ -62,10 +62,9 @@
       </div>
     </div>
     <div class="flex items-center space-x-2">
-      <button onclick="refreshData()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition active:scale-95" title="동기화">
-        <svg id="sync-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-        </svg>
+      <button onclick="refreshData()" class="px-2.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-1.5 shadow transition active:scale-95" title="전체 데이터 실시간 새로고침">
+        <span id="sync-icon">🔄</span>
+        <span>새로고침</span>
       </button>
       <div class="text-right">
         <div class="text-[10px] text-slate-400">정산 예정</div>
@@ -935,12 +934,12 @@
               </div>
               <div class="flex items-center space-x-1.5">
                 <button type="button" onclick="shuffleVerifiedItems()" class="px-2.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-[11px] flex items-center space-x-1 border border-amber-500/40 transition active:scale-95 shadow">
-                  <span>🔄</span>
-                  <span>다른 추천 보기</span>
+                  <span>🎲</span>
+                  <span>랜덤 섞기</span>
                 </button>
-                <button type="button" onclick="fetchVerifiedItemsCloud()" class="px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] flex items-center space-x-1 transition active:scale-95 shadow">
-                  <span>⚡</span>
-                  <span>동기화</span>
+                <button type="button" onclick="refreshData()" class="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] flex items-center space-x-1 transition active:scale-95 shadow">
+                  <span>🔄</span>
+                  <span>픽 새로고침</span>
                 </button>
               </div>
             </div>
@@ -1299,18 +1298,23 @@
           </button>
           <span class="text-[10px] text-slate-500 font-medium">발매·드로우 레이더</span>
         </div>
-        <!-- 드로우 헤더 & 검색 바 -->
-        <!-- 드로우 헤더 & 글로벌 소식통 & 검색 바 -->
+        <!-- 드로우 헤더 & 새로고침 바 -->
         <div class="bg-slate-900/90 rounded-2xl border border-rose-500/30 p-3.5 space-y-3">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center space-x-2">
               <span class="text-base">🎯</span>
               <div>
                 <h3 class="text-xs font-bold text-slate-100">글로벌 & 국내 실시간 발매·드로우·팝업 레이더</h3>
-                <p class="text-[10px] text-slate-400">미국 Sole Retriever · 중국 得物(Poizon) · 일본 SNKRDUNK · 한국 KREAM·성수팝업</p>
+                <p class="text-[10px] text-slate-400">미국 Sole Retriever · 중국 得物 · 일본 SNKRDUNK · 한국 KREAM·성수팝업</p>
               </div>
             </div>
-            <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">23건</span>
+            <div class="flex items-center space-x-2">
+              <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">1,631건</span>
+              <button type="button" onclick="refreshRadarLive()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-white font-black text-xs flex items-center space-x-1 shadow transition active:scale-95">
+                <span id="radar-refresh-spinner">🔄</span>
+                <span>뉴스 새로고침</span>
+              </button>
+            </div>
           </div>
 
           <!-- 🌐 글로벌 상위셀러 직통 뉴스 채널 4대 허브 -->
@@ -1430,9 +1434,13 @@
             </div>
           </div>
 
-          <!-- 실시간 검색 입력 -->
-          <div class="relative">
-            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (연예인, 뉴진스, BTS, 패션, 산산기어, 악세사리, 키링, 팝업, 드로우, 뉴스...)" class="w-full bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
+          <!-- 실시간 검색 입력 & 새로고침 버튼 -->
+          <div class="flex space-x-1.5">
+            <input type="search" id="draw-search-input" oninput="renderDrawEvents()" placeholder="검색 (연예인, 뉴진스, BTS, 패션, 산산기어, 악세사리, 키링, 팝업, 드로우, 뉴스...)" class="flex-1 bg-slate-950 text-xs text-slate-100 placeholder-slate-500 border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500">
+            <button type="button" onclick="refreshRadarLive()" class="px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs whitespace-nowrap flex items-center space-x-1 transition active:scale-95 shadow">
+              <span>🔄</span>
+              <span>새로고침</span>
+            </button>
           </div>
 
           <!-- 카테고리 필터 바 (텍스트 줄바꿈 완전 차단) -->
@@ -4150,7 +4158,19 @@
       } catch (e) {
         console.warn('draw radar remote load fallback to builtin', e);
       }
+      const countElem = document.getElementById('draw-items-count');
+      if (countElem) countElem.innerText = DRAW_RADAR_ITEMS.length.toLocaleString() + '건';
       renderDrawEvents();
+    }
+
+    async function refreshRadarLive() {
+      const sp = document.getElementById('radar-refresh-spinner');
+      if (sp) sp.classList.add('animate-spin');
+      await loadDrawRadarData();
+      setTimeout(() => {
+        if (sp) sp.classList.remove('animate-spin');
+        showToast(`최신 레이더·뉴스 갱신 완료! (${DRAW_RADAR_ITEMS.length.toLocaleString()}건)`, '📡');
+      }, 400);
     }
 
     function renderDrawEvents() {
@@ -5153,19 +5173,26 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예�
 
 
     // Refresh Data & Clear Cache
-    function refreshData() {
+    async function refreshData() {
       const icon = document.getElementById('sync-icon');
-      icon.classList.add('animate-spin');
+      if (icon) icon.classList.add('animate-spin');
       if ('caches' in window) {
-        caches.keys().then(names => {
-          names.forEach(name => caches.delete(name));
-        });
+        try {
+          const names = await caches.keys();
+          await Promise.all(names.map(name => caches.delete(name)));
+        } catch (e) {}
       }
+      try {
+        await Promise.all([
+          loadDrawRadarData(),
+          fetchVerifiedItemsCloud(true),
+          loadOrdersData()
+        ]);
+      } catch (e) {}
       setTimeout(() => {
-        icon.classList.remove('animate-spin');
-        showToast('최신 데이터 동기화 완료!');
-        location.reload();
-      }, 600);
+        if (icon) icon.classList.remove('animate-spin');
+        showToast('전체 데이터 실시간 새로고침 완료! ⚡', '🔄');
+      }, 400);
     }
 
     // Scan Simulation
