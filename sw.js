@@ -1,5 +1,5 @@
-// BayFlow Service Worker v42 (Instant One-Click Refresh Buttons Everywhere)
-const CACHE_NAME = 'bayflow-v42';
+// BayFlow Service Worker v43 (Expanded High-Touch Margin Calculator UI)
+const CACHE_NAME = 'bayflow-v43';
 const ASSETS = [
   './',
   './index.html',

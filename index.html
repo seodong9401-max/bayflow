@@ -430,18 +430,18 @@
       <div class="bg-slate-900 rounded-2xl border border-slate-800 p-4 space-y-4">
         <!-- Input Grid: Price, Cost, FX -->
         <!-- eBay 품목 카테고리 수수료율 선택 (셀러박스 리버싱 연동) -->
-        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 space-y-2 text-xs">
-          <div class="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
-            <span class="font-bold text-slate-200 flex items-center space-x-1">
-              <span>🏷️</span>
+        <div class="bg-slate-950/80 rounded-2xl p-4 border border-slate-800 space-y-3 text-xs sm:text-sm">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+            <span class="font-bold text-slate-200 flex items-center space-x-1.5 text-xs sm:text-sm">
+              <span class="text-base">🏷️</span>
               <span>eBay 품목 카테고리 (공식 수수료율)</span>
             </span>
-            <span id="calc-category-fee-badge" class="text-[10px] text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-900/50 font-bold font-mono">13.25% + $0.40</span>
+            <span id="calc-category-fee-badge" class="text-xs text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-lg border border-amber-900/50 font-bold font-mono">13.25% + $0.40</span>
           </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div class="space-y-1">
-              <label class="text-slate-400 font-medium text-[11px]">판매 품목 카테고리</label>
-              <select id="calc-category" onchange="onCategoryFeeChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="space-y-1.5">
+              <label class="text-slate-300 font-bold text-xs">판매 품목 카테고리</label>
+              <select id="calc-category" onchange="onCategoryFeeChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-slate-100 font-medium focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
                 <option value="pokemon" selected>🃏 포켓몬/트레이딩 카드 (13.25%)</option>
                 <option value="clothing">👗 의류/스트릿/티셔츠 (15.0%)</option>
                 <option value="cap">🧢 모자/볼캡/비니 (15.0%)</option>
@@ -456,48 +456,58 @@
                 <option value="custom">⚡ 수수료율 직접 입력 (%)</option>
               </select>
             </div>
-            <div class="space-y-1">
-              <label class="text-slate-400 font-medium text-[11px]">카테고리 기본 수수료 (%)</label>
+            <div class="space-y-1.5">
+              <label class="text-slate-300 font-bold text-xs">카테고리 기본 수수료 (%)</label>
               <div class="relative">
-                <input type="number" id="calc-fee-pct" value="13.25" step="0.05" oninput="calculateMargin()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2.5 text-amber-300 font-mono font-bold focus:outline-none focus:border-indigo-500 text-xs text-right pr-6">
-                <span class="absolute right-2.5 top-1.5 text-slate-400 font-bold">%</span>
+                <input type="number" id="calc-fee-pct" value="13.25" step="0.05" oninput="calculateMargin()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-amber-300 font-mono font-bold focus:outline-none focus:border-indigo-500 text-xs sm:text-sm text-right pr-7">
+                <span class="absolute right-3 top-2.5 text-slate-400 font-bold text-xs sm:text-sm">%</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-2.5 text-xs">
-          <div class="space-y-1">
-            <label class="text-slate-400 font-medium">이베이 판매가 ($)</label>
+        <!-- 3대 핵심 금액 입력 그리드 (판매가, 원가, 환율) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="space-y-1.5 bg-slate-950/70 p-3 rounded-2xl border border-slate-800">
+            <label class="text-xs text-amber-300 font-black flex items-center space-x-1">
+              <span>🇺🇸</span>
+              <span>이베이 판매가 ($)</span>
+            </label>
             <div class="relative">
-              <span class="absolute left-2.5 top-2 text-slate-500 font-bold">$</span>
-              <input type="number" id="calc-price" value="195" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 pl-6 pr-2 text-white font-bold focus:outline-none focus:border-indigo-500 text-xs">
+              <span class="absolute left-3 top-2.5 text-slate-500 font-black text-sm">$</span>
+              <input type="number" id="calc-price" value="195" oninput="calculateMargin()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 pl-7 pr-3 text-white font-mono font-black text-sm sm:text-base focus:outline-none focus:border-amber-400">
             </div>
           </div>
-          <div class="space-y-1">
-            <label class="text-slate-400 font-medium">매입 원가 (원)</label>
-            <input type="number" id="calc-cost" value="140000" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 px-2.5 text-white font-bold focus:outline-none focus:border-indigo-500 text-xs">
+          <div class="space-y-1.5 bg-slate-950/70 p-3 rounded-2xl border border-slate-800">
+            <label class="text-xs text-slate-200 font-black flex items-center space-x-1">
+              <span>🇰🇷</span>
+              <span>국내 매입 원가 (원)</span>
+            </label>
+            <input type="number" id="calc-cost" value="140000" oninput="calculateMargin()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-white font-mono font-black text-sm sm:text-base focus:outline-none focus:border-indigo-500 text-right">
           </div>
-          <div class="space-y-1">
-            <label class="text-slate-400 font-medium">환율 (KRW/$)</label>
-            <input type="number" id="calc-fx" value="1334" oninput="calculateMargin()" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-1.5 px-2.5 text-slate-300 focus:outline-none focus:border-indigo-500 text-xs">
+          <div class="space-y-1.5 bg-slate-950/70 p-3 rounded-2xl border border-slate-800">
+            <label class="text-xs text-slate-300 font-bold flex items-center space-x-1">
+              <span>💱</span>
+              <span>적용 환율 (KRW/$)</span>
+            </label>
+            <input type="number" id="calc-fx" value="1380" oninput="calculateMargin()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-slate-300 font-mono font-bold text-sm sm:text-base focus:outline-none focus:border-indigo-500 text-right">
           </div>
         </div>
 
         <!-- Shipping & Destination Options (공식 요금 연동) -->
-        <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800/80 space-y-2.5 text-xs">
-          <div class="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
-            <span class="font-bold text-slate-200 flex items-center space-x-1">
-              <span>✈️</span>
+        <div class="bg-slate-950/70 rounded-2xl p-4 border border-slate-800 space-y-3.5">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+            <span class="font-bold text-slate-200 flex items-center space-x-1.5 text-xs sm:text-sm">
+              <span class="text-base">✈️</span>
               <span>배송사·국가·무게 공식 요금 연동</span>
             </span>
-            <span class="text-[10px] text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-900/50">공식 고시 요금표</span>
+            <span class="text-xs text-indigo-400 bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-900/50 font-bold">20개국 공식 고시 요금표</span>
           </div>
 
-          <div class="grid grid-cols-3 gap-2">
-            <div class="space-y-1">
-              <label class="text-slate-400 font-medium text-[11px]">도착 국가</label>
-              <select id="calc-country" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1.5">
+              <label class="text-slate-300 font-bold text-xs">도착 국가</label>
+              <select id="calc-country" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-slate-100 font-medium focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
                 <optgroup label="북미 & 오세아니아">
                   <option value="US" selected>🇺🇸 미국 (US)</option>
                   <option value="CA">🇨🇦 캐나다 (CA)</option>
@@ -529,66 +539,93 @@
               </select>
             </div>
 
-            <div class="space-y-1">
-              <label class="text-slate-400 font-medium text-[11px]">배송 서비스</label>
-              <select id="calc-shipping-service" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-1.5 px-2 text-slate-200 font-medium focus:outline-none focus:border-indigo-500 text-xs">
+            <div class="space-y-1.5">
+              <label class="text-slate-300 font-bold text-xs">배송 서비스</label>
+              <select id="calc-shipping-service" onchange="onShippingOptionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2.5 px-3 text-slate-100 font-medium focus:outline-none focus:border-indigo-500 text-xs sm:text-sm">
                 <option value="kpacket" selected>📮 K-Packet (추천)</option>
                 <option value="egs_standard">📦 eGS Standard</option>
                 <option value="ems">✈️ 우체국 EMS</option>
                 <option value="egs_express">⚡ eGS Express</option>
               </select>
             </div>
+          </div>
 
-            <!-- 포장 실무게 및 박스 부피무게 계산기 (L×W×H ÷ 6000) -->
-            <div class="col-span-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold text-slate-300 flex items-center space-x-1">
-                  <span>⚖️</span>
-                  <span>포장 실무게 및 박스 부피무게 (가로×세로×높이 ÷ 6000)</span>
-                </span>
-                <span id="chargeable-weight-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-bold border border-indigo-500/40">최종 청구: 200g</span>
+          <!-- 포장 실무게 및 박스 부피무게 계산기 (L×W×H ÷ 6000) -->
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <span class="text-xs font-bold text-slate-200 flex items-center space-x-1.5">
+                <span>⚖️</span>
+                <span>포장 실무게 & 박스 부피무게 (가로×세로×높이 ÷ 6000)</span>
+              </span>
+              <span id="chargeable-weight-badge" class="text-xs px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-black border border-indigo-500/40">최종 청구: 200g</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400 font-semibold">실무게 (g)</label>
+                <input type="number" id="calc-real-weight" value="200" step="10" min="10" max="20000" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-2.5 text-slate-100 text-xs sm:text-sm text-right font-mono font-bold focus:outline-none focus:border-indigo-500">
               </div>
-              <div class="grid grid-cols-4 gap-2">
-                <div class="space-y-1">
-                  <label class="text-[10px] text-slate-400">실무게 (g)</label>
-                  <input type="number" id="calc-real-weight" value="200" step="10" min="10" max="20000" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
-                </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] text-slate-400">가로 (cm)</label>
-                  <input type="number" id="calc-dim-l" value="15" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
-                </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] text-slate-400">세로 (cm)</label>
-                  <input type="number" id="calc-dim-w" value="10" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
-                </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] text-slate-400">높이 (cm)</label>
-                  <input type="number" id="calc-dim-h" value="3" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-slate-200 text-xs text-right font-mono focus:outline-none focus:border-indigo-500">
-                </div>
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400 font-semibold">가로 (cm)</label>
+                <input type="number" id="calc-dim-l" value="15" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-2.5 text-slate-100 text-xs sm:text-sm text-right font-mono font-bold focus:outline-none focus:border-indigo-500">
               </div>
-              <div class="flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800/80">
-                <div class="text-slate-400 flex items-center space-x-1.5 text-[10px]">
-                  <span>부피무게: <b id="calc-vol-weight" class="text-amber-400 font-mono">75g</b></span>
-                  <span class="text-slate-600">|</span>
-                  <span id="calc-heavier-note" class="text-emerald-400 font-bold">실무게(200g) 채택 ✅</span>
-                </div>
-                <!-- 빠른 박스 규격 프리셋 버튼 -->
-                <div class="flex items-center space-x-1">
-                  <button type="button" onclick="setBoxPreset(15, 10, 2, 100)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">에어캡봉투</button>
-                  <button type="button" onclick="setBoxPreset(22, 19, 9, 250)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">우체국1호</button>
-                  <button type="button" onclick="setBoxPreset(27, 18, 15, 450)" class="text-[9px] px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800">우체국2호</button>
-                </div>
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400 font-semibold">세로 (cm)</label>
+                <input type="number" id="calc-dim-w" value="10" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-2.5 text-slate-100 text-xs sm:text-sm text-right font-mono font-bold focus:outline-none focus:border-indigo-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] text-slate-400 font-semibold">높이 (cm)</label>
+                <input type="number" id="calc-dim-h" value="3" step="1" min="1" max="150" oninput="onWeightOrDimensionChange()" class="w-full bg-slate-900 border border-slate-800 rounded-xl py-2 px-2.5 text-slate-100 text-xs sm:text-sm text-right font-mono font-bold focus:outline-none focus:border-indigo-500">
+              </div>
+            </div>
+
+            <!-- 부피무게 판정 바 & 시원시원한 박스 프리셋 버튼 -->
+            <div class="space-y-2.5 pt-2 border-t border-slate-800/80">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-400">부피 환산: <b id="calc-vol-weight" class="text-amber-400 font-mono font-bold">75g</b></span>
+                <span id="calc-heavier-note" class="text-emerald-400 font-black px-2 py-0.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30">실무게(200g) 채택 ✅</span>
+              </div>
+              <!-- 시원시원한 원터치 박스 프리셋 버튼 (모바일 터치 최적화) -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button type="button" onclick="setBoxPreset(15, 10, 2, 100)" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-800 transition active:scale-95 shadow flex items-center justify-center space-x-1">
+                  <span>✉️</span>
+                  <span>에어캡봉투 (100g)</span>
+                </button>
+                <button type="button" onclick="setBoxPreset(22, 19, 9, 250)" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-800 transition active:scale-95 shadow flex items-center justify-center space-x-1">
+                  <span>📦</span>
+                  <span>우체국 1호 (250g)</span>
+                </button>
+                <button type="button" onclick="setBoxPreset(27, 18, 15, 450)" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-800 transition active:scale-95 shadow flex items-center justify-center space-x-1">
+                  <span>📦</span>
+                  <span>우체국 2호 (450g)</span>
+                </button>
+                <button type="button" onclick="setBoxPreset(32, 20, 12, 1200)" class="py-2.5 px-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-800 transition active:scale-95 shadow flex items-center justify-center space-x-1">
+                  <span>👟</span>
+                  <span>신발박스 (1.5kg)</span>
+                </button>
               </div>
             </div>
           </div>
 
           <div class="flex items-center justify-between pt-1">
-            <span class="text-slate-400 text-[11px]">적용 배송비 (수동 수정 가능)</span>
-            <div class="flex items-center space-x-1">
-              <input type="number" id="calc-ship" value="8980" oninput="calculateMargin()" class="w-24 bg-slate-900 border border-slate-800 rounded-lg py-1 px-2 text-right text-sky-400 font-bold focus:outline-none focus:border-indigo-500 text-xs">
-              <span class="text-slate-400 text-xs">원</span>
+            <span class="text-slate-300 font-bold text-xs sm:text-sm">최종 적용 운임 (원클릭 자동 산출)</span>
+            <div class="flex items-center space-x-1.5">
+              <input type="number" id="calc-ship" value="8980" oninput="calculateMargin()" class="w-32 bg-slate-900 border border-slate-800 rounded-xl py-2 px-3 text-right text-sky-400 font-mono font-black text-sm sm:text-base focus:outline-none focus:border-indigo-500">
+              <span class="text-slate-400 text-xs sm:text-sm font-bold">원</span>
             </div>
           </div>
+        </div>
+
+        <!-- 마진계산기 원클릭 대형 액션 버튼 바 -->
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+          <button type="button" onclick="calculateMargin()" class="py-3.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs sm:text-sm flex items-center justify-center space-x-1.5 shadow-lg shadow-indigo-600/30 transition active:scale-95">
+            <span class="text-base">🧮</span>
+            <span>마진 실시간 재계산</span>
+          </button>
+          <button type="button" onclick="copyMarginSummary()" class="py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-black text-xs sm:text-sm flex items-center justify-center space-x-1.5 border border-slate-700 shadow transition active:scale-95">
+            <span class="text-base">📋</span>
+            <span>계산 결과 복사</span>
+          </button>
         </div>
 
         <!-- Customs, IOSS & Policy Notice Banner -->
@@ -672,14 +709,17 @@
         </div>
 
         <!-- Profit Result Card -->
-        <div class="bg-gradient-to-r from-emerald-950/60 to-teal-950/60 border border-emerald-500/30 rounded-xl p-4 flex items-center justify-between">
+        <div class="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-teal-950/80 border-2 border-emerald-500/50 rounded-2xl p-5 flex items-center justify-between shadow-lg shadow-emerald-950/40">
           <div>
-            <div class="text-[11px] text-emerald-400 font-semibold uppercase">통장 입금 순마진 (Net Profit)</div>
-            <div id="res-net-profit" class="text-2xl font-black text-emerald-300 tracking-tight">약 63,860원</div>
+            <div class="text-xs text-emerald-400 font-bold uppercase tracking-wider flex items-center space-x-1">
+              <span>💰</span>
+              <span>통장 입금 순마진 (Net Profit)</span>
+            </div>
+            <div id="res-net-profit" class="text-3xl font-black text-emerald-300 tracking-tight mt-1">약 63,860원</div>
           </div>
           <div class="text-right">
-            <div class="text-[11px] text-slate-400">원금 대비 수익률 (ROI)</div>
-            <div id="res-roi" class="text-lg font-bold text-sky-400">+45.6%</div>
+            <div class="text-xs text-slate-400 font-medium">원금 대비 수익률</div>
+            <div id="res-roi" class="text-2xl font-black text-sky-400 mt-1">+45.6%</div>
           </div>
         </div>
       </div>
@@ -5691,9 +5731,27 @@ PC(biz.epost.go.kr)에서 내용 최종 확인 후 체크박스를 눌러 [예�
       
       const profitEl = document.getElementById('res-net-profit');
       profitEl.innerText = (netProfitKRW >= 0 ? '약 ' : '- ') + Math.abs(Math.round(netProfitKRW)).toLocaleString() + '원';
-      profitEl.className = netProfitKRW >= 0 ? 'text-2xl font-black text-emerald-300 tracking-tight' : 'text-2xl font-black text-rose-400 tracking-tight';
+      profitEl.className = netProfitKRW >= 0 ? 'text-3xl font-black text-emerald-300 tracking-tight mt-1' : 'text-3xl font-black text-rose-400 tracking-tight mt-1';
 
       document.getElementById('res-roi').innerText = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
+    }
+
+    function copyMarginSummary() {
+      const price = document.getElementById('calc-price')?.value || '0';
+      const cost = document.getElementById('calc-cost')?.value || '0';
+      const net = document.getElementById('res-net-profit')?.innerText || '';
+      const roi = document.getElementById('res-roi')?.innerText || '';
+      const fee = document.getElementById('res-fee-rate')?.innerText || '';
+      const ship = document.getElementById('calc-ship')?.value || '';
+      const country = document.getElementById('calc-country')?.value || 'US';
+
+      const summary = `[BayFlow 실전 마진 분석]\n- 판매가: $${price}\n- 사입원가: ${parseInt(cost).toLocaleString()}원\n- 도착국가: ${country}\n- 배송비: ${parseInt(ship).toLocaleString()}원\n- 실질수수료: ${fee}\n- 예상 순마진: ${net}\n- ROI: ${roi}`;
+
+      navigator.clipboard.writeText(summary).then(() => {
+        showToast('마진 분석 결과 복사 완료! 📋', '✅');
+      }).catch(() => {
+        prompt('마진 분석 결과를 복사하세요:', summary);
+      });
     }
 
     // eBay API & Listing Handlers
