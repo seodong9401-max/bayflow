@@ -1,5 +1,5 @@
-// BayFlow Service Worker v38 (Massive 1,592 Items Celeb 86 & Fashion 125 Viral Radar)
-const CACHE_NAME = 'bayflow-v38';
+// BayFlow Service Worker v41 (30m Auto Updater & Super Margin Live Radar)
+const CACHE_NAME = 'bayflow-v41';
 const ASSETS = [
   './',
   './index.html',

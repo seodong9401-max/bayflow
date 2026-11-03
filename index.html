@@ -881,6 +881,9 @@
               <button type="button" onclick="filterVerifiedCategory('all')" id="vcat-btn-all" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition active:scale-95 shadow">
                 전체
               </button>
+              <button type="button" onclick="filterVerifiedCategory('super')" id="vcat-btn-super" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-amber-300 font-bold text-xs border border-amber-500/50 transition active:scale-95 shadow">
+                💎 대박마진 픽
+              </button>
               <button type="button" onclick="filterVerifiedCategory('acc')" id="vcat-btn-acc" class="vcat-chip flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 font-semibold text-xs border border-slate-800 transition active:scale-95">
                 💍 악세사리/쥬얼리
               </button>
@@ -3245,12 +3248,18 @@
         title: "스타벅스 코리아 텀블러/MD 이베이 Sold 연동",
         desc: "한국 전통 자개 MD·시티 머그 체결 매물",
         url: "https://www.ebay.com/sch/i.html?_nkw=starbucks+korea+(tumbler%2C+mug%2C+cold+cup%2C+md)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
+      },
+      super: {
+        icon: "💎",
+        title: "초고마진 꿀템 (ROI +150%↑ / 순마진 3만 원↑)",
+        desc: "국내 사입가 대비 글로벌 리셀 마진이 가장 극대화된 실전 검증 픽",
+        url: "https://www.ebay.com/sch/i.html?_nkw=korea+(silver%2C+idol%2C+vintage%2C+limited)&LH_Sold=1&LH_Complete=1&LH_PrefLoc=1&_sop=13"
       }
     };
 
     function filterVerifiedCategory(cat) {
       currentVerifiedFilter = cat;
-      const cats = ['all', 'acc', 'cap', 'clothing', 'sneakers', 'beauty', 'kpop', 'pokemon', 'character', 'starbucks'];
+      const cats = ['all', 'super', 'acc', 'cap', 'clothing', 'sneakers', 'beauty', 'kpop', 'pokemon', 'character', 'starbucks'];
       cats.forEach(c => {
         const btn = document.getElementById('vcat-btn-' + c);
         if (btn) {
@@ -3315,7 +3324,11 @@
       const q = (document.getElementById('verified-search-input')?.value || '').trim().toLowerCase();
 
       let items = activeVerifiedItems.filter(it => {
-        if (currentVerifiedFilter !== 'all' && it.category !== currentVerifiedFilter) return false;
+        if (currentVerifiedFilter === 'super') {
+          if (!it.isSuperMargin) return false;
+        } else if (currentVerifiedFilter !== 'all' && it.category !== currentVerifiedFilter) {
+          return false;
+        }
         if (!q) return true;
         const text = (it.title + ' ' + it.ebayTitle + ' ' + (it.tags || []).join(' ')).toLowerCase();
         return text.includes(q);
@@ -3335,9 +3348,10 @@
           <div class="bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-950 rounded-2xl border border-slate-800 hover:border-amber-500/40 p-4 space-y-3 transition shadow-lg">
             <!-- 태그 & 실적 뱃지 -->
             <div class="flex items-center justify-between flex-wrap gap-1.5">
-              <div class="flex items-center space-x-1.5">
+              <div class="flex items-center space-x-1.5 flex-wrap gap-1">
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">${it.categoryName}</span>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🟢 ${it.status}</span>
+                ${it.isSuperMargin ? `<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm border border-amber-300/40">💎 대박마진 ${it.roi}</span>` : ''}
               </div>
               <div class="flex items-center space-x-1.5 text-[10px] font-semibold">
                 <span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold">${it.badge}</span>

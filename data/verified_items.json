@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-02 19:20",
+  "updatedAt": "2026-11-03 11:10",
   "totalItems": 26,
   "items": [
     {
@@ -14,8 +14,8 @@
       "ebayUsd": 48.0,
       "ebayKrw": 66240,
       "targetBuyKrw": 18000,
-      "profitKrw": 25500,
-      "roi": "+141%",
+      "profitKrw": 28518,
+      "roi": "+158%",
       "boxSize": "에어캡 안전봉투 (15×20cm)",
       "actualWeight": 45,
       "volWeight": 35,
@@ -48,7 +48,9 @@
         "#악세사리",
         "#초경량우체국",
         "#고마진"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+158%)"
     },
     {
       "id": "bts-necklace",
@@ -62,7 +64,7 @@
       "ebayUsd": 180.0,
       "ebayKrw": 248400,
       "targetBuyKrw": 38000,
-      "profitKrw": 159000,
+      "profitKrw": 158800,
       "roi": "+418%",
       "boxSize": "에어캡 안전봉투 (15×20cm)",
       "actualWeight": 65,
@@ -96,7 +98,9 @@
         "#하회탈목걸이",
         "#실버925",
         "#글로벌완판"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+418%)"
     },
     {
       "id": "matin-kim-wallet",
@@ -110,8 +114,8 @@
       "ebayUsd": 65.0,
       "ebayKrw": 89700,
       "targetBuyKrw": 38000,
-      "profitKrw": 27500,
-      "roi": "+72%",
+      "profitKrw": 25802,
+      "roi": "+68%",
       "boxSize": "소형 박스 (15×12×5cm)",
       "actualWeight": 110,
       "volWeight": 150,
@@ -143,7 +147,8 @@
         "#시그니처메탈",
         "#경량소싱",
         "#글로벌인기"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "tamburins-egg-lipbalm",
@@ -157,8 +162,8 @@
       "ebayUsd": 55.0,
       "ebayKrw": 75900,
       "targetBuyKrw": 28000,
-      "profitKrw": 28200,
-      "roi": "+100%",
+      "profitKrw": 24418,
+      "roi": "+87%",
       "boxSize": "소형 박스 (15×12×6cm)",
       "actualWeight": 95,
       "volWeight": 180,
@@ -191,7 +196,8 @@
         "#제니립밤",
         "#진주케이스",
         "#여성바이어선호"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "gentle-monster",
@@ -205,8 +211,8 @@
       "ebayUsd": 280.0,
       "ebayKrw": 386400,
       "targetBuyKrw": 230000,
-      "profitKrw": 82000,
-      "roi": "+35%",
+      "profitKrw": 76280,
+      "roi": "+33%",
       "boxSize": "하드케이스 박스 (20×12×8cm)",
       "actualWeight": 280,
       "volWeight": 320,
@@ -238,7 +244,9 @@
         "#제니선글라스",
         "#고단가수출",
         "#해외직구1위"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+33%)"
     },
     {
       "id": "emis-cap",
@@ -252,8 +260,8 @@
       "ebayUsd": 45.0,
       "ebayKrw": 62100,
       "targetBuyKrw": 35000,
-      "profitKrw": 8600,
-      "roi": "+24%",
+      "profitKrw": 1232,
+      "roi": "+4%",
       "boxSize": "모자보호 1호 박스 (22×20×13cm)",
       "actualWeight": 130,
       "volWeight": 500,
@@ -286,7 +294,8 @@
         "#연예인모자",
         "#바이럴",
         "#품절대란"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "northface-cap",
@@ -300,8 +309,8 @@
       "ebayUsd": 67.0,
       "ebayKrw": 92460,
       "targetBuyKrw": 36000,
-      "profitKrw": 28500,
-      "roi": "+79%",
+      "profitKrw": 25280,
+      "roi": "+70%",
       "boxSize": "모자보호 1호 박스 (22×20×13cm)",
       "actualWeight": 135,
       "volWeight": 500,
@@ -333,7 +342,8 @@
         "#화이트라벨",
         "#팀코리아",
         "#한국한정판"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "mlb-cap",
@@ -347,8 +357,8 @@
       "ebayUsd": 59.0,
       "ebayKrw": 81420,
       "targetBuyKrw": 28000,
-      "profitKrw": 27400,
-      "roi": "+98%",
+      "profitKrw": 24172,
+      "roi": "+86%",
       "boxSize": "모자보호 1호 박스 (22×20×13cm)",
       "actualWeight": 130,
       "volWeight": 500,
@@ -380,7 +390,8 @@
         "#MLB코리아",
         "#워싱볼캡",
         "#글로벌인기"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "mardi-tshirt",
@@ -394,8 +405,8 @@
       "ebayUsd": 58.0,
       "ebayKrw": 80040,
       "targetBuyKrw": 35000,
-      "profitKrw": 21400,
-      "roi": "+61%",
+      "profitKrw": 18533,
+      "roi": "+53%",
       "boxSize": "의류 안전 지퍼백 (25×30×3cm)",
       "actualWeight": 220,
       "volWeight": 375,
@@ -427,7 +438,8 @@
         "#김고은",
         "#여름필수",
         "#스테디셀러"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "frizmworks-tee",
@@ -441,8 +453,8 @@
       "ebayUsd": 140.0,
       "ebayKrw": 193200,
       "targetBuyKrw": 48000,
-      "profitKrw": 102000,
-      "roi": "+212%",
+      "profitKrw": 98890,
+      "roi": "+206%",
       "boxSize": "의류 안전 지퍼백 (25×30×3cm)",
       "actualWeight": 260,
       "volWeight": 375,
@@ -474,7 +486,9 @@
         "#프리즘웍스",
         "#피그먼트",
         "#남성스트릿"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+206%)"
     },
     {
       "id": "adidas-samba-og",
@@ -488,8 +502,8 @@
       "ebayUsd": 125.0,
       "ebayKrw": 172500,
       "targetBuyKrw": 98000,
-      "profitKrw": 39500,
-      "roi": "+40%",
+      "profitKrw": 29312,
+      "roi": "+30%",
       "boxSize": "신발 택배 박스 (32×20×12cm)",
       "actualWeight": 820,
       "volWeight": 1280,
@@ -522,7 +536,8 @@
         "#크림사입",
         "#박스포장",
         "#글로벌완판"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "adidas-samba-maroon",
@@ -536,8 +551,8 @@
       "ebayUsd": 109.0,
       "ebayKrw": 150420,
       "targetBuyKrw": 68000,
-      "profitKrw": 32800,
-      "roi": "+48%",
+      "profitKrw": 41096,
+      "roi": "+60%",
       "boxSize": "신발 택배 박스 (32×20×12cm)",
       "actualWeight": 790,
       "volWeight": 1280,
@@ -569,7 +584,9 @@
         "#삼바마룬",
         "#여성스니커즈",
         "#리셀인기"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+60%)"
     },
     {
       "id": "nonfiction-hand",
@@ -583,8 +600,8 @@
       "ebayUsd": 38.0,
       "ebayKrw": 52440,
       "targetBuyKrw": 21000,
-      "profitKrw": 13200,
-      "roi": "+62%",
+      "profitKrw": 12063,
+      "roi": "+57%",
       "boxSize": "소형 박스 (15×10×6cm)",
       "actualWeight": 90,
       "volWeight": 150,
@@ -616,7 +633,8 @@
         "#올리브영1위",
         "#성수동선물",
         "#가벼운무게"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "beauty-of-joseon-sun",
@@ -630,8 +648,8 @@
       "ebayUsd": 36.0,
       "ebayKrw": 49680,
       "targetBuyKrw": 17000,
-      "profitKrw": 15800,
-      "roi": "+93%",
+      "profitKrw": 13786,
+      "roi": "+81%",
       "boxSize": "에어캡 포장 (16×12×6cm)",
       "actualWeight": 140,
       "volWeight": 192,
@@ -664,7 +682,8 @@
         "#틱톡선크림",
         "#재구매1위",
         "#가벼운무게"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "ive-photocard-musinsa",
@@ -678,8 +697,8 @@
       "ebayUsd": 25.0,
       "ebayKrw": 34500,
       "targetBuyKrw": 12000,
-      "profitKrw": 7640,
-      "roi": "+63%",
+      "profitKrw": 8332,
+      "roi": "+69%",
       "boxSize": "탑로더 에어캡 봉투 (12×18cm)",
       "actualWeight": 35,
       "volWeight": 30,
@@ -712,7 +731,8 @@
         "#무신사POB",
         "#아이브",
         "#우체국8980원"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "skz-lucky-draw",
@@ -726,8 +746,8 @@
       "ebayUsd": 32.0,
       "ebayKrw": 44160,
       "targetBuyKrw": 11000,
-      "profitKrw": 20200,
-      "roi": "+183%",
+      "profitKrw": 17302,
+      "roi": "+157%",
       "boxSize": "탑로더 에어캡 봉투 (12×18cm)",
       "actualWeight": 35,
       "volWeight": 30,
@@ -759,7 +779,9 @@
         "#포토카드",
         "#탑로더포장",
         "#우체국8980원"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+157%)"
     },
     {
       "id": "ive-lightstick",
@@ -773,8 +795,8 @@
       "ebayUsd": 68.0,
       "ebayKrw": 93840,
       "targetBuyKrw": 42000,
-      "profitKrw": 26800,
-      "roi": "+63%",
+      "profitKrw": 20418,
+      "roi": "+49%",
       "boxSize": "응원봉 하드박스 (28×14×12cm)",
       "actualWeight": 420,
       "volWeight": 784,
@@ -806,7 +828,8 @@
         "#월드투어",
         "#콘서트필수",
         "#박스신품"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "newjeans-bunjy",
@@ -820,8 +843,8 @@
       "ebayUsd": 38.0,
       "ebayKrw": 52440,
       "targetBuyKrw": 18000,
-      "profitKrw": 16400,
-      "roi": "+91%",
+      "profitKrw": 12763,
+      "roi": "+71%",
       "boxSize": "1호 박스 (18×14×9cm)",
       "actualWeight": 90,
       "volWeight": 378,
@@ -853,7 +876,8 @@
         "#뉴진스MD",
         "#초경량키링",
         "#주문폭주"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "ditto-promo",
@@ -867,7 +891,7 @@
       "ebayUsd": 135.0,
       "ebayKrw": 186300,
       "targetBuyKrw": 110000,
-      "profitKrw": 35500,
+      "profitKrw": 35568,
       "roi": "+32%",
       "boxSize": "골판지 보강 탑로더 봉투 (15×20cm)",
       "actualWeight": 45,
@@ -900,7 +924,9 @@
         "#밀봉새상품",
         "#동욱님주력",
         "#글로벌완판"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+32%)"
     },
     {
       "id": "pikachu-mat",
@@ -914,8 +940,8 @@
       "ebayUsd": 140.0,
       "ebayKrw": 193200,
       "targetBuyKrw": 85000,
-      "profitKrw": 53200,
-      "roi": "+62%",
+      "profitKrw": 59390,
+      "roi": "+70%",
       "boxSize": "매트 원통형 박스 (40×8×8cm)",
       "actualWeight": 310,
       "volWeight": 426,
@@ -947,7 +973,9 @@
         "#한국전통굿즈",
         "#북미셀렉템",
         "#미개봉"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+70%)"
     },
     {
       "id": "magikarp-promo",
@@ -961,8 +989,8 @@
       "ebayUsd": 185.0,
       "ebayKrw": 255300,
       "targetBuyKrw": 135000,
-      "profitKrw": 63000,
-      "roi": "+46%",
+      "profitKrw": 67492,
+      "roi": "+50%",
       "boxSize": "골판지 보강 탑로더 봉투 (15×20cm)",
       "actualWeight": 45,
       "volWeight": 40,
@@ -994,7 +1022,9 @@
         "#홀로카드",
         "#유럽직배송",
         "#K-Packet"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+50%)"
     },
     {
       "id": "monamhee-keyring",
@@ -1008,8 +1038,8 @@
       "ebayUsd": 55.0,
       "ebayKrw": 75900,
       "targetBuyKrw": 28000,
-      "profitKrw": 26500,
-      "roi": "+95%",
+      "profitKrw": 22118,
+      "roi": "+79%",
       "boxSize": "1호 박스 (16×12×8cm)",
       "actualWeight": 75,
       "volWeight": 256,
@@ -1042,7 +1072,8 @@
         "#가방키링",
         "#성수동핫플",
         "#초경량배송"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "seongsu-hanbok-keyring",
@@ -1056,8 +1087,8 @@
       "ebayUsd": 115.0,
       "ebayKrw": 158700,
       "targetBuyKrw": 45000,
-      "profitKrw": 68500,
-      "roi": "+152%",
+      "profitKrw": 75728,
+      "roi": "+168%",
       "boxSize": "소형 박스 (15×12×6cm)",
       "actualWeight": 85,
       "volWeight": 180,
@@ -1089,7 +1120,9 @@
         "#성수팝업한정",
         "#현장품절템",
         "#미개봉새상품"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+168%)"
     },
     {
       "id": "plave-doll-set",
@@ -1103,8 +1136,8 @@
       "ebayUsd": 179.9,
       "ebayKrw": 248262,
       "targetBuyKrw": 115000,
-      "profitKrw": 82000,
-      "roi": "+71%",
+      "profitKrw": 74816,
+      "roi": "+65%",
       "boxSize": "2호 택배 박스 (25×20×15cm)",
       "actualWeight": 380,
       "volWeight": 1250,
@@ -1137,7 +1170,9 @@
         "#버추얼아이돌",
         "#더현대팝업",
         "#고단가"
-      ]
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+65%)"
     },
     {
       "id": "starbucks-korea-tumbler",
@@ -1151,8 +1186,8 @@
       "ebayUsd": 65.0,
       "ebayKrw": 89700,
       "targetBuyKrw": 34000,
-      "profitKrw": 29500,
-      "roi": "+86%",
+      "profitKrw": 25002,
+      "roi": "+74%",
       "boxSize": "텀블러 완충 박스 (12×12×25cm)",
       "actualWeight": 320,
       "volWeight": 600,
@@ -1185,7 +1220,8 @@
         "#자개텀블러",
         "#안전포장",
         "#고급선물"
-      ]
+      ],
+      "isSuperMargin": false
     },
     {
       "id": "starbucks-farmers-tumbler",
@@ -1199,8 +1235,8 @@
       "ebayUsd": 69.99,
       "ebayKrw": 96586,
       "targetBuyKrw": 38000,
-      "profitKrw": 28100,
-      "roi": "+74%",
+      "profitKrw": 26683,
+      "roi": "+70%",
       "boxSize": "텀블러 완충 박스 (12×12×25cm)",
       "actualWeight": 310,
       "volWeight": 600,
@@ -1232,7 +1268,9 @@
         "#한국한정MD",
         "#파머스마켓",
         "#스타벅스텀블러"
-      ]
+      ],
+      "isSuperMargin": false
     }
-  ]
+  ],
+  "superMarginCount": 11
 }
