@@ -1,5 +1,5 @@
-// BayFlow Service Worker v45 (Intuitive Draw Radar for Wife & Clean Card UI)
-const CACHE_NAME = 'bayflow-v45';
+// BayFlow Service Worker v46 (Dynamic Live Refresh for News & Verified Picks)
+const CACHE_NAME = 'bayflow-v46';
 const ASSETS = [
   './',
   './index.html',

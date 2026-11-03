@@ -977,8 +977,8 @@
                   <span>🎲</span>
                   <span>랜덤 섞기</span>
                 </button>
-                <button type="button" onclick="refreshData()" class="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] flex items-center space-x-1 transition active:scale-95 shadow">
-                  <span>🔄</span>
+                <button type="button" onclick="refreshVerifiedPicksLive()" class="px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] flex items-center space-x-1 transition active:scale-95 shadow">
+                  <span id="picks-refresh-spinner">🔄</span>
                   <span>픽 새로고침</span>
                 </button>
               </div>
@@ -1349,7 +1349,8 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">1,631건</span>
+              <span id="draw-items-count" class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-bold font-mono">1,644건</span>
+              <span id="radar-live-time" class="text-[10px] text-emerald-400 font-bold hidden sm:inline">● 실시간 최신</span>
               <button type="button" onclick="refreshRadarLive()" class="px-2.5 py-1 rounded-xl bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-400 hover:to-amber-400 text-white font-black text-xs flex items-center space-x-1 shadow transition active:scale-95">
                 <span id="radar-refresh-spinner">🔄</span>
                 <span>뉴스 새로고침</span>
@@ -3416,6 +3417,30 @@
       if (!silent) showToast('기본 검증 추천 데이터가 활성화되었습니다.', 'ℹ️');
     }
 
+    async function refreshVerifiedPicksLive() {
+      const sp = document.getElementById('picks-refresh-spinner');
+      if (sp) sp.classList.add('animate-spin');
+      await fetchVerifiedItemsCloud(true);
+
+      for (let i = activeVerifiedItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [activeVerifiedItems[i], activeVerifiedItems[j]] = [activeVerifiedItems[j], activeVerifiedItems[i]];
+      }
+
+      const timeElem = document.getElementById('trend-update-time');
+      const nowTime = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      if (timeElem) {
+        timeElem.innerText = `방금 갱신됨: ${nowTime} (${activeVerifiedItems.length}개 꿀템 풀)`;
+      }
+
+      renderVerifiedItems();
+
+      setTimeout(() => {
+        if (sp) sp.classList.remove('animate-spin');
+        showToast(`새로운 실전 검증 픽으로 갱신되었습니다! (${activeVerifiedItems.length}개)`, '💎');
+      }, 300);
+    }
+
     function shuffleVerifiedItems() {
       for (let i = activeVerifiedItems.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -4266,10 +4291,30 @@
       const sp = document.getElementById('radar-refresh-spinner');
       if (sp) sp.classList.add('animate-spin');
       await loadDrawRadarData();
+
+      if (Array.isArray(DRAW_RADAR_ITEMS) && DRAW_RADAR_ITEMS.length > 10) {
+        const topN = Math.min(60, DRAW_RADAR_ITEMS.length);
+        const topSlice = DRAW_RADAR_ITEMS.slice(0, topN);
+        for (let i = topSlice.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [topSlice[i], topSlice[j]] = [topSlice[j], topSlice[i]];
+        }
+        DRAW_RADAR_ITEMS = [...topSlice, ...DRAW_RADAR_ITEMS.slice(topN)];
+      }
+
+      const timeBadge = document.getElementById('radar-live-time');
+      const nowTime = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      if (timeBadge) {
+        timeBadge.classList.remove('hidden');
+        timeBadge.innerText = `● 방금 갱신됨 (${nowTime})`;
+      }
+
+      renderDrawEvents();
+
       setTimeout(() => {
         if (sp) sp.classList.remove('animate-spin');
-        showToast(`최신 레이더·뉴스 갱신 완료! (${DRAW_RADAR_ITEMS.length.toLocaleString()}건)`, '📡');
-      }, 400);
+        showToast(`최신 레이더·뉴스 실시간 갱신 완료! (${nowTime})`, '📡');
+      }, 300);
     }
 
     function renderDrawEvents() {

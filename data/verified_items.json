@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-11-03 11:40",
-  "totalItems": 26,
+  "updatedAt": "2026-11-03 15:20",
+  "totalItems": 36,
   "items": [
     {
       "id": "chrome-necklace",
@@ -1270,7 +1270,454 @@
         "#스타벅스텀블러"
       ],
       "isSuperMargin": false
+    },
+    {
+      "id": "newjeans-powerpuff-keyring",
+      "category": "character",
+      "categoryName": "🧸 캐릭터/키링",
+      "title": "뉴진스 x 파워퍼프걸 한정 인형 키링 (5종 세트/단품)",
+      "ebayTitle": "NewJeans x Powerpuff Girls Official Plush Keyring Limited Edition",
+      "badge": "🔥 30일 44건 완판",
+      "watchers": "👀 72명 찜",
+      "status": "글로벌 품절 대란 (사모님 추천)",
+      "ebayUsd": 45.0,
+      "ebayKrw": 62100,
+      "targetBuyKrw": 18000,
+      "profitKrw": 25102,
+      "roi": "+139%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 70,
+      "volWeight": 50,
+      "appliedWeight": 100,
+      "weightNote": "실무게 70g ➔ K-Packet 100g 초경량 운임 (8,130원)",
+      "priceRange": "$40.00 ~ $52.00",
+      "salesVelocity": "0.7일당 1건 완판 🔥",
+      "topBuyers": "🇺🇸 미국 60% · 🇦🇺 호주 25% · 🇬🇧 영국 15%",
+      "recentSold": [
+        {
+          "date": "11/02",
+          "price": "$45.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/31",
+          "price": "$48.00",
+          "country": "🇦🇺 호주"
+        }
+      ],
+      "bunjangQuery": "뉴진스 파워퍼프걸 키링",
+      "ebayQuery": "Newjeans powerpuff keyring plush",
+      "tags": [
+        "#뉴진스",
+        "#키링",
+        "#인형키링",
+        "#초경량우체국",
+        "#대박마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+139%)"
+    },
+    {
+      "id": "ive-minive-keyring",
+      "category": "character",
+      "categoryName": "🧸 캐릭터/키링",
+      "title": "아이브(IVE) 미니브(MINIVE) 봉제인형 키링 시즌2 오프라인 한정",
+      "ebayTitle": "IVE Official MINIVE Plush Keyring Season 2 Pop-up Exclusive",
+      "badge": "🔥 30일 29건 완판",
+      "watchers": "👀 48명 찜",
+      "status": "장원영·안유진 완판템",
+      "ebayUsd": 52.0,
+      "ebayKrw": 71760,
+      "targetBuyKrw": 22000,
+      "profitKrw": 29072,
+      "roi": "+132%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 85,
+      "volWeight": 60,
+      "appliedWeight": 100,
+      "weightNote": "실무게 85g ➔ K-Packet 100g 단일 요금 적용",
+      "priceRange": "$48.00 ~ $58.00",
+      "salesVelocity": "1.0일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 50% · 🇯🇵 일본 30% · 🇨🇦 캐나다 20%",
+      "recentSold": [
+        {
+          "date": "11/01",
+          "price": "$52.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/29",
+          "price": "$55.00",
+          "country": "🇨🇦 캐나다"
+        }
+      ],
+      "bunjangQuery": "아이브 미니브 키링",
+      "ebayQuery": "IVE MINIVE plush keyring official",
+      "tags": [
+        "#아이브",
+        "#미니브",
+        "#키링",
+        "#장원영",
+        "#완판템"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+132%)"
+    },
+    {
+      "id": "aespa-whiplash-stand",
+      "category": "kpop",
+      "categoryName": "🎤 K-POP",
+      "title": "에스파(aespa) 'Whiplash' 성수 팝업 한정 아크릴 스탠드 & 미공포",
+      "ebayTitle": "aespa Whiplash Pop-up Exclusive Acrylic Stand & Photocard Set",
+      "badge": "🔥 30일 35건 완판",
+      "watchers": "👀 54명 찜",
+      "status": "성수 오픈런 단독 특전",
+      "ebayUsd": 42.0,
+      "ebayKrw": 57960,
+      "targetBuyKrw": 15000,
+      "profitKrw": 24687,
+      "roi": "+165%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 50,
+      "volWeight": 40,
+      "appliedWeight": 100,
+      "weightNote": "초경량 50g ➔ 우체국 에어캡 봉투 직행",
+      "priceRange": "$38.00 ~ $45.00",
+      "salesVelocity": "0.9일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 55% · 🇬🇧 영국 25% · 🇦🇺 호주 20%",
+      "recentSold": [
+        {
+          "date": "11/02",
+          "price": "$42.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/30",
+          "price": "$40.00",
+          "country": "🇬🇧 영국"
+        }
+      ],
+      "bunjangQuery": "에스파 위플래시 성수 팝업",
+      "ebayQuery": "aespa whiplash popup acrylic stand",
+      "tags": [
+        "#에스파",
+        "#카리나",
+        "#성수팝업",
+        "#포토카드",
+        "#대박마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+165%)"
+    },
+    {
+      "id": "sansangear-windbreaker",
+      "category": "clothing",
+      "categoryName": "👗 스트릿/의류",
+      "title": "산산기어(SAN SAN GEAR) 26FW 테크 웨이브 윈드브레이커 자켓",
+      "ebayTitle": "SAN SAN GEAR Tech Wave Windbreaker Jacket Korean Streetwear",
+      "badge": "🔥 30일 18건 완판",
+      "watchers": "👀 65명 찜",
+      "status": "글로벌 고프코어 1위 리셀",
+      "ebayUsd": 240.0,
+      "ebayKrw": 331200,
+      "targetBuyKrw": 169000,
+      "profitKrw": 91815,
+      "roi": "+54%",
+      "boxSize": "우체국 2호 박스 (27×18×15cm)",
+      "actualWeight": 380,
+      "volWeight": 420,
+      "appliedWeight": 450,
+      "weightNote": "실무게 380g < 부피 420g ➔ 450g 운임 (12,500원)",
+      "priceRange": "$220.00 ~ $260.00",
+      "salesVelocity": "1.6일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 70% · 🇩🇪 독일 20% · 🇨🇦 캐나다 10%",
+      "recentSold": [
+        {
+          "date": "11/01",
+          "price": "$240.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/27",
+          "price": "$255.00",
+          "country": "🇩🇪 독일"
+        }
+      ],
+      "bunjangQuery": "산산기어 윈드브레이커",
+      "ebayQuery": "SAN SAN GEAR windbreaker jacket",
+      "tags": [
+        "#산산기어",
+        "#고프코어",
+        "#스트릿",
+        "#고단가마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+9.1만원)"
+    },
+    {
+      "id": "thugclub-leather-pants",
+      "category": "clothing",
+      "categoryName": "👗 스트릿/의류",
+      "title": "떠그클럽(THUG CLUB) TC 시그니처 엠블럼 레더 조거 팬츠",
+      "ebayTitle": "THUG CLUB Signature TC Emblem Leather Pants Jogger Korean Street",
+      "badge": "🔥 30일 14건 완판",
+      "watchers": "👀 58명 찜",
+      "status": "해외 래퍼·스트릿 착용템",
+      "ebayUsd": 320.0,
+      "ebayKrw": 441600,
+      "targetBuyKrw": 240000,
+      "profitKrw": 111820,
+      "roi": "+47%",
+      "boxSize": "우체국 2호 박스 (27×18×15cm)",
+      "actualWeight": 420,
+      "volWeight": 450,
+      "appliedWeight": 450,
+      "weightNote": "부피 450g ➔ 운임 12,500원 차감 후 순마진 11만 원",
+      "priceRange": "$290.00 ~ $340.00",
+      "salesVelocity": "2.1일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 80% · 🇬🇧 영국 20%",
+      "recentSold": [
+        {
+          "date": "10/31",
+          "price": "$320.00",
+          "country": "🇺🇸 미국"
+        }
+      ],
+      "bunjangQuery": "떠그클럽 팬츠",
+      "ebayQuery": "THUG CLUB leather pants",
+      "tags": [
+        "#떠그클럽",
+        "#스트릿",
+        "#하이엔드",
+        "#고마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+11.1만원)"
+    },
+    {
+      "id": "monamhee-blackpink-keyring",
+      "category": "character",
+      "categoryName": "🧸 캐릭터/키링",
+      "title": "모남희(Monamhee) x 블랙핑크 블핑이 블핑이 인형 키링 (오프라인 한정)",
+      "ebayTitle": "Monamhee x BLACKPINK Limited Edition Plush Keyring Official",
+      "badge": "🔥 30일 26건 완판",
+      "watchers": "👀 63명 찜",
+      "status": "제니·지수 가방 착용 바이럴",
+      "ebayUsd": 88.0,
+      "ebayKrw": 121440,
+      "targetBuyKrw": 48000,
+      "profitKrw": 44059,
+      "roi": "+92%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 90,
+      "volWeight": 70,
+      "appliedWeight": 100,
+      "weightNote": "실무게 90g ➔ 우체국 에어캡봉투 100g 최적화 (8,130원)",
+      "priceRange": "$80.00 ~ $95.00",
+      "salesVelocity": "1.1일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 60% · 🇸🇬 싱가포르 20% · 🇦🇺 호주 20%",
+      "recentSold": [
+        {
+          "date": "11/02",
+          "price": "$88.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/28",
+          "price": "$92.00",
+          "country": "🇸🇬 싱가포르"
+        }
+      ],
+      "bunjangQuery": "모남희 블랙핑크 키링",
+      "ebayQuery": "Monamhee blackpink plush keyring",
+      "tags": [
+        "#모남희",
+        "#블랙핑크",
+        "#키링",
+        "#제니가방",
+        "#대박마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+4.4만원)"
+    },
+    {
+      "id": "pokemon-faker-stamp-metal",
+      "category": "pokemon",
+      "categoryName": "🃏 포켓몬",
+      "title": "우정사업본부 T1 '페이커' 롤드컵 기념 507개 한정 메탈 넘버링 카드",
+      "ebayTitle": "Faker T1 LoL Worlds Commemorative Limited Metal Card Serial Numbered /507",
+      "badge": "🔥 수집가 오더 폭발",
+      "watchers": "👀 112명 찜",
+      "status": "전 세계 507개 한정판",
+      "ebayUsd": 450.0,
+      "ebayKrw": 621000,
+      "targetBuyKrw": 280000,
+      "profitKrw": 224198,
+      "roi": "+80%",
+      "boxSize": "우체국 1호 박스 (22×19×9cm)",
+      "actualWeight": 120,
+      "volWeight": 180,
+      "appliedWeight": 250,
+      "weightNote": "포장 후 200g ➔ 우체국 250g 요금 (10,200원) 적용",
+      "priceRange": "$400.00 ~ $500.00",
+      "salesVelocity": "수집가 즉시 바잉",
+      "topBuyers": "🇺🇸 미국 50% · 🇨🇳 중국 30% · 🇪🇺 유럽 20%",
+      "recentSold": [
+        {
+          "date": "11/01",
+          "price": "$450.00",
+          "country": "🇺🇸 미국"
+        }
+      ],
+      "bunjangQuery": "페이커 우표 메탈카드",
+      "ebayQuery": "Faker T1 commemorative metal card limited",
+      "tags": [
+        "#페이커",
+        "#T1",
+        "#메탈카드",
+        "#한정판",
+        "#초고마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+22.4만원)"
+    },
+    {
+      "id": "pokemon-pikachu-ar-151",
+      "category": "pokemon",
+      "categoryName": "🃏 포켓몬",
+      "title": "포켓몬 카드 151 피카츄 AR 173/165 (한국어판 NM)",
+      "ebayTitle": "Pokemon Card 151 Pikachu AR 173/165 Korean NM",
+      "badge": "🔥 30일 48건 완판",
+      "watchers": "👀 82명 찜",
+      "status": "글로벌 상시 베스트셀러",
+      "ebayUsd": 38.0,
+      "ebayKrw": 52440,
+      "targetBuyKrw": 18000,
+      "profitKrw": 17133,
+      "roi": "+95%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 35,
+      "volWeight": 25,
+      "appliedWeight": 100,
+      "weightNote": "탑로더+에어캡 봉투 포장 35g ➔ 100g 운임 (8,130원)",
+      "priceRange": "$35.00 ~ $42.00",
+      "salesVelocity": "0.6일당 1건 완판 🔥",
+      "topBuyers": "🇺🇸 미국 65% · 🇩🇪 독일 20% · 🇬🇧 영국 15%",
+      "recentSold": [
+        {
+          "date": "11/02",
+          "price": "$38.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "11/01",
+          "price": "$40.00",
+          "country": "🇩🇪 독일"
+        }
+      ],
+      "bunjangQuery": "151 피카츄 AR",
+      "ebayQuery": "pokemon 151 pikachu AR korean",
+      "tags": [
+        "#포켓몬",
+        "#피카츄",
+        "#151",
+        "#AR",
+        "#초경량우체국"
+      ],
+      "isSuperMargin": false
+    },
+    {
+      "id": "pokemon-charizard-ex-sar-inferno",
+      "category": "pokemon",
+      "categoryName": "🃏 포켓몬",
+      "title": "메가 리자몽 X ex SAR 110/080 인페르노X (한국어판 NM)",
+      "ebayTitle": "Pokemon TCG Mega Charizard X ex SAR 110/080 M2 Inferno X Korean NM",
+      "badge": "🔥 30일 22건 완판",
+      "watchers": "👀 94명 찜",
+      "status": "동욱 님 주력 효자 매물",
+      "ebayUsd": 185.0,
+      "ebayKrw": 255300,
+      "targetBuyKrw": 110000,
+      "profitKrw": 92498,
+      "roi": "+84%",
+      "boxSize": "에어캡 안전봉투 (15×20cm)",
+      "actualWeight": 40,
+      "volWeight": 30,
+      "appliedWeight": 100,
+      "weightNote": "완전 안전포장 40g ➔ 호주/미국 K-Packet 8,130원",
+      "priceRange": "$175.00 ~ $195.00",
+      "salesVelocity": "1.3일당 1건 완판",
+      "topBuyers": "🇦🇺 호주 45% · 🇺🇸 미국 40% · 🇨🇦 캐나다 15%",
+      "recentSold": [
+        {
+          "date": "11/01",
+          "price": "$185.00",
+          "country": "🇦🇺 호주"
+        },
+        {
+          "date": "10/28",
+          "price": "$190.00",
+          "country": "🇺🇸 미국"
+        }
+      ],
+      "bunjangQuery": "인페르노 리자몽 ex SAR",
+      "ebayQuery": "charizard ex SAR korean inferno",
+      "tags": [
+        "#리자몽",
+        "#SAR",
+        "#인페르노",
+        "#동욱님주력",
+        "#초고마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+9.2만원)"
+    },
+    {
+      "id": "matinkim-accordian-wallet",
+      "category": "acc",
+      "categoryName": "💍 악세사리/지갑",
+      "title": "마틴킴(Matin Kim) 아코디언 메탈 로고 카드지갑 실버/블랙",
+      "ebayTitle": "Matin Kim Accordion Metal Logo Card Wallet Silver Korean Brand",
+      "badge": "🔥 30일 31건 완판",
+      "watchers": "👀 56명 찜",
+      "status": "사모님 성수 핫픽",
+      "ebayUsd": 78.0,
+      "ebayKrw": 107640,
+      "targetBuyKrw": 45000,
+      "profitKrw": 35673,
+      "roi": "+79%",
+      "boxSize": "우체국 1호 박스 (22×19×9cm)",
+      "actualWeight": 110,
+      "volWeight": 150,
+      "appliedWeight": 250,
+      "weightNote": "우체국 1호 박스 포장 250g 운임 (10,200원) 적용",
+      "priceRange": "$72.00 ~ $85.00",
+      "salesVelocity": "1.0일당 1건 완판",
+      "topBuyers": "🇺🇸 미국 50% · 🇯🇵 일본 30% · 🇹🇼 대만 20%",
+      "recentSold": [
+        {
+          "date": "11/02",
+          "price": "$78.00",
+          "country": "🇺🇸 미국"
+        },
+        {
+          "date": "10/29",
+          "price": "$82.00",
+          "country": "🇯🇵 일본"
+        }
+      ],
+      "bunjangQuery": "마틴킴 아코디언 카드지갑",
+      "ebayQuery": "Matin Kim accordion card wallet silver",
+      "tags": [
+        "#마틴킴",
+        "#카드지갑",
+        "#성수패션",
+        "#사모님추천",
+        "#대박마진"
+      ],
+      "isSuperMargin": true,
+      "superBadge": "💎 대박마진 (+3.5만원)"
     }
   ],
-  "superMarginCount": 11
+  "superMarginCount": 20
 }
