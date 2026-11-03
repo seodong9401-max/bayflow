@@ -1,5 +1,5 @@
-// BayFlow Service Worker v43 (Expanded High-Touch Margin Calculator UI)
-const CACHE_NAME = 'bayflow-v43';
+// BayFlow Service Worker v44 (NAVER News Hub & Direct Article Buttons)
+const CACHE_NAME = 'bayflow-v44';
 const ASSETS = [
   './',
   './index.html',

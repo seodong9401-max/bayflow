@@ -1433,6 +1433,47 @@
             </div>
           </div>
 
+          <!-- 🟢 네이버 & 국내 포털 실시간 뉴스 · 블로그 · 카페 직통 허브 -->
+          <div class="bg-gradient-to-r from-emerald-950/60 via-slate-900 to-emerald-950/60 p-2.5 rounded-xl border border-emerald-500/40 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-emerald-300 flex items-center space-x-1">
+                <span>🟢</span>
+                <span>네이버(NAVER) 실시간 뉴스 · 블로그 오픈런 · 카페 직통</span>
+              </span>
+              <span class="text-[9px] text-emerald-400 font-bold">국내 포털 1위 연동</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px]">
+              <a href="https://search.naver.com/search.naver?where=news&query=%EC%84%B1%EC%88%98+%ED%8C%9D%EC%97%85%EC%8A%A4%ED%86%A0%EC%96%B4+%ED%95%9C%EC%A0%95%ED%8C%90" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">📰</span>
+                  <span class="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">네이버 뉴스</span>
+                </div>
+                <span class="text-[9px] text-slate-500">성수 팝업</span>
+              </a>
+              <a href="https://search.naver.com/search.naver?where=news&query=%EC%97%B0%EC%98%88%EC%9D%B8+%EC%B0%A9%EC%9A%A9+%ED%8C%A8%EC%85%98+%ED%92%88%EC%A0%88" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🌟</span>
+                  <span class="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">연예인 패션</span>
+                </div>
+                <span class="text-[9px] text-slate-500">품절 기사</span>
+              </a>
+              <a href="https://section.blog.naver.com/Search/Post.naver?pageNo=1&rangeType=ALL&orderBy=sim&keyword=%ED%8C%9D%EC%97%85%EC%8A%A4%ED%86%A0%EC%96%B4+%EC%98%A4%ED%94%84%EB%9F%B0+%ED%9B%84%EA%B8%B0" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">✍️</span>
+                  <span class="text-[10px] font-bold text-emerald-400 group-hover:text-emerald-300">블로그 후기</span>
+                </div>
+                <span class="text-[9px] text-slate-500">오픈런 생생</span>
+              </a>
+              <a href="https://search.daum.net/search?w=news&q=%ED%8F%AC%EC%BC%93%EB%AA%AC+%ED%94%84%EB%A1%9C%EB%AA%A8+%ED%95%9C%EC%A0%95%ED%8C%90" target="_blank" rel="noopener noreferrer" class="bg-slate-900/90 hover:bg-slate-800 p-2 rounded-lg border border-slate-800 flex items-center justify-between transition group">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🔵</span>
+                  <span class="text-[10px] font-bold text-sky-400 group-hover:text-sky-300">다음 뉴스</span>
+                </div>
+                <span class="text-[9px] text-slate-500">한정판 TCG</span>
+              </a>
+            </div>
+          </div>
+
           <!-- 📱 SNS 4대 바이럴 채널 실시간 모니터링 허브 -->
           <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-2.5 rounded-xl border border-rose-500/30 space-y-1.5">
             <div class="flex items-center justify-between">
@@ -4311,14 +4352,17 @@
               </div>
             </div>
             <p class="text-[11px] text-slate-400 leading-relaxed">${item.summary || ''}</p>
-            <div class="flex space-x-1.5 pt-1">
-              <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 py-1.5 bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
+            <div class="flex space-x-1.5 pt-1 flex-wrap gap-y-1">
+              <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[100px] py-1.5 bg-rose-600/90 hover:bg-rose-600 text-white font-bold text-[11px] rounded-xl text-center transition shadow">
                 공식 링크 바로가기 ➔
               </a>
-              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-[11px] rounded-xl text-center transition">
+              <a href="https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(item.title.slice(0, 30))}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2.5 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 font-bold text-[11px] rounded-xl text-center transition">
+                🟢 네이버
+              </a>
+              <a href="https://m.bunjang.co.kr/search/products?q=${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-[11px] rounded-xl text-center transition">
                 국내 시세
               </a>
-              <button onclick="sendToSourcingAnalysis('${item.title.replace(/'/g, "\\'")}', 45000, 75.0, null, 'card')" class="py-1.5 px-3 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
+              <button onclick="sendToSourcingAnalysis('${item.title.replace(/'/g, "\\'")}', 45000, 75.0, null, 'card')" class="py-1.5 px-2.5 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white border border-indigo-500/30 font-bold text-[11px] rounded-xl transition active:scale-95">
                 ⚡ 마진분석
               </button>
             </div>

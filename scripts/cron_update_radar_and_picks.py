@@ -72,6 +72,20 @@ SEARCH_QUERIES = [
         "sourceLabel": "스니커즈 드로우 레이더",
         "defaultPlace": "나이키 / 크림 / 무신사",
         "tags": ["스니커즈", "드로우", "응모", "래플", "한정판"]
+    },
+    {
+        "query": "연예인 착용 사복 OR 연예인 공항패션 완판 OR 품절대란",
+        "kind": "celeb",
+        "sourceLabel": "연예인·바이럴 레이더",
+        "defaultPlace": "공항패션 / 인스타그램 / 패션뉴스",
+        "tags": ["연예인", "공항패션", "사복", "품절대란", "바이럴"]
+    },
+    {
+        "query": "한정판 MD 팝업 OR 스타벅스 콜라보 품절",
+        "kind": "popup",
+        "sourceLabel": "한정판 MD 레이더",
+        "defaultPlace": "전국 팝업 / 백화점",
+        "tags": ["한정판MD", "스타벅스", "콜라보", "품절대란", "오픈런"]
     }
 ]
 
