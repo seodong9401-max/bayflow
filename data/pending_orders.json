@@ -20,8 +20,8 @@
     "unitUsd": 185.00,
     "totalUsd": 185.00,
     "currency": "USD",
-    "status": "AWAITING_SHIPMENT",
-    "statusKo": "결제완료 · 우체국 전산 등록 대기",
+    "status": "SHIPPED",
+    "statusKo": "발송 완료 (이베이 트래킹 등록 완료)",
     "carrier": "Korea Post (K-Packet)",
     "packaging": "에어캡 안전봉투 (15×20cm)",
     "boxDimensions": "20×15×5cm",
@@ -32,8 +32,8 @@
     "hsCode": "9504400000",
     "customsDesc": "Playing cards",
     "origin": "KR",
-    "tracking": "",
-    "shipped": false
+    "tracking": "LI087516965KR",
+    "shipped": true
   },
   {
     "orderId": "24-15325-60476",
