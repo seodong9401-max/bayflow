@@ -1,5 +1,5 @@
-// BayFlow Service Worker v44 (NAVER News Hub & Direct Article Buttons)
-const CACHE_NAME = 'bayflow-v44';
+// BayFlow Service Worker v45 (Intuitive Draw Radar for Wife & Clean Card UI)
+const CACHE_NAME = 'bayflow-v45';
 const ASSETS = [
   './',
   './index.html',
