@@ -1,5 +1,5 @@
-// BayFlow Service Worker v46 (Dynamic Live Refresh for News & Verified Picks)
-const CACHE_NAME = 'bayflow-v46';
+// BayFlow Service Worker v47 (Add South America & Latin America Countries to Calculator)
+const CACHE_NAME = 'bayflow-v47';
 const ASSETS = [
   './',
   './index.html',
