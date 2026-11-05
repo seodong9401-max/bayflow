@@ -1,0 +1,716 @@
+{
+  "categories": [
+    {
+      "id": "pokemon",
+      "name": "포켓몬 / 트레이딩카드",
+      "icon": "🃏",
+      "fee": 13.25,
+      "defaultPkg": "bubble",
+      "desc": "한글판 부스터 박스, 프로모 카드, 싱글팩, SAR/UR 고가 레어",
+      "keywords": [
+        {
+          "kr": "포켓몬 30주년 M6a 부스터 박스",
+          "en": "Pokemon 30th Celebration M6a Korean Booster Box",
+          "pkg": "box1",
+          "price": 125
+        },
+        {
+          "kr": "포켓몬 메타몽 프로젝트 프로모 173",
+          "en": "Pokemon Metamong Project Ditto 173/SV-P Korean Promo",
+          "pkg": "bubble",
+          "price": 140
+        },
+        {
+          "kr": "포켓몬 151 한글판 부스터 박스",
+          "en": "Pokemon 151 Korean Booster Box Factory Sealed",
+          "pkg": "box1",
+          "price": 115
+        },
+        {
+          "kr": "포켓몬 메가 리자몽 X ex SAR",
+          "en": "Pokemon Mega Charizard X ex SAR Korean",
+          "pkg": "bubble",
+          "price": 185
+        },
+        {
+          "kr": "고풍 한복 피카츄 대형 봉제인형",
+          "en": "Pokemon Ancient Korean Hanbok Pikachu Plush Doll",
+          "pkg": "box2",
+          "price": 450
+        },
+        {
+          "kr": "고풍 한복 피카츄 라이트 키링",
+          "en": "Pokemon Ancient Korean Hanbok Pikachu Light Keyring",
+          "pkg": "box1",
+          "price": 150
+        },
+        {
+          "kr": "메가페스타 잉어킹 프로모 풍경",
+          "en": "Pokemon Mega Festa Magikarp Wind Chime Korean",
+          "pkg": "box1",
+          "price": 55
+        },
+        {
+          "kr": "포켓몬 테라스탈 데뷔 한글판 박스",
+          "en": "Pokemon Terastal Debut Korean Booster Box",
+          "pkg": "box1",
+          "price": 85
+        }
+      ]
+    },
+    {
+      "id": "starbucks",
+      "name": "스타벅스 MD",
+      "icon": "☕",
+      "fee": 13.25,
+      "defaultPkg": "box2",
+      "desc": "한국 한정 콜라보, 토이스토리 MD, 스탠리 텀블러, 시티 굿즈",
+      "keywords": [
+        {
+          "kr": "스타벅스 토이스토리 인형뽑기 머신",
+          "en": "Starbucks Korea Toy Story Claw Machine Game",
+          "pkg": "large",
+          "price": 259
+        },
+        {
+          "kr": "스타벅스 토이스토리 햄 돼지저금통",
+          "en": "Starbucks Korea Toy Story Hamm Piggy Bank",
+          "pkg": "box1",
+          "price": 39
+        },
+        {
+          "kr": "스타벅스 토이스토리 포키 텀블러",
+          "en": "Starbucks Korea Toy Story Forky Tank Tumbler",
+          "pkg": "box2",
+          "price": 149
+        },
+        {
+          "kr": "스타벅스 토이스토리 릴리패드 파우치",
+          "en": "Starbucks Korea Toy Story Lilypad Pouch",
+          "pkg": "box1",
+          "price": 49
+        },
+        {
+          "kr": "스타벅스 코리아 스탠리 텀블러",
+          "en": "Starbucks Korea Stanley Straw Tumbler",
+          "pkg": "box2",
+          "price": 75
+        },
+        {
+          "kr": "스타벅스 제주 한정 한라봉 머그",
+          "en": "Starbucks Korea Jeju Hallabong Mug Limited",
+          "pkg": "box1",
+          "price": 48
+        }
+      ]
+    },
+    {
+      "id": "kbeauty",
+      "name": "K-뷰티 / 올리브영",
+      "icon": "💄",
+      "fee": 13.25,
+      "defaultPkg": "box1",
+      "desc": "올리브영 타포린백, 한정판 기획세트, 토리든, 아누아, 조선미녀",
+      "keywords": [
+        {
+          "kr": "올리브영 한정판 대형 타포린백",
+          "en": "Olive Young Korea Limited Tarpaulin Bag",
+          "pkg": "box1",
+          "price": 29.99
+        },
+        {
+          "kr": "토리든 다이브인 저분자 세럼 기획",
+          "en": "Torriden Dive In Low Molecular Serum Korea",
+          "pkg": "box1",
+          "price": 35
+        },
+        {
+          "kr": "아누아 어성초 77 토너 대용량",
+          "en": "Anua Heartleaf 77 Soothing Toner Korea",
+          "pkg": "box1",
+          "price": 32
+        },
+        {
+          "kr": "조선미녀 맑은쌀 선크림 기획세트",
+          "en": "Beauty of Joseon Relief Sun Rice Probiotics",
+          "pkg": "bubble",
+          "price": 28
+        },
+        {
+          "kr": "메디큐브 제로 모공 패드 2.0",
+          "en": "Medicube Zero Pore Pad 2.0 Korea",
+          "pkg": "box1",
+          "price": 34
+        }
+      ]
+    },
+    {
+      "id": "nike",
+      "name": "나이키 / 스니커즈",
+      "icon": "👟",
+      "fee": 8.0,
+      "defaultPkg": "shoes",
+      "desc": "조던 1 로우, 트래비스 스캇, 덩크 코리아, 피스마이너스원, 보메로",
+      "keywords": [
+        {
+          "kr": "조던 1 로우 OG 트래비스 스캇",
+          "en": "Nike Air Jordan 1 Retro Low OG Travis Scott",
+          "pkg": "shoes",
+          "price": 550
+        },
+        {
+          "kr": "나이키 덩크 로우 레트로 코리아",
+          "en": "Nike Dunk Low Retro Seoul Korea Limited",
+          "pkg": "shoes",
+          "price": 220
+        },
+        {
+          "kr": "나이키 피스마이너스원 퀀도1 지드래곤",
+          "en": "Nike PEACEMINUSONE Kwondo 1 G-Dragon",
+          "pkg": "shoes",
+          "price": 310
+        },
+        {
+          "kr": "나이키 줌 보메로 5 오트밀",
+          "en": "Nike Zoom Vomero 5 Oatmeal Korea",
+          "pkg": "shoes",
+          "price": 180
+        }
+      ]
+    },
+    {
+      "id": "adidas",
+      "name": "아디다스 / 신발",
+      "icon": "👟",
+      "fee": 8.0,
+      "defaultPkg": "shoes",
+      "desc": "삼바 OG, 가젤 인도어, 핸드볼 스페지알, 태권도 메이, 웨일스 보너",
+      "keywords": [
+        {
+          "kr": "아디다스 삼바 OG 코어 화이트",
+          "en": "Adidas Samba OG Core White B75806 Korea",
+          "pkg": "shoes",
+          "price": 140
+        },
+        {
+          "kr": "아디다스 태권도 메이 발레 코어",
+          "en": "Adidas Taekwondo Mei Slip On Korea Viral",
+          "pkg": "shoes",
+          "price": 190
+        },
+        {
+          "kr": "아디다스 가젤 인도어 블루 퓨전",
+          "en": "Adidas Gazelle Indoor Blue Fusion",
+          "pkg": "shoes",
+          "price": 165
+        },
+        {
+          "kr": "아디다스 핸드볼 스페지알 네이비",
+          "en": "Adidas Handball Spezial Navy Gum",
+          "pkg": "shoes",
+          "price": 150
+        }
+      ]
+    },
+    {
+      "id": "fashion",
+      "name": "연예인 패션 / 스트릿웨어",
+      "icon": "👗",
+      "fee": 15.0,
+      "defaultPkg": "box2",
+      "desc": "사모님 픽! 노스페이스 화이트라벨, 아더에러, 마르디, 이미스, 마틴킴",
+      "keywords": [
+        {
+          "kr": "노스페이스 화이트라벨 눕시 패딩",
+          "en": "The North Face White Label Nuptse Korea",
+          "pkg": "large",
+          "price": 380
+        },
+        {
+          "kr": "아더에러 공식 로고 후드티",
+          "en": "ADER error Official Logo Hoodie Korea",
+          "pkg": "box2",
+          "price": 280
+        },
+        {
+          "kr": "마르디 메크르디 플라워 스웨트셔츠",
+          "en": "Mardi Mercredi Flower Sweatshirt Korea",
+          "pkg": "box2",
+          "price": 120
+        },
+        {
+          "kr": "이미스 뉴 로고 볼캡 연예인 착용",
+          "en": "EMIS New Logo Ball Cap Korea Viral",
+          "pkg": "box1",
+          "price": 65
+        },
+        {
+          "kr": "마틴킴 아코디언 지갑 한정판",
+          "en": "Matin Kim Accordion Card Wallet Korea",
+          "pkg": "box1",
+          "price": 95
+        }
+      ]
+    },
+    {
+      "id": "sanrio",
+      "name": "산리오 / 치이카와 / 캐릭터",
+      "icon": "🧸",
+      "fee": 13.25,
+      "defaultPkg": "box1",
+      "desc": "치이카와 한국 팝업, 헬로키티 50주년, 쿠로미, 시나모롤 키링",
+      "keywords": [
+        {
+          "kr": "치이카와 한국 팝업스토어 한정 인형",
+          "en": "Chiikawa Korea Popup Store Limited Plush",
+          "pkg": "box1",
+          "price": 55
+        },
+        {
+          "kr": "하치와레 한국 팝업 키링 마스코트",
+          "en": "Hachware Chiikawa Korea Mascot Keyring",
+          "pkg": "bubble",
+          "price": 38
+        },
+        {
+          "kr": "산리오 헬로키티 50주년 한정 인형",
+          "en": "Sanrio Hello Kitty 50th Anniversary Korea",
+          "pkg": "box1",
+          "price": 68
+        },
+        {
+          "kr": "쿠로미 산리오 코리아 아크릴 키링",
+          "en": "Kuromi Sanrio Korea Acrylic Keyring",
+          "pkg": "bubble",
+          "price": 25
+        }
+      ]
+    },
+    {
+      "id": "labubu",
+      "name": "라부부 / 팝마트 / 아트토이",
+      "icon": "👾",
+      "fee": 13.25,
+      "defaultPkg": "box1",
+      "desc": "라부부 마카롱 바이닐 페이스, 크라이베이비, 디무 한국 에디션",
+      "keywords": [
+        {
+          "kr": "팝마트 라부부 익사이팅 마카롱",
+          "en": "Pop Mart Labubu Exciting Macaron Vinyl Face",
+          "pkg": "box1",
+          "price": 85
+        },
+        {
+          "kr": "라부부 더 몬스터즈 펄 블라인드 박스",
+          "en": "Labubu The Monsters Fall in Wild Korea",
+          "pkg": "box1",
+          "price": 110
+        },
+        {
+          "kr": "크라이베이비 선셋 콘서트 피규어",
+          "en": "Pop Mart Crybaby Sunset Concert Series",
+          "pkg": "box1",
+          "price": 75
+        },
+        {
+          "kr": "팝마트 디무 한국 한정 에디션",
+          "en": "Pop Mart Dimoo Korea Edition Limited",
+          "pkg": "box1",
+          "price": 65
+        }
+      ]
+    },
+    {
+      "id": "lol",
+      "name": "리그 오브 레전드 / 게임",
+      "icon": "🎮",
+      "fee": 13.25,
+      "defaultPkg": "box1",
+      "desc": "T1 페이커 월즈 유니폼, 롤드컵 자켓, 라이엇 공식 피규어, 메이플",
+      "keywords": [
+        {
+          "kr": "T1 페이커 월즈 2024 유니폼 저지",
+          "en": "T1 Faker Worlds Uniform Jersey Official",
+          "pkg": "box1",
+          "price": 220
+        },
+        {
+          "kr": "T1 롤드컵 챔피언십 자켓 한정판",
+          "en": "T1 Worlds Championship Jacket Korea",
+          "pkg": "box2",
+          "price": 340
+        },
+        {
+          "kr": "라이엇 공식 징크스 언락 피규어",
+          "en": "Riot Games League of Legends Jinx Figure",
+          "pkg": "box2",
+          "price": 160
+        },
+        {
+          "kr": "메이플스토리 공식 주황버섯 인형",
+          "en": "MapleStory Official Orange Mushroom Plush",
+          "pkg": "box1",
+          "price": 45
+        }
+      ]
+    },
+    {
+      "id": "kidult",
+      "name": "레고 / 키덜트 / 닌텐도",
+      "icon": "🧱",
+      "fee": 13.25,
+      "defaultPkg": "box2",
+      "desc": "닌텐도 OLED 한정판, 젤다 왕눈 굿즈, 다마고치 유니, 레고 스타워즈",
+      "keywords": [
+        {
+          "kr": "닌텐도 스위치 OLED 포켓몬 에디션",
+          "en": "Nintendo Switch OLED Pokemon Scarlet Violet",
+          "pkg": "large",
+          "price": 380
+        },
+        {
+          "kr": "다마고치 유니 산리오 캐릭터즈 한정",
+          "en": "Tamagotchi Uni Sanrio Characters Korea",
+          "pkg": "box1",
+          "price": 135
+        },
+        {
+          "kr": "젤다의 전설 티어스 오브 더 킹덤 굿즈",
+          "en": "Zelda Tears of the Kingdom Collector Korea",
+          "pkg": "box2",
+          "price": 120
+        },
+        {
+          "kr": "디지몬 컬러 25주년 한정판 한국",
+          "en": "Digimon Color 25th Anniversary Limited",
+          "pkg": "box1",
+          "price": 160
+        }
+      ]
+    },
+    {
+      "id": "kpop",
+      "name": "K-POP / 포토카드",
+      "icon": "🎤",
+      "fee": 13.25,
+      "defaultPkg": "bubble",
+      "desc": "BTS, 스트레이키즈, 뉴진스, 세븐틴, 에스파 럭키드로우·사운드웨이브",
+      "keywords": [
+        {
+          "kr": "스트레이키즈 럭키드로우 사운드웨이브",
+          "en": "Stray Kids Lucky Draw Photocard Soundwave",
+          "pkg": "bubble",
+          "price": 65
+        },
+        {
+          "kr": "뉴진스 버니즈 캠프 한정 포토카드",
+          "en": "NewJeans Bunnies Camp Exclusive Photocard",
+          "pkg": "bubble",
+          "price": 85
+        },
+        {
+          "kr": "세븐틴 팔로우 투어 공식 포토카드",
+          "en": "Seventeen Follow Tour Official Photocard",
+          "pkg": "bubble",
+          "price": 45
+        },
+        {
+          "kr": "에스파 아마겟돈 위드뮤 럭키드로우",
+          "en": "Aespa Armageddon Withmuu Lucky Draw",
+          "pkg": "bubble",
+          "price": 55
+        }
+      ]
+    },
+    {
+      "id": "cinema",
+      "name": "영화관 MD / 굿즈",
+      "icon": "🎬",
+      "fee": 13.25,
+      "defaultPkg": "bubble",
+      "desc": "CGV TTT 티켓, 메가박스 오리지널 티켓, 롯데시네마 아트카드",
+      "keywords": [
+        {
+          "kr": "CGV TTT 티켓 한정판 시그니처",
+          "en": "CGV TTT That's The Ticket Official Limited",
+          "pkg": "bubble",
+          "price": 35
+        },
+        {
+          "kr": "메가박스 오리지널 티켓 애니메이션",
+          "en": "Megabox Original Ticket Anime Official",
+          "pkg": "bubble",
+          "price": 40
+        },
+        {
+          "kr": "룩백 롯데시네마 아트카드 시그니처",
+          "en": "Look Back Theatrical Art Card Signature",
+          "pkg": "bubble",
+          "price": 45
+        },
+        {
+          "kr": "슬램덩크 극장판 공식 굿즈 한국",
+          "en": "The First Slam Dunk Theater Merch Korea",
+          "pkg": "box1",
+          "price": 65
+        }
+      ]
+    },
+    {
+      "id": "kfood",
+      "name": "한국식품 / 라면 / 과자",
+      "icon": "🍜",
+      "fee": 13.25,
+      "defaultPkg": "box2",
+      "desc": "불닭볶음면 까르보, 초코파이 하우스, 허니버터칩, 맥심 골드",
+      "keywords": [
+        {
+          "kr": "삼양 까르보 불닭볶음면 5개입 멀티팩",
+          "en": "Samyang Buldak Carbonara Ramen 5 Packs",
+          "pkg": "box2",
+          "price": 28
+        },
+        {
+          "kr": "오리온 프리미엄 초코파이 기프트 박스",
+          "en": "Orion Choco Pie House Premium Gift Box",
+          "pkg": "box2",
+          "price": 35
+        },
+        {
+          "kr": "해태 허니버터칩 오리지널 5봉 세트",
+          "en": "Haitai Honey Butter Chip Korean Snack 5pk",
+          "pkg": "box2",
+          "price": 32
+        },
+        {
+          "kr": "맥심 모카골드 마일드 100T 스틱",
+          "en": "Maxim Mocha Gold Mild Coffee Mix 100 Sticks",
+          "pkg": "box2",
+          "price": 38
+        }
+      ]
+    }
+  ],
+  "rates": {
+    "US": {
+      "100": 9010,
+      "200": 10620,
+      "300": 12230,
+      "400": 13840,
+      "500": 16490,
+      "600": 18040,
+      "700": 19590,
+      "800": 21140,
+      "900": 22690,
+      "1000": 24230,
+      "1100": 26730,
+      "1200": 28630,
+      "1300": 30530,
+      "1400": 32430,
+      "1500": 33910,
+      "1600": 35810,
+      "1700": 38310,
+      "1800": 40810,
+      "1900": 43310,
+      "2000": 45810
+    },
+    "CA": {
+      "100": 5730,
+      "200": 7350,
+      "300": 8970,
+      "400": 10590,
+      "500": 13250,
+      "600": 14810,
+      "700": 16370,
+      "800": 17930,
+      "900": 19490,
+      "1000": 21040,
+      "1100": 23550,
+      "1200": 25460,
+      "1300": 27370,
+      "1400": 29280,
+      "1500": 30770,
+      "1600": 32680,
+      "1700": 34290,
+      "1800": 35900,
+      "1900": 37510,
+      "2000": 39120
+    },
+    "GB": {
+      "100": 5730,
+      "200": 7350,
+      "300": 8970,
+      "400": 10590,
+      "500": 13250,
+      "600": 14810,
+      "700": 16370,
+      "800": 17930,
+      "900": 19490,
+      "1000": 21040,
+      "1100": 23550,
+      "1200": 25460,
+      "1300": 27370,
+      "1400": 29280,
+      "1500": 30770,
+      "1600": 32680,
+      "1700": 34290,
+      "1800": 35900,
+      "1900": 37510,
+      "2000": 39120
+    },
+    "DE": {
+      "100": 5460,
+      "200": 6810,
+      "300": 8160,
+      "400": 9510,
+      "500": 11900,
+      "600": 13190,
+      "700": 14480,
+      "800": 15770,
+      "900": 17060,
+      "1000": 18340,
+      "1100": 20580,
+      "1200": 22220,
+      "1300": 23860,
+      "1400": 25500,
+      "1500": 26720,
+      "1600": 28360,
+      "1700": 29700,
+      "1800": 31040,
+      "1900": 32380,
+      "2000": 33720
+    },
+    "FR": {
+      "100": 5450,
+      "200": 6790,
+      "300": 8130,
+      "400": 9470,
+      "500": 11850,
+      "600": 13130,
+      "700": 14410,
+      "800": 15690,
+      "900": 16970,
+      "1000": 18240,
+      "1100": 20470,
+      "1200": 22100,
+      "1300": 23730,
+      "1400": 25360,
+      "1500": 26570,
+      "1600": 28200,
+      "1700": 29530,
+      "1800": 30860,
+      "1900": 32190,
+      "2000": 33520
+    },
+    "IT": {
+      "100": 5460,
+      "200": 6810,
+      "300": 8160,
+      "400": 9510,
+      "500": 11900,
+      "600": 13190,
+      "700": 14480,
+      "800": 15770,
+      "900": 17060,
+      "1000": 18340,
+      "1100": 20580,
+      "1200": 22220,
+      "1300": 23860,
+      "1400": 25500,
+      "1500": 26720,
+      "1600": 28360,
+      "1700": 29700,
+      "1800": 31040,
+      "1900": 32380,
+      "2000": 33720
+    },
+    "ES": {
+      "100": 5580,
+      "200": 7050,
+      "300": 8520,
+      "400": 9990,
+      "500": 12500,
+      "600": 13910,
+      "700": 15320,
+      "800": 16730,
+      "900": 18140,
+      "1000": 19540,
+      "1100": 21900,
+      "1200": 23660,
+      "1300": 25420,
+      "1400": 27180,
+      "1500": 28520,
+      "1600": 30280,
+      "1700": 31740,
+      "1800": 33200,
+      "1900": 34660,
+      "2000": 36120
+    },
+    "AU": {
+      "100": 5330,
+      "200": 6550,
+      "300": 7770,
+      "400": 8990,
+      "500": 11250,
+      "600": 12410,
+      "700": 13570,
+      "800": 14730,
+      "900": 15890,
+      "1000": 17040,
+      "1100": 19150,
+      "1200": 20660,
+      "1300": 22170,
+      "1400": 23680,
+      "1500": 24770,
+      "1600": 26280,
+      "1700": 27490,
+      "1800": 28700,
+      "1900": 29910,
+      "2000": 31120
+    },
+    "JP": {
+      "100": 4510,
+      "200": 5090,
+      "300": 5670,
+      "400": 6250,
+      "500": 7380,
+      "600": 8140,
+      "700": 8900,
+      "800": 9660,
+      "900": 10420,
+      "1000": 11180,
+      "1100": 11930,
+      "1200": 12680,
+      "1300": 13430,
+      "1400": 14180,
+      "1500": 14930,
+      "1600": 15680,
+      "1700": 16430,
+      "1800": 17180,
+      "1900": 17930,
+      "2000": 18680
+    },
+    "MX": {
+      "100": 6080,
+      "200": 7840,
+      "300": 9600,
+      "400": 11360,
+      "500": 14290,
+      "600": 16330,
+      "700": 18370,
+      "800": 20410,
+      "900": 22450,
+      "1000": 24530,
+      "1100": 26560,
+      "1200": 28590,
+      "1300": 30620,
+      "1400": 32650,
+      "1500": 34360,
+      "1600": 36990,
+      "1700": 39620,
+      "1800": 42250,
+      "1900": 44880,
+      "2000": 47510
+    }
+  }
+}
